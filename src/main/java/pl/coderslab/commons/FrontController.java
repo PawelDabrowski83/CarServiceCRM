@@ -19,6 +19,7 @@ public class FrontController extends HttpServlet {
 
         if ("managePersonDetails".equals(action)) {
             address = PersonDetailsDispatcher.doGet(request, response, address);
+            System.out.println("NOW!");
         }
         getServletContext().getRequestDispatcher(address).forward(request, response);
 
