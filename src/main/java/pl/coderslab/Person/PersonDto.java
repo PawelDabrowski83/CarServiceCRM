@@ -1,9 +1,10 @@
-package pl.coderslab.PersonDetails;
+package pl.coderslab.Person;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class PersonDetailsEntity {
+public class PersonDto {
 
     private int id;
     private String firstName;
@@ -11,10 +12,13 @@ public class PersonDetailsEntity {
     private String address;
     private String phone;
     private String notes;
-    private LocalDate birthdate;
+    private String birthYear;
+    private String birthMonth;
+    private String birthDay;
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active;
+    private String fullname;
 
     public int getId() {
         return id;
@@ -64,14 +68,6 @@ public class PersonDetailsEntity {
         this.notes = notes;
     }
 
-    public LocalDate getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
-    }
-
     public LocalDateTime getCreated() {
         return created;
     }
@@ -96,5 +92,45 @@ public class PersonDetailsEntity {
         this.active = active;
     }
 
+    public String getFullname() {
+        return fullname;
+    }
 
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getBirthYear() {
+        return birthYear;
+    }
+
+    public void setBirthYear(String birthYear) {
+        this.birthYear = birthYear;
+    }
+
+    public String getBirthMonth() {
+        return birthMonth;
+    }
+
+    public void setBirthMonth(String birthMonth) {
+        this.birthMonth = birthMonth;
+    }
+
+    public String getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public LocalDate getBirthdate() {
+        try {
+            return LocalDate.of(Integer.parseInt(birthYear), Integer.parseInt(birthMonth), Integer.parseInt(birthDay));
+        } catch (DateTimeException e) {
+            e.printStackTrace();
+            System.out.println("Invalid date format in: dd-mm-rrrr " + birthDay + "-" + birthMonth + "-" + birthYear);
+            return LocalDate.of(1,1,1);
+        }
+    }
 }

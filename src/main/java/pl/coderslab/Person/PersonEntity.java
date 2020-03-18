@@ -1,9 +1,9 @@
-package pl.coderslab.PersonDetails;
+package pl.coderslab.Person;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class PersonDetails {
+public class PersonEntity {
 
     private int id;
     private String firstName;
@@ -15,7 +15,6 @@ public class PersonDetails {
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active;
-
 
     public int getId() {
         return id;
@@ -97,19 +96,5 @@ public class PersonDetails {
         this.active = active;
     }
 
-    public String getFullname () {
-        return lastName + " " + firstName;
-    }
 
-    public String getBirthYear() {
-        return Integer.toString(this.birthdate.getYear());
-    }
-
-    public String getBirthMonth() {
-        return Integer.toString(this.birthdate.getMonthValue());
-    }
-
-    public String getBirthDay() {
-        return Integer.toString(this.birthdate.getDayOfMonth());
-    }
 }

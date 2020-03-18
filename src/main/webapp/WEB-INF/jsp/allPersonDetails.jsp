@@ -24,7 +24,7 @@
         <th>Notes</th>
         <th>Actions</th>
     </tr>
-    <c:forEach items="${personDetails}" var="person">
+    <c:forEach items="${person}" var="person">
         <tr>
             <td>${person.fullname}</td>
             <td>${person.address}</td>

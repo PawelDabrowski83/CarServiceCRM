@@ -1,6 +1,6 @@
 package pl.coderslab.commons;
 
-import pl.coderslab.PersonDetails.PersonDetailsDispatcher;
+import pl.coderslab.Person.PersonDispatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +18,7 @@ public class FrontController extends HttpServlet {
         String address = "/index.jsp";
 
         if ("managePersonDetails".equals(action)) {
-            address = PersonDetailsDispatcher.doGet(request, response, address);
+            address = PersonDispatcher.doGet(request, response, address);
             System.out.println("NOW!");
         }
         getServletContext().getRequestDispatcher(address).forward(request, response);

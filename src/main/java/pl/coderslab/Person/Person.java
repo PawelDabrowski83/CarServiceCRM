@@ -1,10 +1,9 @@
-package pl.coderslab.PersonDetails;
+package pl.coderslab.Person;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class PersonDetailsDto {
+public class Person {
 
     private int id;
     private String firstName;
@@ -12,13 +11,11 @@ public class PersonDetailsDto {
     private String address;
     private String phone;
     private String notes;
-    private String birthYear;
-    private String birthMonth;
-    private String birthDay;
+    private LocalDate birthdate;
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active;
-    private String fullname;
+
 
     public int getId() {
         return id;
@@ -68,6 +65,14 @@ public class PersonDetailsDto {
         this.notes = notes;
     }
 
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
     public LocalDateTime getCreated() {
         return created;
     }
@@ -92,45 +97,19 @@ public class PersonDetailsDto {
         this.active = active;
     }
 
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public String getFullname () {
+        return lastName + " " + firstName;
     }
 
     public String getBirthYear() {
-        return birthYear;
-    }
-
-    public void setBirthYear(String birthYear) {
-        this.birthYear = birthYear;
+        return Integer.toString(this.birthdate.getYear());
     }
 
     public String getBirthMonth() {
-        return birthMonth;
-    }
-
-    public void setBirthMonth(String birthMonth) {
-        this.birthMonth = birthMonth;
+        return Integer.toString(this.birthdate.getMonthValue());
     }
 
     public String getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(String birthDay) {
-        this.birthDay = birthDay;
-    }
-
-    public LocalDate getBirthdate() {
-        try {
-            return LocalDate.of(Integer.parseInt(birthYear), Integer.parseInt(birthMonth), Integer.parseInt(birthDay));
-        } catch (DateTimeException e) {
-            e.printStackTrace();
-            System.out.println("Invalid date format in: dd-mm-rrrr " + birthDay + "-" + birthMonth + "-" + birthYear);
-            return LocalDate.of(1,1,1);
-        }
+        return Integer.toString(this.birthdate.getDayOfMonth());
     }
 }
