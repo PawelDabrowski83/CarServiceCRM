@@ -4,7 +4,7 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class PersonDto {
+public class PersonDto implements Comparable<PersonDto> {
 
     private int id;
     private String firstName;
@@ -132,5 +132,20 @@ public class PersonDto {
             System.out.println("Invalid date format in: dd-mm-rrrr " + birthDay + "-" + birthMonth + "-" + birthYear);
             return LocalDate.of(1,1,1);
         }
+    }
+
+    @Override
+    public int compareTo(PersonDto o) {
+        int result = this.fullname.compareToIgnoreCase(o.fullname);
+        if(result == 0) {
+            result = this.birthYear.compareToIgnoreCase(o.birthYear);
+        }
+        if(result == 0) {
+            result = this.birthMonth.compareToIgnoreCase(o.birthMonth);
+        }
+        if(result == 0) {
+            result = this.birthDay.compareToIgnoreCase(o.birthDay);
+        }
+        return result;
     }
 }

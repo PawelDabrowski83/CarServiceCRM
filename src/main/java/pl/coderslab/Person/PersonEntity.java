@@ -3,7 +3,7 @@ package pl.coderslab.Person;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class PersonEntity {
+public class PersonEntity implements Comparable<PersonEntity> {
 
     private int id;
     private String firstName;
@@ -96,5 +96,31 @@ public class PersonEntity {
         this.active = active;
     }
 
+    @Override
+    public String toString() {
+        return "PersonEntity{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", notes='" + notes + '\'' +
+                ", birthdate=" + birthdate +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", active=" + active +
+                '}';
+    }
 
+    @Override
+    public int compareTo(PersonEntity o) {
+        int result = this.lastName.compareToIgnoreCase(o.lastName);
+        if (result == 0) {
+            result = this.firstName.compareToIgnoreCase(o.firstName);
+        }
+        if (result == 0) {
+            result = this.birthdate.compareTo(o.birthdate);
+        }
+        return result;
+    }
 }

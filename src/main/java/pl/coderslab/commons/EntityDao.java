@@ -4,11 +4,11 @@ import java.util.Set;
 
 public abstract class EntityDao<T> {
 
-    private final Class<T> classType;
+//    private final Class<T> classType;
 
-    public EntityDao(Class<T> classType) {
-        this.classType = classType;
-    }
+//    public EntityDao(Class<T> classType) {
+//        this.classType = classType;
+//    }
 
     public abstract void create(T entity);
     public abstract T read(int id);

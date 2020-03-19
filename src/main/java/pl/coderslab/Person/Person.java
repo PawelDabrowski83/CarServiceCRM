@@ -3,7 +3,7 @@ package pl.coderslab.Person;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Person {
+public class Person implements Comparable<Person>{
 
     private int id;
     private String firstName;
@@ -111,5 +111,17 @@ public class Person {
 
     public String getBirthDay() {
         return Integer.toString(this.birthdate.getDayOfMonth());
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        int result = this.lastName.compareToIgnoreCase(o.lastName);
+        if(result == 0) {
+            result = this.firstName.compareToIgnoreCase(o.firstName);
+        }
+        if(result == 0) {
+            result = this.birthdate.compareTo(o.birthdate);
+        }
+        return result;
     }
 }

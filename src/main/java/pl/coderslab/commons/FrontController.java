@@ -16,7 +16,7 @@ public class FrontController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         String address = "/index.jsp";
-
+        System.out.println("ACTION: " + action);
         if ("managePersonDetails".equals(action)) {
             address = PersonDispatcher.doGet(request, response, address);
             System.out.println("NOW!");
