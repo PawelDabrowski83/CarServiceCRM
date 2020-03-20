@@ -2,6 +2,9 @@ package pl.coderslab.Person;
 
 import pl.coderslab.commons.MapperInterface;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+
 public class PersonMapper implements MapperInterface<PersonDto, Person, PersonEntity> {
 
     public PersonDto mapServiceToDto (Person person) {
@@ -15,8 +18,7 @@ public class PersonMapper implements MapperInterface<PersonDto, Person, PersonEn
         dto.setBirthYear(person.getBirthYear());
         dto.setBirthMonth(person.getBirthMonth());
         dto.setBirthDay(person.getBirthDay());
-        dto.setCreated(person.getCreated());
-        dto.setUpdated(person.getUpdated());
+        dto.setUpdated(person.getUpdated().toString());
         dto.setActive(person.isActive());
         dto.setFullname(person.getFullname());
         return dto;
@@ -31,8 +33,12 @@ public class PersonMapper implements MapperInterface<PersonDto, Person, PersonEn
         person.setPhone(dto.getPhone());
         person.setNotes(dto.getNotes());
         person.setBirthdate(dto.getBirthdate());
-        person.setCreated(dto.getCreated());
-        person.setUpdated(dto.getUpdated());
+        try {
+            person.setUpdated(LocalDateTime.parse(dto.getUpdated()));
+        } catch (DateTimeException | NumberFormatException | NullPointerException e) {
+            e.printStackTrace();
+            person.setUpdated(null);
+        }
         person.setActive(dto.isActive());
         return person;
     }
@@ -66,4 +72,5 @@ public class PersonMapper implements MapperInterface<PersonDto, Person, PersonEn
         person.setActive(entity.isActive());
         return person;
     }
+
 }

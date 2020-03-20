@@ -12,21 +12,27 @@ import java.io.IOException;
 @WebServlet(name = "FrontController", urlPatterns = "/")
 public class FrontController extends HttpServlet {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action");
-        String address = "/index.jsp";
-        System.out.println("ACTION: " + action);
-        if ("managePersonDetails".equals(action)) {
-            address = PersonDispatcher.doGet(request, response, address);
-            System.out.println("NOW!");
-        }
-        getServletContext().getRequestDispatcher(address).forward(request, response);
+    private static final String INDEX_JSP = "/index.jsp";
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        dispatchAll(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+        dispatchAll(request, response);
+    }
 
+    private void dispatchAll (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        request.setAttribute("method", request.getMethod());
+        request.setAttribute("ordnung", request.getParameter("ordnung"));
+
+        String address = INDEX_JSP;
+        System.out.println("ACTION: " + action);
+        if ("managePersonDetails".equals(action)) {
+            address = PersonDispatcher.dispatch(request, response, address);
+        }
+        getServletContext().getRequestDispatcher(address).forward(request, response);
     }
 }

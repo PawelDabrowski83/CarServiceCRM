@@ -3,7 +3,6 @@ package pl.coderslab.Person;
 import pl.coderslab.commons.DbUtil;
 import pl.coderslab.commons.EntityDao;
 
-import javax.crypto.spec.PSource;
 import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -13,11 +12,11 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
     private static final PersonMapper PERSON_MAPPER = new PersonMapper();
     private static final String TABLE_NAME = "personal_infos";
     private static final String CREATE_QUERY =
-            "INSERT INTO " + TABLE_NAME + " (first_name, last_name, address, phone, notes, created, updated, date_of_birth) values (?, ?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO " + TABLE_NAME + " (first_name, last_name, address, phone, notes, created, updated, date_of_birth) values (?, ?, ?, ?, ?, NOW(), NOW(), ?)";
     private static final String READ_QUERY =
             "SELECT * FROM " + TABLE_NAME + " where personal_id = ?";
     private static final String UPDATE_QUERY =
-            "UPDATE " + TABLE_NAME + " SET first_name = ?, last_name = ?, address = ?, phone = ?, notes = ?, created = ?, updated = NOW(), date_of_birth = ? where personal_id = ?";
+            "UPDATE " + TABLE_NAME + " SET first_name = ?, last_name = ?, address = ?, phone = ?, notes = ?, updated = NOW(), date_of_birth = ? where personal_id = ?";
     private static final String DELETE_QUERY =
             "DELETE FROM " + TABLE_NAME + " WHERE personal_id = ?";
     private static final String FIND_ALL_QUERY =
@@ -108,7 +107,7 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
         entity.setPhone(resultSet.getString("phone"));
         entity.setNotes(resultSet.getString("notes"));
         entity.setBirthdate(resultSet.getTimestamp("date_of_birth").toLocalDateTime().toLocalDate());
-        entity.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+//        entity.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
         entity.setUpdated(resultSet.getTimestamp("updated").toLocalDateTime());
         entity.setActive(resultSet.getBoolean("active"));
         System.out.println(entity);
@@ -121,9 +120,9 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
         statement.setString(3, entity.getAddress());
         statement.setString(4, entity.getPhone());
         statement.setString(5, entity.getNotes());
-        statement.setString(6, entity.getCreated().toString());
-        statement.setString(7, entity.getUpdated().toString());
-        statement.setString(8, entity.getBirthdate().toString());
+//        statement.setString(6, entity.getCreated().toString());
+//        statement.setString(7, entity.getUpdated().toString());
+        statement.setString(6, entity.getBirthdate().toString());
         statement.executeUpdate();
     }
 }

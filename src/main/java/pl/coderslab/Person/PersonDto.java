@@ -2,7 +2,6 @@ package pl.coderslab.Person;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class PersonDto implements Comparable<PersonDto> {
 
@@ -15,8 +14,7 @@ public class PersonDto implements Comparable<PersonDto> {
     private String birthYear;
     private String birthMonth;
     private String birthDay;
-    private LocalDateTime created;
-    private LocalDateTime updated;
+    private String updated;
     private boolean active;
     private String fullname;
 
@@ -68,19 +66,11 @@ public class PersonDto implements Comparable<PersonDto> {
         this.notes = notes;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getUpdated() {
+    public String getUpdated() {
         return updated;
     }
 
-    public void setUpdated(LocalDateTime updated) {
+    public void setUpdated(String updated) {
         this.updated = updated;
     }
 

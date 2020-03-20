@@ -1,1 +1,1 @@
-<p>Some important news to be included in website footer</p>
+<hr/><p>Some important news to be included in website footer</p>
