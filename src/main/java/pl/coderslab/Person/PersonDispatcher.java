@@ -1,6 +1,7 @@
 package pl.coderslab.Person;
 
 import javafx.animation.ScaleTransition;
+import pl.coderslab.commons.DispatcherInstance;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ public class PersonDispatcher {
     private static final String PREPARE_VIEW_ALL_PERSONS = "/?action=managePersonDetails&ordnung=view";
     private static final String FORM_PERSON = "/WEB-INF/jsp/formPersonDetails.jsp";
 
-    public static String dispatch(HttpServletRequest request, HttpServletResponse response, String redir) throws ServletException, IOException {
+    public static DispatcherInstance dispatch(HttpServletRequest request, HttpServletResponse response, DispatcherInstance dispatcherInstance) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
         String ordnung = request.getParameter("ordnung");
@@ -36,18 +37,19 @@ public class PersonDispatcher {
                 case "edit":
                     dto = PERSON_SERVICE.readPerson(id);
                     request.setAttribute("person", dto);
-                    redir = FORM_PERSON;
+                    dispatcherInstance = new DispatcherInstance.Builder(false, FORM_PERSON).build();
                     break;
                 case "delete":
                     PERSON_SERVICE.deletePerson(id);
-                    return PREPARE_VIEW_ALL_PERSONS;
+                    dispatcherInstance = new DispatcherInstance.Builder(true, PREPARE_VIEW_ALL_PERSONS).build();
+                    break;
                 case "view":
                     Set<PersonDto> persons = PERSON_SERVICE.findAll();
                     request.setAttribute("persons", persons);
-                    redir = VIEW_ALL_PERSONS;
+                    dispatcherInstance = new DispatcherInstance.Builder(false, VIEW_ALL_PERSONS).build();
                     break;
                 default:
-                    redir = FORM_PERSON;
+                    dispatcherInstance = new DispatcherInstance.Builder(true, FORM_PERSON).build();
             }
         } else { // POST
             String firstName = request.getParameter("firstName");
@@ -73,15 +75,14 @@ public class PersonDispatcher {
                 dto.setId(id);
                 dto.setUpdated(updated);
                 PERSON_SERVICE.updatePerson(dto);
-                redir = PREPARE_VIEW_ALL_PERSONS;
             } else {
                 PERSON_SERVICE.createPerson(dto);
-                redir = PREPARE_VIEW_ALL_PERSONS;
             }
+            dispatcherInstance = new DispatcherInstance.Builder(true, PREPARE_VIEW_ALL_PERSONS).build();
 
         }
 
-        return redir;
+        return dispatcherInstance;
 
     }
 

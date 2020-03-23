@@ -13,6 +13,7 @@ import java.io.IOException;
 public class FrontController extends HttpServlet {
 
     private static final String INDEX_JSP = "/index.jsp";
+    private static DispatcherInstance dispatcherInstance = new DispatcherInstance.Builder(false, INDEX_JSP).build();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         dispatchAll(request, response);
@@ -28,11 +29,15 @@ public class FrontController extends HttpServlet {
         request.setAttribute("method", request.getMethod());
         request.setAttribute("ordnung", request.getParameter("ordnung"));
 
-        String address = INDEX_JSP;
 
         if ("managePersonDetails".equals(action)) {
-            address = PersonDispatcher.dispatch(request, response, address);
+            dispatcherInstance = PersonDispatcher.dispatch(request, response, dispatcherInstance);
         }
-        getServletContext().getRequestDispatcher(address).forward(request, response);
+
+        if (dispatcherInstance.isSendRedirect()) {
+            response.sendRedirect(dispatcherInstance.getRedirURL());
+        } else {
+            getServletContext().getRequestDispatcher(dispatcherInstance.getRedirURL()).forward(request, response);
+        }
     }
 }
