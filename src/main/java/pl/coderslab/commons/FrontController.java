@@ -29,7 +29,7 @@ public class FrontController extends HttpServlet {
         request.setAttribute("ordnung", request.getParameter("ordnung"));
 
         String address = INDEX_JSP;
-        System.out.println("ACTION: " + action);
+
         if ("managePersonDetails".equals(action)) {
             address = PersonDispatcher.dispatch(request, response, address);
         }

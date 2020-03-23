@@ -12,6 +12,7 @@ public class PersonDispatcher {
 
     public static final PersonService PERSON_SERVICE = new PersonService();
     private static final String VIEW_ALL_PERSONS = "/WEB-INF/jsp/allPersonDetails.jsp";
+    private static final String PREPARE_VIEW_ALL_PERSONS = "/?action=managePersonDetails&ordnung=view";
     private static final String FORM_PERSON = "/WEB-INF/jsp/formPersonDetails.jsp";
 
     public static String dispatch(HttpServletRequest request, HttpServletResponse response, String redir) throws ServletException, IOException {
@@ -39,7 +40,7 @@ public class PersonDispatcher {
                     break;
                 case "delete":
                     PERSON_SERVICE.deletePerson(id);
-                    return VIEW_ALL_PERSONS;
+                    return PREPARE_VIEW_ALL_PERSONS;
                 case "view":
                     Set<PersonDto> persons = PERSON_SERVICE.findAll();
                     request.setAttribute("persons", persons);
@@ -72,8 +73,10 @@ public class PersonDispatcher {
                 dto.setId(id);
                 dto.setUpdated(updated);
                 PERSON_SERVICE.updatePerson(dto);
+                redir = PREPARE_VIEW_ALL_PERSONS;
             } else {
                 PERSON_SERVICE.createPerson(dto);
+                redir = PREPARE_VIEW_ALL_PERSONS;
             }
 
         }
