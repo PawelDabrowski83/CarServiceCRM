@@ -1,6 +1,6 @@
 package pl.coderslab.commons;
 
-public class DispatcherInstance {
+public class DispatcherInfo {
     /*
     Builder pattern for practice
      */
@@ -17,12 +17,12 @@ public class DispatcherInstance {
             this.redirURL = redirURL;
         }
 
-        public DispatcherInstance build() {
-            return new DispatcherInstance(this);
+        public DispatcherInfo build() {
+            return new DispatcherInfo(this);
         }
     }
 
-    private DispatcherInstance(Builder builder) {
+    private DispatcherInfo(Builder builder) {
         sendRedirect = builder.sendRedirect;
         redirURL = builder.redirURL;
     }
