@@ -34,4 +34,12 @@ public class DispatcherInfo {
     public String getRedirURL() {
         return redirURL;
     }
+
+    @Override
+    public String toString() {
+        return "DispatcherInfo{" +
+                "sendRedirect=" + sendRedirect +
+                ", redirURL='" + redirURL + '\'' +
+                '}';
+    }
 }

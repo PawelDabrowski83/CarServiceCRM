@@ -1,7 +1,7 @@
 package pl.coderslab.Person;
 
-import javafx.animation.ScaleTransition;
 import pl.coderslab.commons.DispatcherInfo;
+import pl.coderslab.commons.UrlParameterInfo;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,19 +18,13 @@ public class PersonDispatcher {
 
     public static DispatcherInfo dispatch(HttpServletRequest request, HttpServletResponse response, DispatcherInfo dispatcherInfo) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        UrlParameterInfo urlParameterInfo = (UrlParameterInfo) request.getAttribute("urlParameterInfo");
+        String method = urlParameterInfo.getMethod();
+        String action = urlParameterInfo.getAction();
+        String ordnung = urlParameterInfo.getOrdnung();
+        int id = urlParameterInfo.getId();
 
-        String ordnung = request.getParameter("ordnung");
-        String idAsString = request.getParameter("id");
-        int id = -1;
-        String method = request.getAttribute("method").toString();
-        try {
-            id = Integer.parseInt(idAsString);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid number format with: " + idAsString);
-            e.printStackTrace();
-        }
         PersonDto dto = new PersonDto();
-        System.out.println("METHOD: " + method);
 
         if ("GET".equals(method)) {
             switch (ordnung) {
@@ -43,13 +37,14 @@ public class PersonDispatcher {
                     PERSON_SERVICE.deletePerson(id);
                     dispatcherInfo = new DispatcherInfo.Builder(true, PREPARE_VIEW_ALL_PERSONS).build();
                     break;
+                case "main":
                 case "view":
                     Set<PersonDto> persons = PERSON_SERVICE.findAll();
                     request.setAttribute("persons", persons);
                     dispatcherInfo = new DispatcherInfo.Builder(false, VIEW_ALL_PERSONS).build();
                     break;
                 default:
-                    dispatcherInfo = new DispatcherInfo.Builder(true, FORM_PERSON).build();
+                    dispatcherInfo = new DispatcherInfo.Builder(false, FORM_PERSON).build();
             }
         } else { // POST
             String firstName = request.getParameter("firstName");

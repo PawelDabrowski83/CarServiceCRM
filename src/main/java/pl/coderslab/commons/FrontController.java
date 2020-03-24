@@ -25,11 +25,13 @@ public class FrontController extends HttpServlet {
 
     private void dispatchAll (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        String method = request.getMethod();
         String action = request.getParameter("action");
-        request.setAttribute("method", request.getMethod());
-        request.setAttribute("ordnung", request.getParameter("ordnung"));
+        String ordnung = request.getParameter("ordnung");
+        String id = request.getParameter("id");
 
-
+        UrlParameterInfo urlParameterInfo = new UrlParameterInfo.Builder(method, action, ordnung, id).build();
+        request.setAttribute("urlParameterInfo", urlParameterInfo);
         if ("managePersonDetails".equals(action)) {
             dispatcherInfo = PersonDispatcher.dispatch(request, response, dispatcherInfo);
         }
