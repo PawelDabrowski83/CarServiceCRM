@@ -7,11 +7,11 @@ It is not Transactional yet.
 Database model:
 <ul>
 <li>Person (basic data on everyone)<ul></li>
-<li>Employee extends Person</li>
-<li>Customer extends Person</li>
+<li>Employee -> Person</li>
+<li>Customer -> Person</li>
 </ul>
 <li>Vehicle basic<ul>
-<li>Vehicle info</li>
+<li>Vehicle info -> Vehicle basic</li>
 <li>Customer id</li></ul></li>
 <li>Labor<ul>
 <li>Employee id</li>
