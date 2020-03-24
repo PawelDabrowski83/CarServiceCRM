@@ -18,9 +18,9 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
     private static final String UPDATE_QUERY =
             "UPDATE " + TABLE_NAME + " SET first_name = ?, last_name = ?, address = ?, phone = ?, notes = ?, updated = NOW(), date_of_birth = ? where personal_id = ?";
     private static final String DELETE_QUERY =
-            "DELETE FROM " + TABLE_NAME + " WHERE personal_id = ?";
+            "UPDATE " + TABLE_NAME + " SET active = 0, updated = NOW() WHERE personal_id = ?";
     private static final String FIND_ALL_QUERY =
-            "SELECT * FROM " + TABLE_NAME;
+            "SELECT * FROM " + TABLE_NAME + " WHERE active = 1";
 
 //    public PersonDaoImpl(Class<PersonEntity> classType) {
 //        super(classType);
@@ -30,7 +30,8 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
     public void create(PersonEntity entity) {
         try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(CREATE_QUERY);
-            pushPreparedStatementOnEntity(statement, entity);
+            statement = pushPreparedStatementOnEntity(statement, entity);
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -55,7 +56,9 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
     public void update(PersonEntity entity) {
         try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(UPDATE_QUERY);
-            pushPreparedStatementOnEntity(statement, entity);
+            statement = pushPreparedStatementOnEntity(statement, entity);
+            statement.setInt(7, entity.getId());
+            statement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,10 +83,6 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
             List<PersonEntity> entities = new ArrayList<>();
             PreparedStatement statement = conn.prepareStatement(FIND_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
-//            System.out.println("ostatni: " + resultSet.last());
-//            System.out.println("columnCount: " + resultSet.getMetaData().getColumnCount());
-//            System.out.println(resultSet.getString(1));
-//            System.out.println(resultSet.getString(2));
             while (resultSet.next()) {
                 entities.add(getEntityFromResultSet(resultSet));
             }
@@ -107,22 +106,19 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
         entity.setPhone(resultSet.getString("phone"));
         entity.setNotes(resultSet.getString("notes"));
         entity.setBirthdate(resultSet.getTimestamp("date_of_birth").toLocalDateTime().toLocalDate());
-//        entity.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
         entity.setUpdated(resultSet.getTimestamp("updated").toLocalDateTime());
         entity.setActive(resultSet.getBoolean("active"));
-        System.out.println(entity);
         return entity;
     }
 
-    private void pushPreparedStatementOnEntity (PreparedStatement statement, PersonEntity entity) throws SQLException {
+    private PreparedStatement pushPreparedStatementOnEntity (PreparedStatement statement, PersonEntity entity) throws SQLException {
         statement.setString(1, entity.getFirstName());
         statement.setString(2, entity.getLastName());
         statement.setString(3, entity.getAddress());
         statement.setString(4, entity.getPhone());
         statement.setString(5, entity.getNotes());
-//        statement.setString(6, entity.getCreated().toString());
-//        statement.setString(7, entity.getUpdated().toString());
         statement.setString(6, entity.getBirthdate().toString());
-        statement.executeUpdate();
+        return statement;
+
     }
 }

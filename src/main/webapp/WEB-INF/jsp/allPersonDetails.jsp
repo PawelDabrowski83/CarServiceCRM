@@ -14,7 +14,7 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<p><a href="?action=managePersonDetails&ordnung=new">Add new Person</a></p>
+<p><a href="${pageContext.request.contextPath}/managePersonDetails?action=new">Add new Person</a></p>
 
 <table>
     <caption>Personal Details View</caption>
@@ -31,7 +31,7 @@
             <td>${person.address}</td>
             <td>${person.phone}</td>
             <td>${person.notes}</td>
-            <td><a href="?action=managePersonDetails&ordnung=edit&id=${person.id}">Edit</a> - <a href="?action=managePersonDetails&ordnung=delete&id=${person.id}">Delete</a></td>
+            <td><a href="/managePersonDetails?action=edit&id=${person.id}">Edit</a> - <a href="/managePersonDetails?action=delete&id=${person.id}">Delete</a></td>
         </tr>
     </c:forEach>
 </table>

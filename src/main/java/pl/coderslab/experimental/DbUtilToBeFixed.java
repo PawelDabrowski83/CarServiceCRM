@@ -1,4 +1,4 @@
-package pl.coderslab.commons;
+package pl.coderslab.experimental;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

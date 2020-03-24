@@ -1,4 +1,4 @@
-package pl.coderslab.commons;
+package pl.coderslab.experimental;
 
 public class UrlParameterInfo {
 
