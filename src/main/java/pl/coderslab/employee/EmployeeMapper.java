@@ -17,8 +17,6 @@ public class EmployeeMapper implements MapperInterface<EmployeeDto,Employee,Empl
         dto.setEmployeeId(employee.getEmployeeId());
         dto.setPersonId(employee.getPerson().getId());
         dto.setMhCost(employee.getMhCost());
-        dto.setUpdated(employee.getUpdated().toString());
-        dto.setActive(employee.isActive());
         return dto;
     }
 
@@ -27,16 +25,25 @@ public class EmployeeMapper implements MapperInterface<EmployeeDto,Employee,Empl
         Employee employee = new Employee();
         employee.setEmployeeId(dto.getEmployeeId());
         employee.setPerson(PERSON_MAPPER.mapEntityToService(PERSON_DAO.read(dto.getPersonId())));
-        return null;
+        employee.setMhCost(dto.getMhCost());
+        return employee;
     }
 
     @Override
     public EmployeeEntity mapServiceToEntity(Employee employee) {
-        return null;
+        EmployeeEntity entity = new EmployeeEntity();
+        entity.setEmployeeId(employee.getEmployeeId());
+        entity.setPersonId(employee.getPerson().getId());
+        entity.setMhCost(employee.getMhCost());
+        return entity;
     }
 
     @Override
     public Employee mapEntityToService(EmployeeEntity entity) {
-        return null;
+        Employee employee = new Employee();
+        employee.setEmployeeId(entity.getEmployeeId());
+        employee.setPerson(PERSON_MAPPER.mapEntityToService(PERSON_DAO.read(entity.getPersonId())));
+        employee.setMhCost(entity.getMhCost());
+        return employee;
     }
 }
