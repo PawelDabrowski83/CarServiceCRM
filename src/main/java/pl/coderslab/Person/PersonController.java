@@ -31,12 +31,12 @@ public class PersonController extends HttpServlet {
                 getServletContext().getRequestDispatcher(ALL_PERSONS).forward(request, response);
                 return;
             case "edit":
-                dto = PERSON_SERVICE.readPerson(id);
+                dto = PERSON_SERVICE.read(id);
                 request.setAttribute("person", dto);
                 request.setAttribute("action", action);
                 break;
             case "delete":
-                PERSON_SERVICE.deletePerson(id);
+                PERSON_SERVICE.delete(id);
                 response.sendRedirect(PREP_ALL_PERSONS);
                 return;
             default:
@@ -73,9 +73,9 @@ public class PersonController extends HttpServlet {
 
         if ("edit".equals(action)) {
             dto.setId(id);
-            PERSON_SERVICE.updatePerson(dto);
+            PERSON_SERVICE.update(dto);
         } else {
-            PERSON_SERVICE.createPerson(dto);
+            PERSON_SERVICE.create(dto);
         }
         response.sendRedirect(PREP_ALL_PERSONS);
 
