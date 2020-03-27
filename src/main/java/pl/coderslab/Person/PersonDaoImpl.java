@@ -22,10 +22,6 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
     private static final String FIND_ALL_QUERY =
             "SELECT * FROM " + TABLE_NAME + " WHERE active = 1";
 
-//    public PersonDaoImpl(Class<PersonEntity> classType) {
-//        super(classType);
-//    }
-
     @Override
     public void create(PersonEntity entity) {
         try (Connection conn = DbUtil.getConnection()) {
@@ -59,11 +55,9 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
             statement = pushPreparedStatementOnEntity(statement, entity);
             statement.setInt(7, entity.getId());
             statement.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

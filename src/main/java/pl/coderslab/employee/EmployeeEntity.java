@@ -58,4 +58,5 @@ public class EmployeeEntity {
     public void setActive(boolean active) {
         this.active = active;
     }
+
 }
