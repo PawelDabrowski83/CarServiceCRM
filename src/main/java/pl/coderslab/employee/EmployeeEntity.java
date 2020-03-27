@@ -6,7 +6,7 @@ public class EmployeeEntity {
 
     private int employeeId;
     private int personId;
-    private double mhCost;
+    private double mhCost; // man-hour
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active = true;

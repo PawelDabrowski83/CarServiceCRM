@@ -1,14 +1,13 @@
 package pl.coderslab.employee;
 
-import java.time.LocalDateTime;
 
-public class EmployeeDto {
+public class EmployeeDto implements Comparable<EmployeeDto>{
 
     private int employeeId;
     private int personId;
     private double mhCost;
     private String updated;
-    private boolean active = true;
+    private String fullname;
 
     public int getEmployeeId() {
         return employeeId;
@@ -42,12 +41,16 @@ public class EmployeeDto {
         this.updated = updated;
     }
 
-    public boolean isActive() {
-        return active;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
+    @Override
+    public int compareTo(EmployeeDto o) {
+        return this.fullname.compareToIgnoreCase(o.fullname);
+    }
 }

@@ -17,6 +17,7 @@ public class EmployeeMapper implements MapperInterface<EmployeeDto,Employee,Empl
         dto.setEmployeeId(employee.getEmployeeId());
         dto.setPersonId(employee.getPerson().getId());
         dto.setMhCost(employee.getMhCost());
+        dto.setFullname(employee.getPerson().getFullname());
         return dto;
     }
 

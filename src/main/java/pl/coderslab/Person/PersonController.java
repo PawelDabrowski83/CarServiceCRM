@@ -14,7 +14,7 @@ import java.util.Set;
 public class PersonController extends HttpServlet {
 
     private static final String PERSON_FORM = "/WEB-INF/jsp/formPersonDetails.jsp";
-    private static final String ALL_PERSONS = "/WEB-INF/jsp/allPersonDetails.jsp";
+    private static final String SHOW_ALL_PERSONS = "/WEB-INF/jsp/allPersonDetails.jsp";
     private static final String PREP_ALL_PERSONS = "/managePersonDetails?action=view";
     private static final PersonService PERSON_SERVICE = new PersonService();
 
@@ -28,7 +28,7 @@ public class PersonController extends HttpServlet {
             case "view":
                 Set<PersonDto> dtos = PERSON_SERVICE.findAll();
                 request.setAttribute("persons", dtos);
-                getServletContext().getRequestDispatcher(ALL_PERSONS).forward(request, response);
+                getServletContext().getRequestDispatcher(SHOW_ALL_PERSONS).forward(request, response);
                 return;
             case "edit":
                 dto = PERSON_SERVICE.read(id);

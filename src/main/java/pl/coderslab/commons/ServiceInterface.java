@@ -2,7 +2,7 @@ package pl.coderslab.commons;
 
 import java.util.Set;
 
-public interface ServiceInterface<T,U> {
+public interface ServiceInterface<T> {
 
     void create (T t);
     T read (int id);
