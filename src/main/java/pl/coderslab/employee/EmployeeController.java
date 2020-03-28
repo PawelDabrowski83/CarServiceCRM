@@ -21,10 +21,11 @@ public class EmployeeController extends HttpServlet {
     private static final String PREPARE_ALL_EMPLOYEES = "/employees?action=view";
     private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService();
     private static final ServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
+    private static final String EMPLOYEE_ID = "employeeId";
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        int id = ParameterReaderService.getIdFromRequest(request);
+        int id = ParameterReaderService.getIdFromRequest(request, EMPLOYEE_ID);
         String action = request.getParameter("action");
         String redir = EMPLOYEE_FORM;
 
@@ -55,7 +56,7 @@ public class EmployeeController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        int id = ParameterReaderService.getIdFromRequest(request);
+        int id = ParameterReaderService.getIdFromRequest(request, EMPLOYEE_ID);
         String action = request.getParameter("action");
 
         double mhCost;
@@ -66,7 +67,7 @@ public class EmployeeController extends HttpServlet {
         }
         int personalId;
         try {
-            personalId = Integer.parseInt(request.getParameter("personalId"));
+            personalId = Integer.parseInt(request.getParameter("personId"));
         } catch (NumberFormatException e) {
             personalId = 0;
         }

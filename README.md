@@ -19,7 +19,13 @@ Database model:
 </ul>
 
 Completed:
-Index.jsp front + Person class Dao
+Index.jsp front
+Person Dao
+Employee Dao
 
 Next step:
-Customer and Employee Dao
+Customer Dao + Vehicle Dao
+
+To Do:
+Form verification on front
+Form verification on backend

@@ -32,6 +32,7 @@ public class EmployeeDaoImpl extends EntityDao<EmployeeEntity> {
             PreparedStatement statement = conn.prepareStatement(CREATE_QUERY);
             statement.setInt(1, entity.getPersonId());
             statement.setDouble(2, entity.getMhCost());
+            System.out.println(">>" + statement.toString());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

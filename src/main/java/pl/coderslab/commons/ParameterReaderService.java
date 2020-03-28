@@ -4,12 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ParameterReaderService {
 
-    public static int getIdFromRequest (HttpServletRequest request) {
+    public static int getIdFromRequest (HttpServletRequest request, String idName) {
         int id = 0;
-        String idAsString = request.getParameter("id");
+        String idAsString = request.getParameter(idName);
         try {
             id = Integer.parseInt(idAsString);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             e.printStackTrace();
             System.out.println("Extraction unsuccessful with id "+ idAsString);
         }

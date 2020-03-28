@@ -21,8 +21,7 @@ public class PersonController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-        int id = ParameterReaderService.getIdFromRequest(request);
-        PersonDto dto = new PersonDto();
+        int id = ParameterReaderService.getIdFromRequest(request, "id");
 
         switch (action) {
             case "view":
@@ -31,7 +30,7 @@ public class PersonController extends HttpServlet {
                 getServletContext().getRequestDispatcher(SHOW_ALL_PERSONS).forward(request, response);
                 return;
             case "edit":
-                dto = PERSON_SERVICE.read(id);
+                PersonDto dto = PERSON_SERVICE.read(id);
                 request.setAttribute("person", dto);
                 request.setAttribute("action", action);
                 break;
@@ -50,7 +49,7 @@ public class PersonController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-        int id = ParameterReaderService.getIdFromRequest(request);
+        int id = ParameterReaderService.getIdFromRequest(request, "id");
         PersonDto dto = new PersonDto();
         String updated = request.getParameter("updated");
         String firstName = request.getParameter("firstName");

@@ -82,7 +82,6 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
             }
             return entities.stream()
                     .map(PERSON_MAPPER::mapEntityToService)
-                    .sorted(Comparator.naturalOrder())
                     .map(PERSON_MAPPER::mapServiceToEntity)
                     .collect(Collectors.toCollection(TreeSet::new));
         } catch (SQLException e) {
