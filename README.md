@@ -22,9 +22,11 @@ Completed:
 Index.jsp front
 Person Dao
 Employee Dao
+Customer Dao
 
 Next step:
-Customer Dao + Vehicle Dao
+Cars Dao
+Vehicle Dao
 
 To Do:
 Form verification on front
@@ -32,3 +34,4 @@ Form verification on backend
 
 To consider:
 Mapper class should extract objects with Dao or Service class?
+Customer and Employee should not allow duplicate entries

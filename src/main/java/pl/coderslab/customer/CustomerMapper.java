@@ -17,6 +17,7 @@ public class CustomerMapper implements MapperInterface<CustomerDto, Customer, Cu
         dto.setCustomerId(customer.getCustomerId());
         dto.setPersonalId(customer.getPerson().getId());
         dto.setUpdated(customer.getUpdated().toString());
+        dto.setFullname(customer.getPerson().getFullname());
         return dto;
     }
 

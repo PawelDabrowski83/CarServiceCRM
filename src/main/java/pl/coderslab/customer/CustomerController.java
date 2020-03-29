@@ -25,7 +25,7 @@ public class CustomerController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-        int customerId = ParameterReaderService.getIdFromRequest(request, "customerId");
+        int customerId = ParameterReaderService.getIdFromRequest(request, "id");
         String redir = FORM_CUSTOMER;
 
         if ("new".equals(action) | "edit".equals(action)) {
@@ -40,6 +40,7 @@ public class CustomerController extends HttpServlet {
                 redir = SHOW_ALL_CUSTOMERS;
                 break;
             case "edit":
+                System.out.println();
                 CustomerDto dto = CUSTOMER_SERVICE.read(customerId);
                 request.setAttribute("customer", dto);
             case "new":
@@ -48,6 +49,7 @@ public class CustomerController extends HttpServlet {
             case "delete":
                 CUSTOMER_SERVICE.delete(customerId);
                 response.sendRedirect(PREPARE_ALL_CUSTOMERS);
+                return;
             default:
         }
 

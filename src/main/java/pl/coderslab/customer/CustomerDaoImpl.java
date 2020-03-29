@@ -76,6 +76,7 @@ public class CustomerDaoImpl extends EntityDao<CustomerEntity> {
         try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(DELETE_QUERY);
             statement.setInt(1, id);
+            System.out.println(statement.toString());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,6 +99,7 @@ public class CustomerDaoImpl extends EntityDao<CustomerEntity> {
                 entity.setActive(resultSet.getBoolean("active"));
                 entities.add(entity);
             }
+            return entities;
         } catch (SQLException e) {
             e.printStackTrace();
         }
