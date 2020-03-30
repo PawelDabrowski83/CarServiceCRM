@@ -2,9 +2,8 @@ package pl.coderslab.car;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Year;
 
-public class Car {
+public class Car implements Comparable<Car>{
 
     private int carId;
     private String model;
@@ -68,5 +67,17 @@ public class Car {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public int compareTo(Car o) {
+        int result = this.productionYear.compareTo(o.productionYear);
+        if (result == 0) {
+            result = this.mark.compareToIgnoreCase(o.mark);
+        }
+        if (result == 0) {
+            result = this.model.compareToIgnoreCase(o.model);
+        }
+        return result;
     }
 }

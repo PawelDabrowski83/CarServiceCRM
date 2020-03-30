@@ -2,7 +2,6 @@ package pl.coderslab.car;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Year;
 
 public class CarEntity {
 
