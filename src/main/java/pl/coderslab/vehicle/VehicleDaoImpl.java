@@ -1,8 +1,13 @@
 package pl.coderslab.vehicle;
 
+import pl.coderslab.commons.DbUtil;
 import pl.coderslab.commons.EntityDao;
 import pl.coderslab.commons.MapperInterface;
 
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 
 public class VehicleDaoImpl extends EntityDao<VehicleEntity> {
@@ -23,26 +28,99 @@ public class VehicleDaoImpl extends EntityDao<VehicleEntity> {
 
     @Override
     public void create(VehicleEntity entity) {
-
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(CREATE_QUERY);
+            statement.setInt(1, entity.getCarId());
+            statement.setString(2, entity.getRegistryPlate());
+            statement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.of(entity.getNextInspection(), LocalTime.NOON)));
+            statement.setInt(4, entity.getOwnerId());
+            statement.setString(5, entity.getColor());
+            statement.setString(6, entity.getNotes());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public VehicleEntity read(int id) {
-        return null;
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(READ_QUERY);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                VehicleEntity entity = new VehicleEntity();
+                entity.setVehicleId(resultSet.getInt("vehicle_id"));
+                entity.setCarId(resultSet.getInt("details_id"));
+                entity.setRegistryPlate(resultSet.getString("registration_plate"));
+                entity.setNextInspection(resultSet.getTimestamp("next_inspection").toLocalDateTime().toLocalDate());
+                entity.setOwnerId(resultSet.getInt("owner"));
+                entity.setColor(resultSet.getString("color"));
+                entity.setNotes(resultSet.getString("notes"));
+                entity.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+                entity.setUpdated(resultSet.getTimestamp("updated").toLocalDateTime());
+                entity.setActive(resultSet.getBoolean("active"));
+                return entity;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new VehicleEntity();
     }
 
     @Override
     public void update(VehicleEntity entity) {
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(UPDATE_QUERY);
+            statement.setInt(1, entity.getCarId());
+            statement.setString(2, entity.getRegistryPlate());
+            statement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.of(entity.getNextInspection(), LocalTime.NOON)));
+            statement.setInt(4, entity.getOwnerId());
+            statement.setString(5, entity.getColor());
+            statement.setString(6, entity.getNotes());
+            statement.setInt(7, entity.getVehicleId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void delete(int id) {
-
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(DELETE_QUERY);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Set<VehicleEntity> findAll() {
-        return null;
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(FIND_ALL_QUERY);
+            ResultSet resultSet = statement.executeQuery();
+            Set<VehicleEntity> vehicleEntities = new HashSet<>();
+            while (resultSet.next()) {
+                VehicleEntity entity = new VehicleEntity();
+                entity.setVehicleId(resultSet.getInt("vehicle_id"));
+                entity.setCarId(resultSet.getInt("details_id"));
+                entity.setRegistryPlate(resultSet.getString("registry_plate"));
+                entity.setOwnerId(resultSet.getInt("owner"));
+                entity.setColor(resultSet.getString("color"));
+                entity.setNotes(resultSet.getString("notes"));
+                entity.setNextInspection(resultSet.getTimestamp("next_inspection").toLocalDateTime().toLocalDate());
+                entity.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+                entity.setUpdated(resultSet.getTimestamp("updated").toLocalDateTime());
+                entity.setActive(resultSet.getBoolean("active"));
+                vehicleEntities.add(entity);
+            }
+            return vehicleEntities;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new HashSet<>();
     }
 }
