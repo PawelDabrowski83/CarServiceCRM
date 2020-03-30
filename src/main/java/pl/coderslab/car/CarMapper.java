@@ -20,6 +20,7 @@ public class CarMapper implements MapperInterface<CarDto, Car, CarEntity> {
 //            e.printStackTrace();
 //            System.out.println("Invalid production year with: " + car.getProductionYear());
 //        }
+        dto.setCarSignature(car.getCarSignature());
         return dto;
     }
 
