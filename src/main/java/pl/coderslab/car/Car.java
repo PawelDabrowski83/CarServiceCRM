@@ -12,6 +12,7 @@ public class Car implements Comparable<Car>{
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active;
+    private String carSignature;
 
     public int getCarId() {
         return carId;
@@ -67,6 +68,14 @@ public class Car implements Comparable<Car>{
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getCarSignature() {
+        return carSignature;
+    }
+
+    public String setCarSignature() {
+        return "(" + productionYear + ") " + mark + " " + model;
     }
 
     @Override

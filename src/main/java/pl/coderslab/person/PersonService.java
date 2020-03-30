@@ -1,4 +1,4 @@
-package pl.coderslab.Person;
+package pl.coderslab.person;
 
 import pl.coderslab.commons.EntityDao;
 import pl.coderslab.commons.MapperInterface;

@@ -1,10 +1,8 @@
 package pl.coderslab.customer;
 
-import pl.coderslab.Person.*;
+import pl.coderslab.person.*;
 import pl.coderslab.commons.EntityDao;
 import pl.coderslab.commons.MapperInterface;
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
 
 public class CustomerMapper implements MapperInterface<CustomerDto, Customer, CustomerEntity> {
 

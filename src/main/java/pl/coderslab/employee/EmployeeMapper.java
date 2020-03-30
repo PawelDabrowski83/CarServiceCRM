@@ -1,6 +1,6 @@
 package pl.coderslab.employee;
 
-import pl.coderslab.Person.*;
+import pl.coderslab.person.*;
 import pl.coderslab.commons.EntityDao;
 import pl.coderslab.commons.MapperInterface;
 

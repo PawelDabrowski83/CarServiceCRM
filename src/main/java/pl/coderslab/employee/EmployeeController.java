@@ -1,7 +1,7 @@
 package pl.coderslab.employee;
 
-import pl.coderslab.Person.PersonDto;
-import pl.coderslab.Person.PersonService;
+import pl.coderslab.person.PersonDto;
+import pl.coderslab.person.PersonService;
 import pl.coderslab.commons.ParameterReaderService;
 import pl.coderslab.commons.ServiceInterface;
 
