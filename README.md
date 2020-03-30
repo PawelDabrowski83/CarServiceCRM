@@ -19,19 +19,19 @@ Database model:
 </ul>
 
 Completed:
-Index.jsp front
-Person Dao
-Employee Dao
-Customer Dao
-Car Dao
+* Index.jsp front
+* Person Dao
+* Employee Dao
+* Customer Dao
+* Car Dao
 
 Next step:
-Vehicle Dao
+* Vehicle Dao
 
 To Do:
-Form verification on front
-Form verification on backend
+* Form verification on front
+* Form verification on backend
 
 To consider:
-Mapper class should extract objects with Dao or Service class?
-Customer and Employee should not allow duplicate entries
+* Mapper class should extract objects with Dao or Service class?
+* Customer and Employee should not allow duplicate entries
