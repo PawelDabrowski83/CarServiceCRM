@@ -1,5 +1,6 @@
 package pl.coderslab.car;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 
@@ -8,7 +9,7 @@ public class Car {
     private int carId;
     private String model;
     private String mark;
-    private Year productionYear;
+    private LocalDate productionYear;
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active;
@@ -37,11 +38,11 @@ public class Car {
         this.mark = mark;
     }
 
-    public Year getProductionYear() {
+    public LocalDate getProductionYear() {
         return productionYear;
     }
 
-    public void setProductionYear(Year productionYear) {
+    public void setProductionYear(LocalDate productionYear) {
         this.productionYear = productionYear;
     }
 
