@@ -40,6 +40,8 @@ public class CarController extends HttpServlet {
             case "edit":
                 CarDto dto = CAR_SERVICE.read(carId);
                 request.setAttribute("car", dto);
+            case "new":
+                request.setAttribute("action", action);
                 break;
             default:
         }

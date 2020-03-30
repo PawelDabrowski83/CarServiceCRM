@@ -3,7 +3,7 @@ package pl.coderslab.car;
 import java.time.LocalDateTime;
 import java.time.Year;
 
-public class CarDto {
+public class CarDto implements Comparable<CarDto>{
 
     private int carId;
     private String model;
@@ -40,5 +40,17 @@ public class CarDto {
 
     public void setProductionYear(int productionYear) {
         this.productionYear = productionYear;
+    }
+
+    @Override
+    public int compareTo(CarDto o) {
+        int result = Integer.compare(this.productionYear, o.productionYear);
+        if (result == 0) {
+            result = this.mark.compareToIgnoreCase(o.mark);
+        }
+        if (result == 0) {
+            result = this.model.compareToIgnoreCase(o.model);
+        }
+        return result;
     }
 }

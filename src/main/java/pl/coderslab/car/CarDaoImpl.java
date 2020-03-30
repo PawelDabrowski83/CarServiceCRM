@@ -32,7 +32,7 @@ public class CarDaoImpl extends EntityDao<CarEntity> {
             PreparedStatement statement = conn.prepareStatement(CREATE_QUERY);
             statement.setString(1, entity.getModel());
             statement.setString(2, entity.getMark());
-            statement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.of(entity.getProductionYear(), LocalTime.MIN)));
+            statement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.of(entity.getProductionYear(), LocalTime.NOON)));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,7 +99,7 @@ public class CarDaoImpl extends EntityDao<CarEntity> {
                 entity.setCarId(resultSet.getInt("vehicle_details_id"));
                 entity.setModel(resultSet.getString("model"));
                 entity.setMark(resultSet.getString("mark"));
-                entity.setProductionYear(resultSet.getTimestamp("producion_year").toLocalDateTime().toLocalDate());
+                entity.setProductionYear(resultSet.getTimestamp("production_year").toLocalDateTime().toLocalDate());
                 entity.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
                 entity.setUpdated(resultSet.getTimestamp("updated").toLocalDateTime());
                 entity.setActive(resultSet.getBoolean("active"));
