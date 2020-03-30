@@ -23,9 +23,9 @@ Index.jsp front
 Person Dao
 Employee Dao
 Customer Dao
+Car Dao
 
 Next step:
-Cars Dao
 Vehicle Dao
 
 To Do:
