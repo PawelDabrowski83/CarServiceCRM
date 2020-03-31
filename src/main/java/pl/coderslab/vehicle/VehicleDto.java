@@ -3,7 +3,7 @@ package pl.coderslab.vehicle;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class VehicleDto {
+public class VehicleDto implements Comparable<VehicleDto> {
 
     private int vehicleId;
     private int carId;
@@ -85,5 +85,14 @@ public class VehicleDto {
 
     public void setCarSignature(String carSignature) {
         this.carSignature = carSignature;
+    }
+
+    @Override
+    public int compareTo(VehicleDto o) {
+        int result = this.carSignature.compareToIgnoreCase(o.carSignature);
+        if (result == 0) {
+            result = this.registryPlate.compareToIgnoreCase(o.registryPlate);
+        }
+        return result;
     }
 }

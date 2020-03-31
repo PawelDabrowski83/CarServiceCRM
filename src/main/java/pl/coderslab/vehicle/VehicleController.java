@@ -5,7 +5,6 @@ import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ParameterReaderService;
 import pl.coderslab.commons.ServiceInterface;
 import pl.coderslab.customer.*;
-import pl.coderslab.experimental.ParameterReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @WebServlet (name="VehicleController", urlPatterns = "/vehicles")

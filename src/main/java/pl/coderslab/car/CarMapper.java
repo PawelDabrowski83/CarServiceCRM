@@ -14,12 +14,12 @@ public class CarMapper implements MapperInterface<CarDto, Car, CarEntity> {
         dto.setCarId(car.getCarId());
         dto.setModel(car.getModel());
         dto.setMark(car.getMark());
-//        try {
-        dto.setProductionYear(car.getProductionYear().getYear());
-//        } catch (NumberFormatException e) {
-//            e.printStackTrace();
-//            System.out.println("Invalid production year with: " + car.getProductionYear());
-//        }
+        try {
+            dto.setProductionYear(car.getProductionYear().getYear());
+        } catch (NumberFormatException | NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("Invalid production year with: " + car.getProductionYear());
+        }
         dto.setCarSignature(car.getCarSignature());
         return dto;
     }

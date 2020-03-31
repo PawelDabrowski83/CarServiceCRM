@@ -59,6 +59,7 @@ public class VehicleMapper implements MapperInterface<VehicleDto, Vehicle, Vehic
         vehicle.setVehicleId(entity.getVehicleId());
         vehicle.setCar(CAR_MAPPER.mapDtoToService(CAR_SERVICE.read(entity.getCarId())));
         vehicle.setRegistryPlate(entity.getRegistryPlate());
+        vehicle.setNextInspection(entity.getNextInspection());
         vehicle.setOwner(CUSTOMER_MAPPER.mapDtoToService(CUSTOMER_SERVICE.read(entity.getOwnerId())));
         vehicle.setColor(entity.getColor());
         vehicle.setNotes(entity.getNotes());

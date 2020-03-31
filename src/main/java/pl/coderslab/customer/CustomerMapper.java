@@ -14,7 +14,6 @@ public class CustomerMapper implements MapperInterface<CustomerDto, Customer, Cu
         CustomerDto dto = new CustomerDto();
         dto.setCustomerId(customer.getCustomerId());
         dto.setPersonalId(customer.getPerson().getId());
-        dto.setUpdated(customer.getUpdated().toString());
         dto.setFullname(customer.getPerson().getFullname());
         return dto;
     }
@@ -32,9 +31,6 @@ public class CustomerMapper implements MapperInterface<CustomerDto, Customer, Cu
         CustomerEntity entity = new CustomerEntity();
         entity.setCustomerId(customer.getCustomerId());
         entity.setPersonalId(customer.getPerson().getId());
-        entity.setUpdated(customer.getUpdated());
-        entity.setCreated(customer.getCreated());
-        entity.setActive(customer.isActive());
         return entity;
     }
 

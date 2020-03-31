@@ -107,7 +107,7 @@ public class VehicleDaoImpl extends EntityDao<VehicleEntity> {
                 VehicleEntity entity = new VehicleEntity();
                 entity.setVehicleId(resultSet.getInt("vehicle_id"));
                 entity.setCarId(resultSet.getInt("details_id"));
-                entity.setRegistryPlate(resultSet.getString("registry_plate"));
+                entity.setRegistryPlate(resultSet.getString("registration_plate"));
                 entity.setOwnerId(resultSet.getInt("owner"));
                 entity.setColor(resultSet.getString("color"));
                 entity.setNotes(resultSet.getString("notes"));

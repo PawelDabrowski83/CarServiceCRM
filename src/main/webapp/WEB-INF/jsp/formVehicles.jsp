@@ -20,16 +20,16 @@
     <select name="carId">
         <option hidden selected disabled value="">select</option>
         <c:forEach items="${cars}" var="car">
-            <option value="car.carId">${car.carSignature}</option>
+            <option value="${car.carId}">${car.carSignature}</option>
         </c:forEach>
     </select><br/>
-    Registry plate: <input type="text" name="registry_plate" value="${vehicle.registryPlate}"/><br/>
+    Registry plate: <input type="text" name="registryPlate" value="${vehicle.registryPlate}"/><br/>
     Color: <input type="text" name="color" value="${vehicle.color}"/><br/>
     Notes: <input type="text" name="notes" value="${vehicle.notes}"/><br/>
     Owner: <select name="ownerId">
         <option hidden selected disabled value="">select</option>
         <c:forEach items="${customers}" var="customer">
-            <option value="customer.customerId">${customer.fullname}</option>
+            <option value="${customer.customerId}">${customer.fullname}</option>
         </c:forEach>
     </select><br/>
     Next Inspection Date: <input type="date" name="nextInspection" value="${vehicle.nextInspection}"/><br/>
