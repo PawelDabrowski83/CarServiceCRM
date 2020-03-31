@@ -24,9 +24,10 @@ Completed:
 * Employee Dao
 * Customer Dao
 * Car Dao
+* Vehicle Dao
 
 Next step:
-* Vehicle Dao
+* Labor Dao
 
 To Do:
 * Form verification on front
