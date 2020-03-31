@@ -9,6 +9,7 @@ public class CarDto implements Comparable<CarDto>{
     private String model;
     private String mark;
     private int productionYear;
+    private String carSignature;
 
     public int getCarId() {
         return carId;
@@ -40,6 +41,14 @@ public class CarDto implements Comparable<CarDto>{
 
     public void setProductionYear(int productionYear) {
         this.productionYear = productionYear;
+    }
+
+    public String getCarSignature() {
+        return carSignature;
+    }
+
+    public void setCarSignature(String carSignature) {
+        this.carSignature = carSignature;
     }
 
     @Override

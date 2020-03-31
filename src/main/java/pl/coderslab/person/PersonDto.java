@@ -1,4 +1,4 @@
-package pl.coderslab.Person;
+package pl.coderslab.person;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;

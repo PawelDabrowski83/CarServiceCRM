@@ -1,6 +1,6 @@
 package pl.coderslab.employee;
 
-import pl.coderslab.Person.Person;
+import pl.coderslab.person.Person;
 
 import java.time.LocalDateTime;
 

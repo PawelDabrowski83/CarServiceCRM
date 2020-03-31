@@ -4,7 +4,6 @@ public class CustomerDto implements Comparable<CustomerDto> {
 
     private int customerId;
     private int personalId;
-    private String updated;
     private String fullname;
 
     public int getCustomerId() {
@@ -21,14 +20,6 @@ public class CustomerDto implements Comparable<CustomerDto> {
 
     public void setPersonalId(int personalId) {
         this.personalId = personalId;
-    }
-
-    public String getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(String updated) {
-        this.updated = updated;
     }
 
     public String getFullname() {

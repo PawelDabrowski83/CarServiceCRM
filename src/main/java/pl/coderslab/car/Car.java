@@ -69,6 +69,10 @@ public class Car implements Comparable<Car>{
         this.active = active;
     }
 
+    public String getCarSignature() {
+        return "(" + productionYear + ") " + mark + " " + model;
+    }
+
     @Override
     public int compareTo(Car o) {
         int result = this.productionYear.compareTo(o.productionYear);
