@@ -18,7 +18,12 @@
     <input type="hidden" name="vehicleId" value="${vehicle.vehicleId}"/>
     Type of car:
     <select name="carId">
-        <option hidden selected disabled value="">select</option>
+        <c:if test="${action eq 'new'}">
+            <option hidden selected disabled value="">select</option>
+        </c:if>
+        <c:if test="${action eq 'edit'}">
+            <option value="${vehicle.carId}" selected>${vehicle.carSignature}</option>
+        </c:if>
         <c:forEach items="${cars}" var="car">
             <option value="${car.carId}">${car.carSignature}</option>
         </c:forEach>
@@ -27,7 +32,12 @@
     Color: <input type="text" name="color" value="${vehicle.color}"/><br/>
     Notes: <input type="text" name="notes" value="${vehicle.notes}"/><br/>
     Owner: <select name="ownerId">
-        <option hidden selected disabled value="">select</option>
+        <c:if test="${action eq 'new'}">
+            <option hidden selected disabled value="">select</option>
+        </c:if>
+        <c:if test="${action eq 'edit'}">
+            <option value="${vehicle.ownerId}" selected>${vehicle.ownerFullname}</option>
+        </c:if>
         <c:forEach items="${customers}" var="customer">
             <option value="${customer.customerId}">${customer.fullname}</option>
         </c:forEach>
