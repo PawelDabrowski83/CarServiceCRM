@@ -16,8 +16,8 @@ public class Labor {
     private Employee employee;
     private String descriptionIssue;
     private String descriptionService;
-    private Status status;
-    private enum Status {
+    private StatusEnum status;
+    protected enum StatusEnum {
         BACKLOG,
         COST_ESTIMATION_ACCEPTED,
         QUEUE,
@@ -97,11 +97,11 @@ public class Labor {
         this.descriptionService = descriptionService;
     }
 
-    public Status getStatus() {
-        return status;
+    public String getStatus() {
+        return status.toString();
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
@@ -159,5 +159,13 @@ public class Labor {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getEmployeeFullname() {
+        return employee.getPerson().getFullname();
+    }
+
+    public String getVehicleSignature() {
+        return vehicle.getCar().getCarSignature() + " " + vehicle.getRegistryPlate();
     }
 }

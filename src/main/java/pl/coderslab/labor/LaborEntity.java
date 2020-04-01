@@ -13,8 +13,8 @@ public class LaborEntity {
     private int employeeId;
     private String descriptionIssue;
     private String descriptionService;
-    private Status status;
-    private enum Status {
+    private StatusEnum status;
+    protected enum StatusEnum {
         BACKLOG,
         COST_ESTIMATION_ACCEPTED,
         QUEUE,
@@ -94,11 +94,11 @@ public class LaborEntity {
         this.descriptionService = descriptionService;
     }
 
-    public Status getStatus() {
-        return status;
+    public String getStatus() {
+        return status.toString();
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
