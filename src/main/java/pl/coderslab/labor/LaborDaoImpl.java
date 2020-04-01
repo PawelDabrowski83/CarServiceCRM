@@ -4,14 +4,8 @@ import pl.coderslab.commons.DbUtil;
 import pl.coderslab.commons.EntityDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ParameterReaderService;
-import pl.coderslab.vehicle.Vehicle;
-import pl.coderslab.vehicle.VehicleDto;
-import pl.coderslab.vehicle.VehicleEntity;
-import pl.coderslab.vehicle.VehicleMapper;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 

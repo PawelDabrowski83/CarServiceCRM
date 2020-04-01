@@ -1,9 +1,8 @@
 package pl.coderslab.labor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-public class LaborDto {
+public class LaborDto implements Comparable<LaborDto>{
 
     private int laborId;
     private LocalDate registrationDate;
@@ -139,5 +138,17 @@ public class LaborDto {
 
     public void setMhTotal(int mhTotal) {
         this.mhTotal = mhTotal;
+    }
+
+    @Override
+    public int compareTo(LaborDto o) {
+        int result = this.registrationDate.compareTo(o.registrationDate);
+        if (result == 0) {
+            result = this.scheduledDate.compareTo(o.scheduledDate);
+        }
+        if (result == 0) {
+            result = this.vehicleSignature.compareToIgnoreCase(o.vehicleSignature);
+        }
+        return result;
     }
 }
