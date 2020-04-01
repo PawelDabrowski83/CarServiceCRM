@@ -5,4 +5,5 @@
     <li><a href="${pageContext.request.contextPath}/customers?action=view">Manage Customers</a></li>
     <li><a href="${pageContext.request.contextPath}/cars?action=view">Manage Cars</a></li>
     <li><a href="${pageContext.request.contextPath}/vehicles?action=view">Manage Vehicles</a></li>
+    <li><a href="${pageContext.request.contextPath}/labors?action=view">Manage Labors</a></li>
 </ul>

@@ -30,6 +30,7 @@ public class LaborMapper implements MapperInterface<LaborDto, Labor, LaborEntity
         dto.setCustomerCost(labor.getCustomerCost());
         dto.setMaterialCost(labor.getMaterialCost());
         dto.setMhTotal(labor.getMhTotal());
+        dto.setCustomerFullname(labor.getCustomerFullname());
         return dto;
     }
 

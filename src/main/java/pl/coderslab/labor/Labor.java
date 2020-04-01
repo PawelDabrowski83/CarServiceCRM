@@ -168,4 +168,8 @@ public class Labor {
     public String getVehicleSignature() {
         return vehicle.getCar().getCarSignature() + " " + vehicle.getRegistryPlate();
     }
+
+    public String getCustomerFullname() {
+        return vehicle.getOwner().getPerson().getFullname();
+    }
 }

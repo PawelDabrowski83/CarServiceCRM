@@ -19,6 +19,7 @@ public class LaborDto implements Comparable<LaborDto>{
     private double customerCost;
     private double materialCost;
     private int mhTotal;
+    private String customerFullname;
 
     public int getLaborId() {
         return laborId;
@@ -138,6 +139,14 @@ public class LaborDto implements Comparable<LaborDto>{
 
     public void setMhTotal(int mhTotal) {
         this.mhTotal = mhTotal;
+    }
+
+    public String getCustomerFullname() {
+        return customerFullname;
+    }
+
+    public void setCustomerFullname(String customerFullname) {
+        this.customerFullname = customerFullname;
     }
 
     @Override
