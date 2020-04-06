@@ -20,6 +20,7 @@
     Scheduled: <input type="date" name="scheduledDate" value="${labor.scheduledDate}"/><br/>
     Started: <input type="date" name="startedDate" value="${labor.startedDate}"/><br/>
     Finished: <input type="date" name="finishedDate" value="${labor.finishedDate}"/><br/>
+    <label>Employee: </label>
     <select name="employeeId">
         <c:if test="${action eq 'new'}">
             <option value="" selected disabled hidden>select</option>
@@ -27,24 +28,25 @@
         <c:if test="${action eq 'edit'}">
             <option value="${labor.employeeId}" selected>${labor.employeeFullname}</option>
         </c:if>
-        <c:forEach items="employees" var="employee">
+        <c:forEach items="${employees}" var="employee">
             <option value="${employee.employeeId}">${employee.fullname}</option>
         </c:forEach>
     </select><br/>
     Issue description: <input type="text" name="descriptionIssue" value="${labor.descriptionIssue}"/><br/>
     Provided service description: <input type="text" name="descriptionService" value="${labor.descriptionService}"/><br/>
+    <label>Status:</label>
     <select name="status">
         <c:if test="${action eq 'new'}">
             <option value="" selected disabled hidden>select</option>
         </c:if>
         <c:if test="${action eq 'edit'}">
-            <option value="labor.status" selected>${labor.status}</option>
+            <option value="${labor.status}" selected>${labor.status}</option>
         </c:if>
         <c:forEach items="${statuses}" var="status">
-            <option value="status">${status}</option>
+            <option value="${status}">${status}</option>
         </c:forEach>
     </select><br/>
-    Vehicle:
+    <label>Vehicle:</label>
     <select name="vehicleId">
         <c:if test="${action eq 'new'}">
             <option value="" selected disabled hidden>select</option>
@@ -53,7 +55,7 @@
             <option value="labor.vehicleId">${labor.vehicleSignature}</option>
         </c:if>
         <c:forEach items="${vehicles}" var="vehicle">
-            <option value="${vehicle.id}">${vehicle.carSignature}</option>
+            <option value="${vehicle.vehicleId}">${vehicle.carSignature}</option>
         </c:forEach>
     </select><br/>
     Customer cost: <input type="text" name="customerCost" value="${labor.customerCost}"/><br/>
