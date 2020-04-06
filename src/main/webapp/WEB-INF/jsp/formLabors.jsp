@@ -52,7 +52,7 @@
             <option value="" selected disabled hidden>select</option>
         </c:if>
         <c:if test="${action eq 'edit'}">
-            <option value="labor.vehicleId">${labor.vehicleSignature}</option>
+            <option value="${labor.vehicleId}">${labor.vehicleSignature}</option>
         </c:if>
         <c:forEach items="${vehicles}" var="vehicle">
             <option value="${vehicle.vehicleId}">${vehicle.carSignature}</option>
