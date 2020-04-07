@@ -14,7 +14,16 @@
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
 
-    <h1>Main view</h1>
+    <h1>User functions</h1>
+
+    <ul>
+        <li>Manage Customers</li>
+        <li>Manage Vehicles</li>
+        <li>Manage Employees</li>
+        <li>Manage Labors</li>
+    </ul>
+
+
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
