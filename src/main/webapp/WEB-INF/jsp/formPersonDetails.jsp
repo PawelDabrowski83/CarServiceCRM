@@ -14,7 +14,7 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<form action="/managePersonDetails?action=${action}" method="post">
+<form action="${pageContext.request.contextPath}/managePersonDetails?action=${action}" method="post">
     <input type="hidden" name="id" value="${person.id}"/>
     <input type="hidden" name="updated" value="${person.updated}"/>
     First name: <input type="text" name="firstName" value="${person.firstName}"/><br/>
