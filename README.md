@@ -25,9 +25,10 @@ Completed:
 * Customer Dao
 * Car Dao
 * Vehicle Dao
+* Labor Dao
 
 Next step:
-* Labor Dao
+* User story - crud for Person
 
 To Do:
 * Form verification on front

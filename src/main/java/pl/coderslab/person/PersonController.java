@@ -40,6 +40,8 @@ public class PersonController extends HttpServlet {
                 return;
             default:
         }
+//        request.setAttribute("error", true);
+//        request.setAttribute("errorMessage", "Unable to create object");
         getServletContext().getRequestDispatcher(PERSON_FORM).forward(request, response);
 
 
