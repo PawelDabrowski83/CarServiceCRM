@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CustomerDaoImpl extends EntityDao<CustomerEntity> {
+public class CustomerDaoImpl extends EntityDao<CustomerEntity> implements CustomerDaoInterface<CustomerEntity>{
 
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
     private static final String TABLE_NAME = "customers";
@@ -25,6 +25,12 @@ public class CustomerDaoImpl extends EntityDao<CustomerEntity> {
             "UPDATE " + TABLE_NAME + " SET active = 0, updated = NOW() WHERE customer_id = ?";
     private static final String FIND_ALL_QUERY =
             "SELECT * FROM " + TABLE_NAME + " WHERE active = 1";
+    private static final String FIND_UNMATCHED_PERSON =
+            "SELECT * FROM personal_infos\n" +
+                    "WHERE personal_infos.personal_id\n" +
+                    "    NOT IN (SELECT customers.personal_id\n" +
+                    "    FROM customers\n" +
+                    "    WHERE customers.personal_id=personal_infos.personal_id);";
 
     @Override
     public void create(CustomerEntity entity) {
@@ -91,18 +97,43 @@ public class CustomerDaoImpl extends EntityDao<CustomerEntity> {
             ResultSet resultSet = statement.executeQuery();
             Set<CustomerEntity> entities = new HashSet<>();
             while (resultSet.next()) {
-                CustomerEntity entity = new CustomerEntity();
-                entity.setCustomerId(resultSet.getInt("customer_id"));
-                entity.setPersonalId(resultSet.getInt("personal_id"));
-                entity.setUpdated(resultSet.getTimestamp("updated").toLocalDateTime());
-                entity.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-                entity.setActive(resultSet.getBoolean("active"));
-                entities.add(entity);
+//                CustomerEntity entity = new CustomerEntity();
+//                entity.setCustomerId(resultSet.getInt("customer_id"));
+//                entity.setPersonalId(resultSet.getInt("personal_id"));
+//                entity.setUpdated(resultSet.getTimestamp("updated").toLocalDateTime());
+//                entity.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+//                entity.setActive(resultSet.getBoolean("active"));
+                entities.add(getEntityFromResultSet(resultSet));
             }
             return entities;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return new HashSet<>();
+    }
+
+    public Set<CustomerEntity> findUnmatched() {
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(FIND_UNMATCHED_PERSON);
+            ResultSet resultSet = statement.executeQuery();
+            Set<CustomerEntity> entities = new HashSet<>();
+            while (resultSet.next()) {
+                entities.add(getEntityFromResultSet(resultSet));
+            }
+            return entities;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new HashSet<>();
+    }
+
+    protected CustomerEntity getEntityFromResultSet (ResultSet resultSet) throws SQLException {
+        CustomerEntity entity = new CustomerEntity();
+        entity.setCustomerId(resultSet.getInt("customer_i"));
+        entity.setPersonalId(resultSet.getInt("personal_id"));
+        entity.setUpdated(resultSet.getTimestamp("updated").toLocalDateTime());
+        entity.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+        entity.setActive(resultSet.getBoolean("active"));
+        return entity;
     }
 }

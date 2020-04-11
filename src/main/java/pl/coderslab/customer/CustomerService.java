@@ -4,7 +4,6 @@ import pl.coderslab.commons.EntityDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 
-import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -14,6 +13,7 @@ public class CustomerService implements ServiceInterface<CustomerDto> {
 
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
     private static final EntityDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
+    private static final CustomerDaoInterface<CustomerEntity> CUSTOMER_DAO_PLUS = new CustomerDaoImpl();
 
     @Override
     public void create(CustomerDto dto) {
@@ -49,7 +49,13 @@ public class CustomerService implements ServiceInterface<CustomerDto> {
     public Set<CustomerDto> findAll() {
         return CUSTOMER_DAO.findAll().stream()
                 .map(CUSTOMER_MAPPER::mapEntityToService)
-                .sorted(Comparator.naturalOrder())
+                .map(CUSTOMER_MAPPER::mapServiceToDto)
+                .collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    public Set<CustomerDto> findUnmatched() {
+        return CUSTOMER_DAO_PLUS.findUnmatched().stream()
+                .map(CUSTOMER_MAPPER::mapEntityToService)
                 .map(CUSTOMER_MAPPER::mapServiceToDto)
                 .collect(Collectors.toCollection(TreeSet::new));
     }

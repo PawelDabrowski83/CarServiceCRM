@@ -2,12 +2,14 @@ package pl.coderslab.person;
 
 import pl.coderslab.commons.DbUtil;
 import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
+import pl.coderslab.customer.CustomerEntity;
 
 import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PersonDaoImpl extends EntityDao<PersonEntity> {
+public class PersonDaoImpl implements PersonDaoInterface<PersonEntity> {
 
     private static final PersonMapper PERSON_MAPPER = new PersonMapper();
     private static final String TABLE_NAME = "personal_infos";
@@ -21,12 +23,18 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
             "UPDATE " + TABLE_NAME + " SET active = 0, updated = NOW() WHERE personal_id = ?";
     private static final String FIND_ALL_QUERY =
             "SELECT * FROM " + TABLE_NAME + " WHERE active = 1";
+    private static final String FIND_UNMATCHED_CUSTOMERS =
+            "SELECT * FROM " + TABLE_NAME + "\n" +
+                    "WHERE " + TABLE_NAME + ".personal_id\n" +
+                    "    NOT IN (SELECT customers.personal_id\n" +
+                    "    FROM customers\n" +
+                    "    WHERE customers.personal_id=" + TABLE_NAME + ".personal_id);";
 
     @Override
     public void create(PersonEntity entity) {
         try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(CREATE_QUERY);
-            statement = pushPreparedStatementOnEntity(statement, entity);
+            pushPreparedStatementOnEntity(statement, entity);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,7 +60,7 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
     public void update(PersonEntity entity) {
         try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(UPDATE_QUERY);
-            statement = pushPreparedStatementOnEntity(statement, entity);
+            pushPreparedStatementOnEntity(statement, entity);
             statement.setInt(7, entity.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -90,6 +98,21 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
         }
     }
 
+    public Set<PersonEntity> findUnmatchedCustomers() {
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(FIND_UNMATCHED_CUSTOMERS);
+            ResultSet resultSet = statement.executeQuery();
+            Set<PersonEntity> entities = new HashSet<>();
+            while (resultSet.next()) {
+                entities.add(getEntityFromResultSet(resultSet));
+            }
+            return entities;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new HashSet<>();
+    }
+
     private PersonEntity getEntityFromResultSet (ResultSet resultSet) throws SQLException{
         PersonEntity entity = new PersonEntity();
         entity.setId(resultSet.getInt("personal_id"));
@@ -114,4 +137,6 @@ public class PersonDaoImpl extends EntityDao<PersonEntity> {
         return statement;
 
     }
+
+
 }

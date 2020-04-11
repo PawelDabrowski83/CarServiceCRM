@@ -1,12 +1,12 @@
 package pl.coderslab.customer;
 
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.person.*;
-import pl.coderslab.commons.EntityDao;
 import pl.coderslab.commons.MapperInterface;
 
 public class CustomerMapper implements MapperInterface<CustomerDto, Customer, CustomerEntity> {
 
-    private static final EntityDao<PersonEntity> PERSON_DAO = new PersonDaoImpl();
+    private static final GenericDao<PersonEntity> PERSON_DAO = new PersonDaoImpl();
     private static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
 
     @Override
