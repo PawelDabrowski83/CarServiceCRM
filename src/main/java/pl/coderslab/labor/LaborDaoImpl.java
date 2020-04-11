@@ -1,7 +1,7 @@
 package pl.coderslab.labor;
 
 import pl.coderslab.commons.DbUtil;
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ParameterReaderService;
 
@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class LaborDaoImpl extends EntityDao<LaborEntity> {
+public class LaborDaoImpl implements GenericDao<LaborEntity> {
 
     private static final MapperInterface<LaborDto, Labor, LaborEntity> LABOR_MAPPER = new LaborMapper();
     private static final String TABLE_NAME = "labors";
@@ -79,23 +79,6 @@ public class LaborDaoImpl extends EntityDao<LaborEntity> {
             ResultSet resultSet = statement.executeQuery();
             Set<LaborEntity> entities = new HashSet<>();
             while(resultSet.next()) {
-//                LaborEntity entity = new LaborEntity();
-//                entity.setLaborId(resultSet.getInt("labor_id"));
-//                entity.setRegistrationDate(resultSet.getTimestamp("registry_date").toLocalDateTime().toLocalDate());
-//                entity.setScheduledDate(resultSet.getTimestamp("scheduled_date").toLocalDateTime().toLocalDate());
-//                entity.setStartedDate(resultSet.getTimestamp("started_date").toLocalDateTime().toLocalDate());
-//                entity.setFinishedDate(resultSet.getTimestamp("finished_date").toLocalDateTime().toLocalDate());
-//                entity.setEmployeeId(resultSet.getInt("assigned"));
-//                entity.setDescriptionIssue(resultSet.getString("issue_description"));
-//                entity.setDescriptionService(resultSet.getString("service_log"));
-//                entity.setStatus(LaborEntity.StatusEnum.valueOf(resultSet.getString("status")));
-//                entity.setVehicleId(resultSet.getInt("vehicle"));
-//                entity.setCustomerCost(resultSet.getDouble("labor_cost"));
-//                entity.setMaterialCost(resultSet.getDouble("material_cost"));
-//                entity.setMhTotal(resultSet.getInt("mh_ammount"));
-//                entity.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-//                entity.setUpdated(resultSet.getTimestamp("updated").toLocalDateTime());
-//                entity.setActive(resultSet.getBoolean("active"));
                 entities.add(getLaborEntityFromResultSet(resultSet));
             }
             return entities;

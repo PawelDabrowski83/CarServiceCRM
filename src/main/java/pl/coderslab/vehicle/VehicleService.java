@@ -1,6 +1,6 @@
 package pl.coderslab.vehicle;
 
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class VehicleService implements ServiceInterface<VehicleDto> {
 
-    private static final EntityDao<VehicleEntity> VEHICLE_DAO = new VehicleDaoImpl();
+    private static final GenericDao<VehicleEntity> VEHICLE_DAO = new VehicleDaoImpl();
     private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper();
 
     @Override

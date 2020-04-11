@@ -1,10 +1,9 @@
 package pl.coderslab.car;
 
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 
-import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class CarService implements ServiceInterface<CarDto> {
 
-    private static final EntityDao<CarEntity> CAR_DAO = new CarDaoImpl();
+    private static final GenericDao<CarEntity> CAR_DAO = new CarDaoImpl();
     private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
 
     @Override

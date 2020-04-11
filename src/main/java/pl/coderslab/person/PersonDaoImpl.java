@@ -1,13 +1,13 @@
 package pl.coderslab.person;
 
 import pl.coderslab.commons.DbUtil;
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 
 import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PersonDaoImpl extends EntityDao<PersonEntity> {
+public class PersonDaoImpl implements GenericDao<PersonEntity> {
 
     private static final PersonMapper PERSON_MAPPER = new PersonMapper();
     private static final String TABLE_NAME = "personal_infos";

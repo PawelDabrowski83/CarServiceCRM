@@ -1,7 +1,7 @@
 package pl.coderslab.car;
 
 import pl.coderslab.commons.DbUtil;
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 
 import java.sql.*;
@@ -10,7 +10,7 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CarDaoImpl extends EntityDao<CarEntity> {
+public class CarDaoImpl implements GenericDao<CarEntity> {
 
     private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
     private static final String TABLE_NAME = "vehicle_details";
