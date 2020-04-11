@@ -4,6 +4,7 @@ import pl.coderslab.person.PersonDto;
 import pl.coderslab.person.PersonService;
 import pl.coderslab.commons.ParameterReaderService;
 import pl.coderslab.commons.ServiceInterface;
+import pl.coderslab.person.PersonServiceInterface;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +20,7 @@ public class CustomerController extends HttpServlet {
     private static final String FORM_CUSTOMER = "/WEB-INF/jsp/formCustomers.jsp";
     private static final String SHOW_ALL_CUSTOMERS = "/WEB-INF/jsp/allCustomers.jsp";
     private static final String PREPARE_ALL_CUSTOMERS = "/customers?action=view";
-    private static final ServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
+    private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
     private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,7 +30,7 @@ public class CustomerController extends HttpServlet {
         String redir = FORM_CUSTOMER;
 
         if ("new".equals(action) | "edit".equals(action)) {
-            Set<PersonDto> personDtos = PERSON_SERVICE.findAll();
+            Set<PersonDto> personDtos = PERSON_SERVICE.findUnmatchedCustomers();
             request.setAttribute("persons", personDtos);
         }
 
