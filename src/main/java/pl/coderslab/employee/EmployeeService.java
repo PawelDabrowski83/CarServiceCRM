@@ -1,6 +1,6 @@
 package pl.coderslab.employee;
 
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class EmployeeService implements ServiceInterface<EmployeeDto> {
 
-    private static final EntityDao<EmployeeEntity> EMPLOYEE_DAO = new EmployeeDaoImpl();
+    private static final GenericDao<EmployeeEntity> EMPLOYEE_DAO = new EmployeeDaoImpl();
     private static final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper();
 
     @Override

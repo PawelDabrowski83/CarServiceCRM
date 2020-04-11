@@ -1,6 +1,6 @@
 package pl.coderslab.person;
 
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class PersonService implements ServiceInterface<PersonDto> {
 
-    public static final EntityDao<PersonEntity> PERSON_DAO = new PersonDaoImpl();
+    public static final GenericDao<PersonEntity> PERSON_DAO = new PersonDaoImpl();
     public static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
 
     public void create (PersonDto dto) {

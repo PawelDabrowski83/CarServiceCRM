@@ -4,7 +4,6 @@ import pl.coderslab.commons.MapperInterface;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.Year;
 
 public class CarMapper implements MapperInterface<CarDto, Car, CarEntity> {
 

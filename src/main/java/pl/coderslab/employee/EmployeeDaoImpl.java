@@ -1,7 +1,7 @@
 package pl.coderslab.employee;
 
 import pl.coderslab.commons.DbUtil;
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class EmployeeDaoImpl extends EntityDao<EmployeeEntity> {
+public class EmployeeDaoImpl implements GenericDao<EmployeeEntity> {
 
     private static final MapperInterface<EmployeeDto,Employee,EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper();
     private static final String TABLE_NAME = "employees";

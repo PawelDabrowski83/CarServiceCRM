@@ -1,13 +1,13 @@
 package pl.coderslab.employee;
 
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.person.*;
-import pl.coderslab.commons.EntityDao;
 import pl.coderslab.commons.MapperInterface;
 
 public class EmployeeMapper implements MapperInterface<EmployeeDto,Employee,EmployeeEntity> {
 
     private static final PersonMapper PERSON_MAPPER = new PersonMapper();
-    private static final EntityDao<PersonEntity> PERSON_DAO = new PersonDaoImpl();
+    private static final GenericDao<PersonEntity> PERSON_DAO = new PersonDaoImpl();
 
     @Override
     public EmployeeDto mapServiceToDto(Employee employee) {

@@ -1,6 +1,6 @@
 package pl.coderslab.customer;
 
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class CustomerService implements ServiceInterface<CustomerDto> {
 
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
-    private static final EntityDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
+    private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
 
     @Override
     public void create(CustomerDto dto) {
