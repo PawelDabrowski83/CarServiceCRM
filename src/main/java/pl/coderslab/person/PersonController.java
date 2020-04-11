@@ -48,7 +48,7 @@ public class PersonController extends HttpServlet {
             default:
         }
 
-        String error = request.getParameter("error");
+      String error = request.getParameter("error");
         String errorMessage = request.getParameter("errorMessage");
         request.setAttribute("error", error);
         request.setAttribute("errorMessage", errorMessage);

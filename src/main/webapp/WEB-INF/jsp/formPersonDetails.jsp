@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Person Details</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/WEB-INF/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/WEB-INF/css/style.css">
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
@@ -26,6 +26,9 @@
     Year of birth (YYYY): <input type="text" name="birthYear" value="${person.birthYear}"/><br/>
     Month of birth (MM): <input type="text" name="birthMonth" value="${person.birthMonth}"/><br/>
     Day of birth (DD): <input type="text" name="birthDay" value="${person.birthDay}"/><br/>
+    <c:if test="${error}">
+        <span class="error">${errorMessage}</span><br/>
+    </c:if>
     <input type="submit" value="Save"/>
     <c:if test="${error}">
         <span class="error">${errorMessage}</span>
