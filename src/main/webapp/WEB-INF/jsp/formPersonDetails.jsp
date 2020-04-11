@@ -23,7 +23,7 @@
     Address: <input type="text" name="address" value="${person.address}"/><br/>
     Phone: <input type="text" name="phone" value="${person.phone}"/><br/>
     Notes: <input name="notes" value="${person.notes}"/><br/>
-    Year of birth (RRRR): <input type="text" name="birthYear" value="${person.birthYear}"/><br/>
+    Year of birth (YYYY): <input type="text" name="birthYear" value="${person.birthYear}"/><br/>
     Month of birth (MM): <input type="text" name="birthMonth" value="${person.birthMonth}"/><br/>
     Day of birth (DD): <input type="text" name="birthDay" value="${person.birthDay}"/><br/>
     <c:if test="${error}">

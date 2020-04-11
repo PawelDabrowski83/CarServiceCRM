@@ -1,6 +1,7 @@
 package pl.coderslab.person;
 
 import pl.coderslab.commons.ParameterReaderService;
+import pl.coderslab.commons.ValidatorInterface;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ public class PersonController extends HttpServlet {
     private static final String SHOW_ALL_PERSONS = "/WEB-INF/jsp/allPersonDetails.jsp";
     private static final String PREP_ALL_PERSONS = PERSON_PATH + "?action=view";
     private static final PersonService PERSON_SERVICE = new PersonService();
-    private static final Pattern DATE_FORMAT_PATTERN = Pattern.compile("^([1]9\\d{2}|[2][0|1]\\d{2})-(0[1-9]|1[0-2])-(0[1-9]|1\\d|2\\d|3[0-1])$");
+    private static final ValidatorInterface<PersonDto> PERSON_VALIDATOR = new PersonValidator();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -35,7 +36,9 @@ public class PersonController extends HttpServlet {
                 getServletContext().getRequestDispatcher(SHOW_ALL_PERSONS).forward(request, response);
                 return;
             case "edit":
-                setPersonToForm(request, id);
+                PersonDto dto = PERSON_SERVICE.read(id);
+                request.setAttribute("person", dto);
+                request.setAttribute("action", "edit");
                 System.out.println("GET edit");
                 break;
             case "delete":
@@ -71,28 +74,6 @@ public class PersonController extends HttpServlet {
         String birthYear = request.getParameter("birthYear");
         String birthMonth = request.getParameter("birthMonth");
         String birthDay = request.getParameter("birthDay");
-        String fulldate = birthYear + "-" + birthMonth + "-" + birthDay;
-        Matcher matcher = DATE_FORMAT_PATTERN.matcher(fulldate);
-
-        if (firstName == null || firstName.isEmpty()
-                || lastName == null || lastName.isEmpty()
-                || phone == null || phone.isEmpty()
-                || birthYear == null
-                || birthMonth == null
-                || birthDay == null
-                || !matcher.matches()) {
-            // do not validate
-            request.setAttribute("error", true);
-            request.setAttribute("errorMessage", "All required fields should be filled (firstName, lastName, phone, date)");
-            System.out.println(PERSON_PATH + " " + action + " " + id);
-            if ("edit".equals(action)) {
-               setPersonToForm(request, id);
-            };
-            getServletContext().getRequestDispatcher(PERSON_FORM).forward(request, response);
-            return;
-        } else {
-            request.setAttribute("error", false);
-        }
 
         dto.setUpdated(updated);
         dto.setFirstName(firstName);
@@ -104,6 +85,23 @@ public class PersonController extends HttpServlet {
         dto.setBirthMonth(birthMonth);
         dto.setBirthDay(birthDay);
 
+        String validateResult = PERSON_VALIDATOR.validate(dto);
+        System.out.println("Validate result is: " + validateResult);
+
+        if (!validateResult.isEmpty()) {
+            request.setAttribute("error", true);
+            request.setAttribute("errorMessage", validateResult);
+            System.out.println(PERSON_PATH + " " + action + " " + id);
+            if ("edit".equals(action)) {
+                request.setAttribute("person", dto);
+                request.setAttribute("action", "edit");
+            };
+            getServletContext().getRequestDispatcher(PERSON_FORM).forward(request, response);
+            return;
+        } else {
+            request.setAttribute("error", false);
+        }
+
         if ("edit".equals(action)) {
             dto.setId(id);
             PERSON_SERVICE.update(dto);
@@ -114,9 +112,4 @@ public class PersonController extends HttpServlet {
 
     }
 
-    private void setPersonToForm(HttpServletRequest request, int id) {
-        PersonDto dto = PERSON_SERVICE.read(id);
-        request.setAttribute("person", dto);
-        request.setAttribute("action", "edit");
-    }
 }
