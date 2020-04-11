@@ -23,13 +23,16 @@
     Address: <input type="text" name="address" value="${person.address}"/><br/>
     Phone: <input type="text" name="phone" value="${person.phone}"/><br/>
     Notes: <input name="notes" value="${person.notes}"/><br/>
-    Year of birth: <input type="text" name="birthYear" value="${person.birthYear}"/><br/>
-    Month of birth: <input type="text" name="birthMonth" value="${person.birthMonth}"/><br/>
-    Day of birth: <input type="text" name="birthDay" value="${person.birthDay}"/><br/>
+    Year of birth (RRRR): <input type="text" name="birthYear" value="${person.birthYear}"/><br/>
+    Month of birth (MM): <input type="text" name="birthMonth" value="${person.birthMonth}"/><br/>
+    Day of birth (DD): <input type="text" name="birthDay" value="${person.birthDay}"/><br/>
     <c:if test="${error}">
         <span class="error">${errorMessage}</span><br/>
     </c:if>
     <input type="submit" value="Save"/>
+    <c:if test="${error}">
+        <span class="error">${errorMessage}</span>
+    </c:if>
 </form>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

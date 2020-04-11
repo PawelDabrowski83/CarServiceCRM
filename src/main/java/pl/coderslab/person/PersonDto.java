@@ -117,7 +117,7 @@ public class PersonDto implements Comparable<PersonDto> {
     public LocalDate getBirthdate() {
         try {
             return LocalDate.of(Integer.parseInt(birthYear), Integer.parseInt(birthMonth), Integer.parseInt(birthDay));
-        } catch (DateTimeException e) {
+        } catch (DateTimeException | NumberFormatException e) {
             e.printStackTrace();
             System.out.println("Invalid date format in: dd-mm-rrrr " + birthDay + "-" + birthMonth + "-" + birthYear);
             return LocalDate.of(1,1,1);

@@ -26,9 +26,10 @@ Completed:
 * Car Dao
 * Vehicle Dao
 * Labor Dao
+* Person form backend validation
 
 Next step:
-* User story - crud for Person
+* Backend validation on Customer form
 
 To Do:
 * Form verification on front
@@ -37,3 +38,4 @@ To Do:
 To consider:
 * Mapper class should extract objects with Dao or Service class?
 * Customer and Employee should not allow duplicate entries
+* REST API Controller
