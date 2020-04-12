@@ -39,7 +39,6 @@ public class PersonController extends HttpServlet {
                 PersonDto dto = PERSON_SERVICE.read(id);
                 request.setAttribute("person", dto);
                 request.setAttribute("action", "edit");
-                System.out.println("GET edit");
                 break;
             case "delete":
                 PERSON_SERVICE.delete(id);
@@ -48,16 +47,12 @@ public class PersonController extends HttpServlet {
             default:
         }
 
-      String error = request.getParameter("error");
+        String error = request.getParameter("error");
         String errorMessage = request.getParameter("errorMessage");
         request.setAttribute("error", error);
         request.setAttribute("errorMessage", errorMessage);
-        System.out.println(">>> ERROR: " + error + " MESSAGE: " + errorMessage);
 
         getServletContext().getRequestDispatcher(PERSON_FORM).forward(request, response);
-
-
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -84,14 +79,12 @@ public class PersonController extends HttpServlet {
         dto.setBirthDay(birthDay);
 
         String validateResult = PERSON_VALIDATOR.validate(dto);
-        System.out.println("Validate result is: " + validateResult);
 
         if (!validateResult.isEmpty()) {
             request.setAttribute("error", true);
             request.setAttribute("errorMessage", validateResult);
-            System.out.println(PERSON_PATH + " " + action + " " + id);
+            request.setAttribute("person", dto);
             if ("edit".equals(action)) {
-                request.setAttribute("person", dto);
                 request.setAttribute("action", "edit");
             };
             getServletContext().getRequestDispatcher(PERSON_FORM).forward(request, response);
@@ -107,7 +100,6 @@ public class PersonController extends HttpServlet {
             PERSON_SERVICE.create(dto);
         }
         response.sendRedirect(PREP_ALL_PERSONS);
-
     }
 
 }

@@ -9,4 +9,5 @@ public interface GenericDao<T> {
     public void update(T entity);
     public void delete(int id);
     public Set<T> findAll();
+
 }

@@ -1,7 +1,6 @@
 package pl.coderslab.person;
 
 import pl.coderslab.commons.DbUtil;
-
 import java.sql.*;
 import java.util.*;
 
@@ -89,6 +88,7 @@ public class PersonDaoImpl implements PersonDaoInterface<PersonEntity> {
         }
     }
 
+
     @Override
     public Set<PersonEntity> findUnmatchedCustomers() {
         try (Connection conn = DbUtil.getConnection()) {
@@ -144,4 +144,6 @@ public class PersonDaoImpl implements PersonDaoInterface<PersonEntity> {
         statement.setString(6, entity.getBirthdate().toString());
 
     }
+
+
 }

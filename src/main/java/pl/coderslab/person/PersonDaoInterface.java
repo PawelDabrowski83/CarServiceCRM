@@ -8,5 +8,4 @@ public interface PersonDaoInterface<T> extends GenericDao<T> {
 
     Set<T> findUnmatchedCustomers();
     Set<T> findUnmatchedEmployees();
-
 }
