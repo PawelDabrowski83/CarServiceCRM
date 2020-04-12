@@ -19,7 +19,8 @@ public class PersonService implements PersonServiceInterface<PersonDto> {
     }
 
     public PersonDto read (int personId) {
-        Optional<PersonEntity> entityOptional = Optional.of(PERSON_DAO.read(personId));
+        Optional<PersonEntity> entityOptional = Optional.ofNullable(PERSON_DAO.read(personId));
+        System.out.println("ENT: " + entityOptional);
         return PERSON_MAPPER.mapServiceToDto(
                 PERSON_MAPPER.mapEntityToService(
                         entityOptional.orElseGet(

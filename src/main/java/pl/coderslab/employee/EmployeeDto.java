@@ -53,4 +53,15 @@ public class EmployeeDto implements Comparable<EmployeeDto>{
     public int compareTo(EmployeeDto o) {
         return this.fullname.compareToIgnoreCase(o.fullname);
     }
+
+    @Override
+    public String toString() {
+        return "EmployeeDto{" +
+                "employeeId=" + employeeId +
+                ", personId=" + personId +
+                ", mhCost=" + mhCost +
+                ", updated='" + updated + '\'' +
+                ", fullname='" + fullname + '\'' +
+                '}';
+    }
 }

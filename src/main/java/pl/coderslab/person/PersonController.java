@@ -65,7 +65,6 @@ public class PersonController extends HttpServlet {
         String action = request.getParameter("action");
         int id = ParameterReaderService.getIdFromRequest(request, "id");
         PersonDto dto = new PersonDto();
-        String updated = request.getParameter("updated");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String address = request.getParameter("address");
@@ -75,7 +74,6 @@ public class PersonController extends HttpServlet {
         String birthMonth = request.getParameter("birthMonth");
         String birthDay = request.getParameter("birthDay");
 
-        dto.setUpdated(updated);
         dto.setFirstName(firstName);
         dto.setLastName(lastName);
         dto.setAddress(address);

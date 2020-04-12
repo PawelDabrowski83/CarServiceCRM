@@ -18,13 +18,18 @@
         <input type="hidden" name="employeeId" value="${employee.employeeId}"/>
         Person: <select name="personId">
         <optgroup label="select">
+            <c:if test="${action eq 'new'}">
                 <option value="" selected disabled hidden>select</option>
+            </c:if>
+            <c:if test="${action eq 'edit'}">
+                <option value="${employee.personId}" title="${employee.fullname}">${employee.fullname}</option>
+            </c:if>
             <c:forEach items="${persons}" var="person">
                 <option title="${person.fullname}" value="${person.id}">${person.fullname}</option>
             </c:forEach>
         </optgroup>
     </select><br/>
-        Man hour cost: <input type="text" name="mhCost" value="${person.mhCost}"/><br/>
+        Man hour cost: <input type="text" name="mhCost" value="${employee.mhCost}"/><br/>
         <input type="submit" value="Save"/>
     </form>
 

@@ -34,4 +34,13 @@ public class CustomerDto implements Comparable<CustomerDto> {
     public int compareTo(CustomerDto o) {
         return this.fullname.compareToIgnoreCase(o.fullname);
     }
+
+    @Override
+    public String toString() {
+        return "CustomerDto{" +
+                "customerId=" + customerId +
+                ", personalId=" + personalId +
+                ", fullname='" + fullname + '\'' +
+                '}';
+    }
 }

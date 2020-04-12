@@ -34,6 +34,8 @@ public class CustomerController extends HttpServlet {
             request.setAttribute("persons", personDtos);
         }
 
+        System.out.println("customer ACTION: " + action);
+
         switch (action) {
             case "view":
                 Set<CustomerDto> dtos = CUSTOMER_SERVICE.findAll();
@@ -41,9 +43,10 @@ public class CustomerController extends HttpServlet {
                 redir = SHOW_ALL_CUSTOMERS;
                 break;
             case "edit":
-                System.out.println();
                 CustomerDto dto = CUSTOMER_SERVICE.read(customerId);
+                System.out.println("DTO: " + dto);
                 request.setAttribute("customer", dto);
+                request.setAttribute("person", PERSON_SERVICE.read(dto.getPersonalId()));
             case "new":
                 request.setAttribute("action", action);
                 break;
@@ -53,7 +56,6 @@ public class CustomerController extends HttpServlet {
                 return;
             default:
         }
-
         getServletContext().getRequestDispatcher(redir).forward(request, response);
     }
 
@@ -72,7 +74,6 @@ public class CustomerController extends HttpServlet {
         } else {
             CUSTOMER_SERVICE.create(dto);
         }
-
         response.sendRedirect(PREPARE_ALL_CUSTOMERS);
     }
 
