@@ -75,8 +75,8 @@ public class CarController extends HttpServlet {
         if (!validateResult.isEmpty()) {
             request.setAttribute("error", true);
             request.setAttribute("errorMessage", validateResult);
+            request.setAttribute("car", dto);
             if ("edit".equals(action)) {
-                request.setAttribute("car", dto);
                 request.setAttribute("action", "edit");
             }
             getServletContext().getRequestDispatcher(FORM_CAR).forward(request, response);
