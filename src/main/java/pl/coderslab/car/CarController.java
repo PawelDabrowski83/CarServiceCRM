@@ -2,6 +2,7 @@ package pl.coderslab.car;
 
 import pl.coderslab.commons.ParameterReaderService;
 import pl.coderslab.commons.ServiceInterface;
+import pl.coderslab.commons.ValidatorInterface;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +20,7 @@ public class CarController extends HttpServlet {
     private static final String PREPARE_ALL_CARS = "/cars?action=view";
     private static final String CHARACTER_ENCODING = "UTF-8";
     private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService();
+    private static final ValidatorInterface<CarDto> CAR_VALIDATOR = new CarValidator();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,6 +47,12 @@ public class CarController extends HttpServlet {
                 break;
             default:
         }
+
+        String error = request.getParameter("error");
+        String errorMessage = request.getParameter("errorMessage");
+        request.setAttribute("error", error);
+        request.setAttribute("errorMessage", errorMessage);
+
         getServletContext().getRequestDispatcher(redir).forward(request, response);
     }
 
@@ -62,6 +70,20 @@ public class CarController extends HttpServlet {
         dto.setMark(mark);
         dto.setModel(model);
         dto.setProductionYear(productionYear);
+
+        String validateResult = CAR_VALIDATOR.validate(dto);
+        if (!validateResult.isEmpty()) {
+            request.setAttribute("error", true);
+            request.setAttribute("errorMessage", validateResult);
+            if ("edit".equals(action)) {
+                request.setAttribute("car", dto);
+                request.setAttribute("action", "edit");
+            }
+            getServletContext().getRequestDispatcher(FORM_CAR).forward(request, response);
+            return;
+        } else {
+            request.setAttribute("error", false);
+        }
 
         if ("edit".equals(action)) {
             dto.setCarId(carId);
