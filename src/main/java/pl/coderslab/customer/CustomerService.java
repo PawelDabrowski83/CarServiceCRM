@@ -51,11 +51,4 @@ public class CustomerService implements ServiceInterface<CustomerDto> {
                 .map(CUSTOMER_MAPPER::mapServiceToDto)
                 .collect(Collectors.toCollection(TreeSet::new));
     }
-
-    public Set<CustomerDto> findUnmatched() {
-        return CUSTOMER_DAO_PLUS.findUnmatched().stream()
-                .map(CUSTOMER_MAPPER::mapEntityToService)
-                .map(CUSTOMER_MAPPER::mapServiceToDto)
-                .collect(Collectors.toCollection(TreeSet::new));
-    }
 }
