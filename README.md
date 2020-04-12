@@ -28,9 +28,10 @@ Completed:
 * Labor Dao
 * Person form backend validation
 * Customer, Employee form backend validation
+* Car backend validation
 
 Next step:
-* Backend validation on Car form
+* Backend validation on Vehicle form
 
 To Do:
 * Form verification on front
