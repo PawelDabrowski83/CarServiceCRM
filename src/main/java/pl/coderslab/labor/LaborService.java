@@ -1,6 +1,6 @@
 package pl.coderslab.labor;
 
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class LaborService implements ServiceInterface<LaborDto> {
 
-    private static final EntityDao<LaborEntity> LABOR_DAO = new LaborDaoImpl();
+    private static final GenericDao<LaborEntity> LABOR_DAO = new LaborDaoImpl();
     private static final MapperInterface<LaborDto, Labor, LaborEntity> LABOR_MAPPER = new LaborMapper();
 
     @Override

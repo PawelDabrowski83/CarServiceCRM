@@ -17,7 +17,12 @@
 <form method="post" action="${pageContext.request.contextPath}/customers?action=${action}">
     <input type="hidden" name="customerId" value="${customer.customerId}"/>
     <select name="personId">
-        <option value="" hidden disabled selected>select</option>
+        <c:if test="${action eq 'new'}">
+            <option value="" hidden disabled selected>select</option>
+        </c:if>
+        <c:if test="${action eq 'edit'}">
+            <option value="${customer.personalId}" title="${customer.fullname}">${customer.fullname}</option>
+        </c:if>
         <c:forEach items="${persons}" var="person">
             <option value="${person.id}">${person.fullname}</option>
         </c:forEach>

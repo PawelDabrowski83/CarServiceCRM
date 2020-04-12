@@ -7,4 +7,5 @@ import java.util.Set;
 public interface PersonServiceInterface<T> extends ServiceInterface<T> {
 
     Set<T> findUnmatchedCustomers();
+    Set<T> findUnmatchedEmployees();
 }

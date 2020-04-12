@@ -1,7 +1,7 @@
 package pl.coderslab.customer;
 
 import pl.coderslab.commons.DbUtil;
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CustomerDaoImpl extends EntityDao<CustomerEntity> implements CustomerDaoInterface<CustomerEntity>{
+public class CustomerDaoImpl implements GenericDao<CustomerEntity> {
 
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
     private static final String TABLE_NAME = "customers";

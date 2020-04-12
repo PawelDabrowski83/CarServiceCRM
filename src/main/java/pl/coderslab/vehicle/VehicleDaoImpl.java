@@ -1,7 +1,7 @@
 package pl.coderslab.vehicle;
 
 import pl.coderslab.commons.DbUtil;
-import pl.coderslab.commons.EntityDao;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 
 import java.sql.*;
@@ -10,7 +10,7 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
-public class VehicleDaoImpl extends EntityDao<VehicleEntity> {
+public class VehicleDaoImpl implements GenericDao<VehicleEntity> {
 
     private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper();
     private static final String TABLE_NAME = "vehicles";

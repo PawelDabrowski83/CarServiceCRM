@@ -4,6 +4,7 @@ import pl.coderslab.person.PersonDto;
 import pl.coderslab.person.PersonService;
 import pl.coderslab.commons.ParameterReaderService;
 import pl.coderslab.commons.ServiceInterface;
+import pl.coderslab.person.PersonServiceInterface;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,19 +21,19 @@ public class EmployeeController extends HttpServlet {
     private static final String SHOW_ALL_EMPLOYEES = "/WEB-INF/jsp/allEmployees.jsp";
     private static final String PREPARE_ALL_EMPLOYEES = "/employees?action=view";
     private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService();
-    private static final ServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
+    private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
     private static final String EMPLOYEE_ID = "employeeId";
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        int id = ParameterReaderService.getIdFromRequest(request, EMPLOYEE_ID);
+        int id = ParameterReaderService.getIdFromRequest(request, "id");
         String action = request.getParameter("action");
         String redir = EMPLOYEE_FORM;
 
-        if ("edit".equals(action) | "new".equals(action)) {
-            Set<PersonDto> personDtos = PERSON_SERVICE.findAll();
-            request.setAttribute("persons", personDtos);
-        }
+//        if ("edit".equals(action) | "new".equals(action)) {
+//        }
+
+        System.out.println("(employee ACTION: " + action);
 
         switch (action) {
             case "view":
@@ -40,16 +41,20 @@ public class EmployeeController extends HttpServlet {
                 request.setAttribute("employees", dtos);
                 redir = SHOW_ALL_EMPLOYEES;
                 break;
-            case "edit":
-                request.setAttribute("employee", EMPLOYEE_SERVICE.read(id));
-                request.setAttribute("action", action);
-                break;
             case "delete":
                 EMPLOYEE_SERVICE.delete(id);
                 response.sendRedirect(PREPARE_ALL_EMPLOYEES);
                 return;
+            case "edit":
+                EmployeeDto employeeDto = EMPLOYEE_SERVICE.read(id);
+                System.out.println("Employee read: " + employeeDto);
+                request.setAttribute("employee", employeeDto);
+                System.out.println("Person service read: " + PERSON_SERVICE.read(employeeDto.getPersonId()));
+                request.setAttribute("person", PERSON_SERVICE.read(employeeDto.getPersonId()));
+            case "new":
+                request.setAttribute("persons", PERSON_SERVICE.findUnmatchedEmployees());
+                request.setAttribute("action", action);
             default:
-                request.setAttribute("action", "new");
         }
         getServletContext().getRequestDispatcher(redir).forward(request, response);
     }

@@ -15,11 +15,11 @@ public class PersonMapper implements MapperInterface<PersonDto, Person, PersonEn
         dto.setAddress(person.getAddress());
         dto.setPhone(person.getPhone());
         dto.setNotes(person.getNotes());
-        dto.setBirthYear(person.getBirthYear());
-        dto.setBirthMonth(person.getBirthMonth());
-        dto.setBirthDay(person.getBirthDay());
-        dto.setUpdated(person.getUpdated().toString());
-        dto.setActive(person.isActive());
+        if (person.getBirthdate() != null) {
+            dto.setBirthYear(person.getBirthYear());
+            dto.setBirthMonth(person.getBirthMonth());
+            dto.setBirthDay(person.getBirthDay());
+        }
         dto.setFullname(person.getFullname());
         return dto;
     }
@@ -33,13 +33,12 @@ public class PersonMapper implements MapperInterface<PersonDto, Person, PersonEn
         person.setPhone(dto.getPhone());
         person.setNotes(dto.getNotes());
         person.setBirthdate(dto.getBirthdate());
-        try {
-            person.setUpdated(LocalDateTime.parse(dto.getUpdated()));
-        } catch (DateTimeException | NumberFormatException | NullPointerException e) {
-            e.printStackTrace();
-            person.setUpdated(null);
-        }
-        person.setActive(dto.isActive());
+//        try {
+//            person.setUpdated(LocalDateTime.parse(dto.getUpdated()));
+//        } catch (DateTimeException | NumberFormatException | NullPointerException e) {
+//            e.printStackTrace();
+//            person.setUpdated(null);
+//        }
         return person;
     }
 
