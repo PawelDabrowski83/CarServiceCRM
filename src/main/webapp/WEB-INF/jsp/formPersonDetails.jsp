@@ -30,9 +30,6 @@
         <span class="error">${errorMessage}</span><br/>
     </c:if>
     <input type="submit" value="Save"/>
-    <c:if test="${error}">
-        <span class="error">${errorMessage}</span>
-    </c:if>
 </form>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

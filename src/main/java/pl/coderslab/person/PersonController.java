@@ -85,8 +85,8 @@ public class PersonController extends HttpServlet {
         if (!validateResult.isEmpty()) {
             request.setAttribute("error", true);
             request.setAttribute("errorMessage", validateResult);
+            request.setAttribute("person", dto);
             if ("edit".equals(action)) {
-                request.setAttribute("person", dto);
                 request.setAttribute("action", "edit");
             };
             getServletContext().getRequestDispatcher(PERSON_FORM).forward(request, response);
