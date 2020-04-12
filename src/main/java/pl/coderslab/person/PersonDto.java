@@ -14,8 +14,8 @@ public class PersonDto implements Comparable<PersonDto> {
     private String birthYear;
     private String birthMonth;
     private String birthDay;
-    private String updated;
-    private boolean active;
+//    private String updated;
+//    private boolean active;
     private String fullname;
 
     public int getId() {
@@ -66,21 +66,21 @@ public class PersonDto implements Comparable<PersonDto> {
         this.notes = notes;
     }
 
-    public String getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(String updated) {
-        this.updated = updated;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+//    public String getUpdated() {
+//        return updated;
+//    }
+//
+//    public void setUpdated(String updated) {
+//        this.updated = updated;
+//    }
+//
+//    public boolean isActive() {
+//        return active;
+//    }
+//
+//    public void setActive(boolean active) {
+//        this.active = active;
+//    }
 
     public String getFullname() {
         return fullname;
@@ -127,15 +127,33 @@ public class PersonDto implements Comparable<PersonDto> {
     @Override
     public int compareTo(PersonDto o) {
         int result = this.fullname.compareToIgnoreCase(o.fullname);
-        if(result == 0) {
-            result = this.birthYear.compareToIgnoreCase(o.birthYear);
-        }
-        if(result == 0) {
-            result = this.birthMonth.compareToIgnoreCase(o.birthMonth);
-        }
-        if(result == 0) {
-            result = this.birthDay.compareToIgnoreCase(o.birthDay);
-        }
+//        if (this.birthDay != null) {
+            if (result == 0) {
+                result = this.birthYear.compareToIgnoreCase(o.birthYear);
+            }
+            if (result == 0) {
+                result = this.birthMonth.compareToIgnoreCase(o.birthMonth);
+            }
+            if (result == 0) {
+                result = this.birthDay.compareToIgnoreCase(o.birthDay);
+            }
+//        }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PersonDto{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", notes='" + notes + '\'' +
+                ", birthYear='" + birthYear + '\'' +
+                ", birthMonth='" + birthMonth + '\'' +
+                ", birthDay='" + birthDay + '\'' +
+                ", fullname='" + fullname + '\'' +
+                '}';
     }
 }

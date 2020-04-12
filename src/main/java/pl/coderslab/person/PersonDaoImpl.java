@@ -1,13 +1,11 @@
 package pl.coderslab.person;
 
 import pl.coderslab.commons.DbUtil;
-import pl.coderslab.commons.GenericDao;
 
 import java.sql.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class PersonDaoImpl implements GenericDao<PersonEntity> {
+public class PersonDaoImpl implements PersonDaoInterface<PersonEntity> {
 
     private static final PersonMapper PERSON_MAPPER = new PersonMapper();
     private static final String TABLE_NAME = "personal_infos";
@@ -21,12 +19,16 @@ public class PersonDaoImpl implements GenericDao<PersonEntity> {
             "UPDATE " + TABLE_NAME + " SET active = 0, updated = NOW() WHERE personal_id = ?";
     private static final String FIND_ALL_QUERY =
             "SELECT * FROM " + TABLE_NAME + " WHERE active = 1";
+    private static final String FIND_UNMATCHED_CUSTOMERS =
+            "SELECT * FROM " + TABLE_NAME + " WHERE " + TABLE_NAME + ".personal_id NOT IN (SELECT customers.personal_id FROM customers WHERE customers.personal_id=" + TABLE_NAME + ".personal_id);";
+    private static final String FIND_UNMATCHED_EMPLOYEES =
+            "SELECT * FROM " + TABLE_NAME + " WHERE " + TABLE_NAME + ".personal_id NOT IN (SELECT employees.employee_id FROM employees WHERE employees.personal_id=" + TABLE_NAME + ".personal_id);";
 
     @Override
     public void create(PersonEntity entity) {
         try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(CREATE_QUERY);
-            statement = pushPreparedStatementOnEntity(statement, entity);
+            pushPreparedStatementOnEntity(statement, entity);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,7 +54,7 @@ public class PersonDaoImpl implements GenericDao<PersonEntity> {
     public void update(PersonEntity entity) {
         try (Connection conn = DbUtil.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(UPDATE_QUERY);
-            statement = pushPreparedStatementOnEntity(statement, entity);
+            pushPreparedStatementOnEntity(statement, entity);
             statement.setInt(7, entity.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -74,20 +76,49 @@ public class PersonDaoImpl implements GenericDao<PersonEntity> {
     @Override
     public Set<PersonEntity> findAll() {
         try (Connection conn = DbUtil.getConnection()) {
-            List<PersonEntity> entities = new ArrayList<>();
+            Set<PersonEntity> entities = new HashSet<>();
             PreparedStatement statement = conn.prepareStatement(FIND_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 entities.add(getEntityFromResultSet(resultSet));
             }
-            return entities.stream()
-                    .map(PERSON_MAPPER::mapEntityToService)
-                    .map(PERSON_MAPPER::mapServiceToEntity)
-                    .collect(Collectors.toCollection(TreeSet::new));
+            return entities;
         } catch (SQLException e) {
             e.printStackTrace();
             return new HashSet<>(0);
         }
+    }
+
+    @Override
+    public Set<PersonEntity> findUnmatchedCustomers() {
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(FIND_UNMATCHED_CUSTOMERS);
+            ResultSet resultSet = statement.executeQuery();
+            Set<PersonEntity> entities = new HashSet<>();
+            while (resultSet.next()) {
+                entities.add(getEntityFromResultSet(resultSet));
+            }
+            return entities;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new HashSet<>(0);
+    }
+
+    @Override
+    public Set<PersonEntity> findUnmatchedEmployees() {
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(FIND_UNMATCHED_EMPLOYEES);
+            ResultSet resultSet = statement.executeQuery();
+            Set<PersonEntity> entities = new HashSet<>();
+            while (resultSet.next()) {
+                entities.add(getEntityFromResultSet(resultSet));
+            }
+            return entities;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new HashSet<>(0);
     }
 
     private PersonEntity getEntityFromResultSet (ResultSet resultSet) throws SQLException{
@@ -104,14 +135,13 @@ public class PersonDaoImpl implements GenericDao<PersonEntity> {
         return entity;
     }
 
-    private PreparedStatement pushPreparedStatementOnEntity (PreparedStatement statement, PersonEntity entity) throws SQLException {
+    private void pushPreparedStatementOnEntity (PreparedStatement statement, PersonEntity entity) throws SQLException {
         statement.setString(1, entity.getFirstName());
         statement.setString(2, entity.getLastName());
         statement.setString(3, entity.getAddress());
         statement.setString(4, entity.getPhone());
         statement.setString(5, entity.getNotes());
         statement.setString(6, entity.getBirthdate().toString());
-        return statement;
 
     }
 }

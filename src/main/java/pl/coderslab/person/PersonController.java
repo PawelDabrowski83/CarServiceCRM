@@ -21,7 +21,7 @@ public class PersonController extends HttpServlet {
     private static final String PERSON_FORM = "/WEB-INF/jsp/formPersonDetails.jsp";
     private static final String SHOW_ALL_PERSONS = "/WEB-INF/jsp/allPersonDetails.jsp";
     private static final String PREP_ALL_PERSONS = PERSON_PATH + "?action=view";
-    private static final PersonService PERSON_SERVICE = new PersonService();
+    private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
     private static final ValidatorInterface<PersonDto> PERSON_VALIDATOR = new PersonValidator();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,7 +65,6 @@ public class PersonController extends HttpServlet {
         String action = request.getParameter("action");
         int id = ParameterReaderService.getIdFromRequest(request, "id");
         PersonDto dto = new PersonDto();
-        String updated = request.getParameter("updated");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String address = request.getParameter("address");
@@ -75,7 +74,6 @@ public class PersonController extends HttpServlet {
         String birthMonth = request.getParameter("birthMonth");
         String birthDay = request.getParameter("birthDay");
 
-        dto.setUpdated(updated);
         dto.setFirstName(firstName);
         dto.setLastName(lastName);
         dto.setAddress(address);
