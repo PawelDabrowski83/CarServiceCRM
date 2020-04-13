@@ -1,5 +1,6 @@
 package pl.coderslab.employee;
 
+import pl.coderslab.commons.ValidatorInterface;
 import pl.coderslab.person.PersonDto;
 import pl.coderslab.person.PersonService;
 import pl.coderslab.commons.ParameterReaderService;
@@ -23,6 +24,7 @@ public class EmployeeController extends HttpServlet {
     private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService();
     private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
     private static final String EMPLOYEE_ID = "employeeId";
+    private static final ValidatorInterface<EmployeeDto> EMPLOYEE_VALIDATOR = new EmployeeValidator();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -56,6 +58,10 @@ public class EmployeeController extends HttpServlet {
                 request.setAttribute("action", action);
             default:
         }
+
+        request.setAttribute("error", request.getParameter("error"));
+        request.setAttribute("errorMessage", request.getParameter("errorMessage"));
+
         getServletContext().getRequestDispatcher(redir).forward(request, response);
     }
 
