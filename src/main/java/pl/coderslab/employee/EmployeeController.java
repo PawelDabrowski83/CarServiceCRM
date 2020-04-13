@@ -1,5 +1,6 @@
 package pl.coderslab.employee;
 
+import pl.coderslab.commons.ValidatorInterface;
 import pl.coderslab.person.PersonDto;
 import pl.coderslab.person.PersonService;
 import pl.coderslab.commons.ParameterReaderService;
@@ -23,6 +24,7 @@ public class EmployeeController extends HttpServlet {
     private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService();
     private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
     private static final String EMPLOYEE_ID = "employeeId";
+    private static final ValidatorInterface<EmployeeDto> EMPLOYEE_VALIDATOR = new EmployeeValidator();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -47,15 +49,17 @@ public class EmployeeController extends HttpServlet {
                 return;
             case "edit":
                 EmployeeDto employeeDto = EMPLOYEE_SERVICE.read(id);
-                System.out.println("Employee read: " + employeeDto);
                 request.setAttribute("employee", employeeDto);
-                System.out.println("Person service read: " + PERSON_SERVICE.read(employeeDto.getPersonId()));
                 request.setAttribute("person", PERSON_SERVICE.read(employeeDto.getPersonId()));
             case "new":
                 request.setAttribute("persons", PERSON_SERVICE.findUnmatchedEmployees());
                 request.setAttribute("action", action);
             default:
         }
+
+        request.setAttribute("error", request.getParameter("error"));
+        request.setAttribute("errorMessage", request.getParameter("errorMessage"));
+
         getServletContext().getRequestDispatcher(redir).forward(request, response);
     }
 
@@ -80,6 +84,26 @@ public class EmployeeController extends HttpServlet {
         EmployeeDto dto = new EmployeeDto();
         dto.setPersonId(personalId);
         dto.setMhCost(mhCost);
+        dto.setFullname(PERSON_SERVICE.read(dto.getPersonId()).getFullname());
+
+        String validateResult = EMPLOYEE_VALIDATOR.validate(dto);
+        if (!validateResult.isEmpty()) {
+            request.setAttribute("error", true);
+            request.setAttribute("errorMessage", validateResult);
+            if ("edit".equals(action)) {
+                request.setAttribute("action", "edit");
+                dto.setEmployeeId(id);
+            } else {
+                request.setAttribute("action", "new");
+            }
+            request.setAttribute("employee", dto);
+            request.setAttribute("person", PERSON_SERVICE.read(dto.getPersonId()));
+            request.setAttribute("persons", PERSON_SERVICE.findUnmatchedEmployees());
+            getServletContext().getRequestDispatcher(EMPLOYEE_FORM).forward(request, response);
+            return;
+        } else {
+            request.setAttribute("error", false);
+        }
 
         if ("edit".equals(action)) {
             dto.setEmployeeId(id);
