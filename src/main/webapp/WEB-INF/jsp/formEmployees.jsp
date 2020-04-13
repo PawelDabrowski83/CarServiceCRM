@@ -30,6 +30,10 @@
         </optgroup>
     </select><br/>
         Man hour cost: <input type="text" name="mhCost" value="${employee.mhCost}"/><br/>
+        <c:if test="${error}">
+            ${errorMessage}<br/>
+        </c:if>
+
         <input type="submit" value="Save"/>
     </form>
 
