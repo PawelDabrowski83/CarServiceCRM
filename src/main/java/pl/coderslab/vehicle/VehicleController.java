@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Set;
 
 @WebServlet (name="VehicleController", urlPatterns = "/vehicles")
@@ -82,7 +83,12 @@ public class VehicleController extends HttpServlet {
         dto.setRegistryPlate(registryPlate);
         dto.setColor(color);
         dto.setNotes(notes);
-        dto.setNextInspection(LocalDate.parse(nextInspectionAsString));
+        try {
+            dto.setNextInspection(LocalDate.parse(nextInspectionAsString));
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            dto.setNextInspection(LocalDate.of(1,1,1));
+        }
 
         if ("edit".equals(action)) {
             dto.setVehicleId(vehicleId);
