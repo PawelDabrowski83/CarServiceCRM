@@ -34,8 +34,6 @@ public class CustomerController extends HttpServlet {
             request.setAttribute("persons", personDtos);
         }
 
-        System.out.println("customer ACTION: " + action);
-
         switch (action) {
             case "view":
                 Set<CustomerDto> dtos = CUSTOMER_SERVICE.findAll();
@@ -44,7 +42,6 @@ public class CustomerController extends HttpServlet {
                 break;
             case "edit":
                 CustomerDto dto = CUSTOMER_SERVICE.read(customerId);
-                System.out.println("DTO: " + dto);
                 request.setAttribute("customer", dto);
                 request.setAttribute("person", PERSON_SERVICE.read(dto.getPersonalId()));
             case "new":
