@@ -17,7 +17,6 @@
 
 <form action="${pageContext.request.contextPath}/managePersonDetails?action=${action}" method="post">
     <input type="hidden" name="id" value="${person.id}"/>
-    <input type="hidden" name="updated" value="${person.updated}"/>
     First name: <input type="text" name="firstName" value="${person.firstName}"/><br/>
     Last name: <input type="text" name="lastName" value="${person.lastName}"/><br/>
     Address: <input type="text" name="address" value="${person.address}"/><br/>
