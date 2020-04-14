@@ -2,6 +2,7 @@ package pl.coderslab.labor;
 
 import pl.coderslab.commons.ParameterReaderService;
 import pl.coderslab.commons.ServiceInterface;
+import pl.coderslab.commons.ValidatorInterface;
 import pl.coderslab.customer.CustomerDto;
 import pl.coderslab.customer.CustomerService;
 import pl.coderslab.employee.EmployeeDto;
@@ -29,6 +30,7 @@ public class LaborController extends HttpServlet {
     private static final ServiceInterface<LaborDto> LABOR_SERVICE = new LaborService();
     private static final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService();
     private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService();
+    private static final ValidatorInterface<LaborDto> LABOR_VALIDATOR = new LaborValidator();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,12 +40,10 @@ public class LaborController extends HttpServlet {
         String redir = FORM_LABOR;
 
         if ("new".equals(action) | "edit".equals(action)) {
-            Set<EmployeeDto> employeeDtos = EMPLOYEE_SERVICE.findAll();
-            request.setAttribute("employees", employeeDtos);
-            Set<VehicleDto> vehicleDtos = VEHICLE_SERVICE.findAll();
-            request.setAttribute("vehicles", vehicleDtos);
-            EnumSet<Labor.StatusEnum> enums = EnumSet.allOf(Labor.StatusEnum.class);
-            request.setAttribute("statuses", enums);
+            request.setAttribute("employees", EMPLOYEE_SERVICE.findAll());
+            request.setAttribute("vehicles", VEHICLE_SERVICE.findAll());
+//            EnumSet<Labor.StatusEnum> enums = EnumSet.allOf(Labor.StatusEnum.class);
+            request.setAttribute("statuses", EnumSet.allOf(Labor.StatusEnum.class));
         }
 
         switch (action) {
@@ -63,6 +63,10 @@ public class LaborController extends HttpServlet {
                 request.setAttribute("action", action);
             default:
         }
+
+        request.setAttribute("error", request.getParameter("error"));
+        request.setAttribute("errorMessage", request.getParameter("errorMessage"));
+
         getServletContext().getRequestDispatcher(redir).forward(request, response);
     }
 
@@ -90,13 +94,34 @@ public class LaborController extends HttpServlet {
         dto.setStartedDate(startedDate);
         dto.setFinishedDate(finishedDate);
         dto.setEmployeeId(employeeId);
+        dto.setEmployeeFullname(EMPLOYEE_SERVICE.read(employeeId).getFullname());
         dto.setDescriptionIssue(descriptionIssue);
         dto.setDescriptionService(descriptionService);
         dto.setStatus(status);
         dto.setVehicleId(vehicleId);
+        dto.setVehicleSignature(VEHICLE_SERVICE.read(vehicleId).getCarSignature());
         dto.setCustomerCost(customerCost);
         dto.setMaterialCost(materialCost);
         dto.setMhTotal(mhTotal);
+
+        String validateResult = LABOR_VALIDATOR.validate(dto);
+        if (!validateResult.isEmpty()) {
+            request.setAttribute("error", true);
+            request.setAttribute("errorMessage", validateResult);
+            request.setAttribute("labor", dto);
+            request.setAttribute("employees", EMPLOYEE_SERVICE.findAll());
+            request.setAttribute("vehicles", VEHICLE_SERVICE.findAll());
+            request.setAttribute("statuses", EnumSet.allOf(Labor.StatusEnum.class));
+            if ("edit".equals(action)) {
+                request.setAttribute("action", "edit");
+            } else {
+                request.setAttribute("action", "new");
+            }
+            getServletContext().getRequestDispatcher(FORM_LABOR).forward(request, response);
+            return;
+        } else {
+            request.setAttribute("error", false);
+        }
 
         if ("edit".equals(action)) {
             dto.setLaborId(laborId);

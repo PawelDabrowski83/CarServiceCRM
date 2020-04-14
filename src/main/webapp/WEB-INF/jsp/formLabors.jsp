@@ -22,12 +22,14 @@
     Finished: <input type="date" name="finishedDate" value="${labor.finishedDate}"/><br/>
     <label>Employee: </label>
     <select name="employeeId">
-        <c:if test="${action eq 'new'}">
-            <option value="" selected disabled hidden>select</option>
-        </c:if>
-        <c:if test="${action eq 'edit'}">
-            <option value="${labor.employeeId}" selected>${labor.employeeFullname}</option>
-        </c:if>
+        <c:choose>
+            <c:when test="${(empty labor.employeeId) || (labor.employeeId < 1) }">
+                <option value="" selected disabled hidden>select</option>
+            </c:when>
+            <c:otherwise>
+                <option value="${labor.employeeId}" selected>${labor.employeeFullname}</option>
+            </c:otherwise>
+        </c:choose>
         <c:forEach items="${employees}" var="employee">
             <option value="${employee.employeeId}">${employee.fullname}</option>
         </c:forEach>
@@ -36,24 +38,28 @@
     Provided service description: <input type="text" name="descriptionService" value="${labor.descriptionService}"/><br/>
     <label>Status:</label>
     <select name="status">
-        <c:if test="${action eq 'new'}">
-            <option value="" selected disabled hidden>select</option>
-        </c:if>
-        <c:if test="${action eq 'edit'}">
-            <option value="${labor.status}" selected>${labor.status}</option>
-        </c:if>
+        <c:choose>
+            <c:when test="${empty labor.status}">
+                <option value="" selected disabled hidden>select</option>
+            </c:when>
+            <c:otherwise>
+                <option value="${labor.status}" selected>${labor.status}</option>
+            </c:otherwise>
+        </c:choose>
         <c:forEach items="${statuses}" var="status">
             <option value="${status}">${status}</option>
         </c:forEach>
     </select><br/>
     <label>Vehicle:</label>
     <select name="vehicleId">
-        <c:if test="${action eq 'new'}">
-            <option value="" selected disabled hidden>select</option>
-        </c:if>
-        <c:if test="${action eq 'edit'}">
-            <option value="${labor.vehicleId}">${labor.vehicleSignature}</option>
-        </c:if>
+        <c:choose>
+            <c:when test="${(empty labor.vehicleId) || (labor.vehicleId < 1)}">
+                <option value="" selected disabled hidden>select</option>
+            </c:when>
+            <c:otherwise>
+                <option value="${labor.vehicleId}">${labor.vehicleSignature}</option>
+            </c:otherwise>
+        </c:choose>
         <c:forEach items="${vehicles}" var="vehicle">
             <option value="${vehicle.vehicleId}">${vehicle.carSignature}</option>
         </c:forEach>
@@ -61,6 +67,9 @@
     Customer cost: <input type="text" name="customerCost" value="${labor.customerCost}"/><br/>
     Material cost: <input type="text" name="materialCost" value="${labor.materialCost}"/><br/>
     MH count: <input type="text" name="mhTotal" value="${labor.mhTotal}"/><br/>
+    <c:if test="${error}">
+        ${errorMessage}<br/>
+    </c:if>
     <input type="submit" value="Save"/>
 
 </form>
