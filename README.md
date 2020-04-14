@@ -30,13 +30,28 @@ Completed:
 * Customer, Employee form backend validation
 * Car backend validation
 * Backend validation on Vehicle form
-
-Next step:
 * Labor backend validation
 
+Next step:
+* User stories - add new Employee
+
 To Do:
+* User stories - add new Customer
+* User stories - add new Vehicle
+* User stories - add new Labor
+* User stories - update Labor status
+* User stories - find Labors by Customer name
+* User stories - find Employees by Labor (with Labor.status)
+* User stories - worked MH by Employees
+* User stories - total profit by Labor
+* Main page - current Labors
+* Main page - all Customers by birthday and profit
+* Main page - all Labors by date
+* Main page - all Employees with details (Labor)
+* Main page - reports
+
 * Form verification on front
-* Form verification on backend
+
 
 To consider:
 * Mapper class should extract objects with Dao or Service class?
