@@ -17,7 +17,7 @@ public class VehicleMapper implements MapperInterface<VehicleDto, Vehicle, Vehic
         VehicleDto dto = new VehicleDto();
         dto.setVehicleId(vehicle.getVehicleId());
         dto.setCarId(vehicle.getCar().getCarId());
-        dto.setCarSignature(vehicle.getCar().getCarSignature());
+        dto.setCarSignature(vehicle.getCarSignature());
         dto.setRegistryPlate(vehicle.getRegistryPlate());
         dto.setNextInspection(vehicle.getNextInspection());
         dto.setOwnerId(vehicle.getOwner().getCustomerId());
