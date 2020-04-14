@@ -46,7 +46,7 @@ public class ParameterReaderService {
             return LocalDate.parse(s);
         } catch (DateTimeParseException e) {
             e.printStackTrace();
-            return LocalDate.MIN;
+            return null;
         }
     }
 }

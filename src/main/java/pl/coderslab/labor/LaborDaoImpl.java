@@ -6,6 +6,7 @@ import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ParameterReaderService;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -94,7 +95,9 @@ public class LaborDaoImpl implements GenericDao<LaborEntity> {
         entity.setRegistrationDate(resultSet.getTimestamp("registry_date").toLocalDateTime().toLocalDate());
         entity.setScheduledDate(resultSet.getTimestamp("scheduled_date").toLocalDateTime().toLocalDate());
         entity.setStartedDate(resultSet.getTimestamp("started_date").toLocalDateTime().toLocalDate());
-        entity.setFinishedDate(resultSet.getTimestamp("finished_date").toLocalDateTime().toLocalDate());
+        if (resultSet.getTimestamp("finished_date") != null) {
+            entity.setFinishedDate(resultSet.getTimestamp("finished_date").toLocalDateTime().toLocalDate());
+        }
         entity.setEmployeeId(resultSet.getInt("assigned"));
         entity.setDescriptionIssue(resultSet.getString("issue_description"));
         entity.setDescriptionService(resultSet.getString("service_log"));
@@ -113,7 +116,11 @@ public class LaborDaoImpl implements GenericDao<LaborEntity> {
         statement.setTimestamp(1, ParameterReaderService.convertLocalDateToTimestamp(entity.getRegistrationDate()));
         statement.setTimestamp(2, ParameterReaderService.convertLocalDateToTimestamp(entity.getScheduledDate()));
         statement.setTimestamp(3, ParameterReaderService.convertLocalDateToTimestamp(entity.getStartedDate()));
-        statement.setTimestamp(4, ParameterReaderService.convertLocalDateToTimestamp(entity.getFinishedDate()));
+        if (entity.getFinishedDate() == null) {
+            statement.setNull(4, Types.DATE);
+        } else {
+            statement.setTimestamp(4, ParameterReaderService.convertLocalDateToTimestamp(entity.getFinishedDate()));
+        }
         statement.setInt(5, entity.getEmployeeId());
         statement.setString(6, entity.getDescriptionIssue());
         statement.setString(7, entity.getDescriptionService());

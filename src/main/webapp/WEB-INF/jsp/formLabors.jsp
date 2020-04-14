@@ -23,7 +23,7 @@
     <label>Employee: </label>
     <select name="employeeId">
         <c:choose>
-            <c:when test="${labor.employeeId < 1}">
+            <c:when test="${(empty labor.employeeId) || (labor.employeeId < 1) }">
                 <option value="" selected disabled hidden>select</option>
             </c:when>
             <c:otherwise>
@@ -53,7 +53,7 @@
     <label>Vehicle:</label>
     <select name="vehicleId">
         <c:choose>
-            <c:when test="${labor.vehicleId < 1}">
+            <c:when test="${(empty labor.vehicleId) || (labor.vehicleId < 1)}">
                 <option value="" selected disabled hidden>select</option>
             </c:when>
             <c:otherwise>

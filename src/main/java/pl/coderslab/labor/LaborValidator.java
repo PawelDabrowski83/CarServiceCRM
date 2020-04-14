@@ -10,13 +10,13 @@ public class LaborValidator implements ValidatorInterface<LaborDto> {
     public String validate(LaborDto laborDto) {
 
         StringBuilder builder = new StringBuilder();
-        if (laborDto.getRegistrationDate().isBefore(LocalDate.of(2020,1,1))) {
+        if (laborDto.getRegistrationDate() == null || laborDto.getRegistrationDate().isBefore(LocalDate.of(2020,1,1))) {
             builder.append("Registration date cannot be empty or before 2020.<br/>");
         }
-        if (laborDto.getScheduledDate().isBefore(laborDto.getRegistrationDate())) {
+        if (laborDto.getScheduledDate() == null || laborDto.getScheduledDate().isBefore(laborDto.getRegistrationDate())) {
             builder.append("Scheduled date cannot be empty or before Registration date.<br/>");
         }
-        if (laborDto.getStartedDate().isBefore(laborDto.getRegistrationDate())) {
+        if (laborDto.getStartedDate() == null || laborDto.getStartedDate().isBefore(laborDto.getRegistrationDate())) {
             builder.append("Started date cannot be empty or before Registration date.<br/>");
         }
         if (laborDto.getEmployeeId() < 1) {
