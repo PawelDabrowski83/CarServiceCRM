@@ -67,6 +67,9 @@
     Customer cost: <input type="text" name="customerCost" value="${labor.customerCost}"/><br/>
     Material cost: <input type="text" name="materialCost" value="${labor.materialCost}"/><br/>
     MH count: <input type="text" name="mhTotal" value="${labor.mhTotal}"/><br/>
+    <c:if test="${error}">
+        ${errorMessage}<br/>
+    </c:if>
     <input type="submit" value="Save"/>
 
 </form>
