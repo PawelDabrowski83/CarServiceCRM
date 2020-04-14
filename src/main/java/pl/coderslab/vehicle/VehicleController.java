@@ -4,6 +4,7 @@ import pl.coderslab.car.*;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ParameterReaderService;
 import pl.coderslab.commons.ServiceInterface;
+import pl.coderslab.commons.ValidatorInterface;
 import pl.coderslab.customer.*;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Set;
 
 @WebServlet (name="VehicleController", urlPatterns = "/vehicles")
@@ -27,6 +29,7 @@ public class VehicleController extends HttpServlet {
     private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService();
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
     private static final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService();
+    private static final ValidatorInterface<VehicleDto> VEHICLE_VALIDATOR = new VehicleValidator();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,10 +39,8 @@ public class VehicleController extends HttpServlet {
         String redir = FORM_VEHICLE;
 
         if ("edit".equals(action) | "new".equals(action)) {
-            Set<CarDto> carDtos = CAR_SERVICE.findAll();
-            Set<CustomerDto> customerDtos = CUSTOMER_SERVICE.findAll();
-            request.setAttribute("cars", carDtos);
-            request.setAttribute("customers", customerDtos);
+            request.setAttribute("cars", CAR_SERVICE.findAll());
+            request.setAttribute("customers", CUSTOMER_SERVICE.findAll());
         }
 
         switch (action) {
@@ -60,6 +61,10 @@ public class VehicleController extends HttpServlet {
                 break;
             default:
         }
+
+        request.setAttribute("error", request.getParameter("error"));
+        request.setAttribute("errorMessage", request.getParameter("errorMessage"));
+
         getServletContext().getRequestDispatcher(redir).forward(request, response);
     }
 
@@ -78,11 +83,37 @@ public class VehicleController extends HttpServlet {
 
         VehicleDto dto = new VehicleDto();
         dto.setCarId(carId);
+        dto.setCarSignature(CAR_SERVICE.read(carId).getCarSignature());
         dto.setOwnerId(ownerId);
+        dto.setOwnerFullname(CUSTOMER_SERVICE.read(ownerId).getFullname());
         dto.setRegistryPlate(registryPlate);
         dto.setColor(color);
         dto.setNotes(notes);
-        dto.setNextInspection(LocalDate.parse(nextInspectionAsString));
+        try {
+            dto.setNextInspection(LocalDate.parse(nextInspectionAsString));
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            dto.setNextInspection(LocalDate.now());
+        }
+
+        String validateResult = VEHICLE_VALIDATOR.validate(dto);
+        if (!validateResult.isEmpty()) {
+            request.setAttribute("error", true);
+            request.setAttribute("errorMessage", validateResult);
+            if ("edit".equals(action)) {
+                request.setAttribute("action", "edit");
+                dto.setVehicleId(vehicleId);
+            } else {
+                request.setAttribute("action", "new");
+            }
+            request.setAttribute("vehicle", dto);
+            request.setAttribute("cars", CAR_SERVICE.findAll());
+            request.setAttribute("customers", CUSTOMER_SERVICE.findAll());
+            getServletContext().getRequestDispatcher(FORM_VEHICLE).forward(request, response);
+            return;
+        } else {
+            request.setAttribute("error", false);
+        }
 
         if ("edit".equals(action)) {
             dto.setVehicleId(vehicleId);
