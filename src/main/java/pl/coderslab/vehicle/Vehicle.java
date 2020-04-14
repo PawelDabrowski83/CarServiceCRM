@@ -99,4 +99,8 @@ public class Vehicle {
         this.active = active;
     }
 
+    public String getCarSignature() {
+        return this.car.getCarSignature() + " " + this.registryPlate;
+    }
+
 }
