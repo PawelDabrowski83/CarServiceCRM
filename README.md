@@ -49,7 +49,6 @@ To Do:
 * Main page - all Labors by date
 * Main page - all Employees with details (Labor)
 * Main page - reports
-
 * Form verification on front
 
 
