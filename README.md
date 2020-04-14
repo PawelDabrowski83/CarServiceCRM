@@ -29,9 +29,10 @@ Completed:
 * Person form backend validation
 * Customer, Employee form backend validation
 * Car backend validation
+* Backend validation on Vehicle form
 
 Next step:
-* Backend validation on Vehicle form
+* Labor backend validation
 
 To Do:
 * Form verification on front
