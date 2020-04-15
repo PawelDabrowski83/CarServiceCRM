@@ -6,19 +6,22 @@ import java.util.regex.Pattern;
 
 public class CarValidator implements ValidatorInterface<CarDto> {
 
-    private static final Pattern PRODUCTION_YEAR_PATTERN = Pattern.compile("^19\\d{2}$|^20[0-2]\\d{1}$");
+    protected static final Pattern PRODUCTION_YEAR_PATTERN = Pattern.compile("^19\\d{2}$|^20[0-2]\\d{1}$");
+    protected static final String INVALID_MARK = "Mark cannot be empty. <br/>" + System.lineSeparator();
+    protected static final String INVALID_MODEL =  "Model cannot be empty. <br/>" + System.lineSeparator();
+    protected static final String INVALID_PRODYEAR = "Wrong year format or year outside of range 1900-202x <br/>" + System.lineSeparator();
 
     @Override
     public String validate(CarDto carDto) {
         StringBuilder builder = new StringBuilder();
-        if (carDto.getMark() == null || carDto.getMark().isEmpty()) {
-            builder.append("Mark cannot be empty. <br/>" + System.lineSeparator());
+        if (carDto.getMark() == null || carDto.getMark().trim().isEmpty()) {
+            builder.append(INVALID_MARK);
         }
-        if (carDto.getModel() == null || carDto.getModel().isEmpty()) {
-            builder.append("Model cannot be empty. <br/>" + System.lineSeparator());
+        if (carDto.getModel() == null || carDto.getModel().trim().isEmpty()) {
+            builder.append(INVALID_MODEL);
         }
         if (!PRODUCTION_YEAR_PATTERN.matcher(String.valueOf(carDto.getProductionYear())).matches()) {
-            builder.append("Wrong year format or year outside of range 1900-202x <br/>" + System.lineSeparator());
+            builder.append(INVALID_PRODYEAR);
         }
         return builder.toString();
     }
