@@ -17,7 +17,7 @@ public class Car implements Comparable<Car>{
     public Car() {
     }
 
-    public Car(int carId, String mark, String model, LocalDate productionYear, LocalDateTime created, LocalDateTime updated, boolean active) {
+    protected Car(int carId, String mark, String model, LocalDate productionYear, LocalDateTime created, LocalDateTime updated, boolean active) {
         this.carId = carId;
         this.mark = mark;
         this.model = model;
@@ -27,7 +27,7 @@ public class Car implements Comparable<Car>{
         this.active = active;
     }
 
-    public Car(String mark, String model, LocalDate productionYear) {
+    protected Car(String mark, String model, LocalDate productionYear) {
         this.mark = mark;
         this.model = model;
         this.productionYear = productionYear;
