@@ -1,7 +1,5 @@
 package pl.coderslab.car;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Assert;
 import pl.coderslab.commons.ValidatorInterface;
 
 import static org.junit.Assert.*;
@@ -36,7 +34,7 @@ public class CarValidatorTest {
         String validateResult = CAR_VALIDATOR.validate(carDto);
 
         // then
-        assertEquals("Mark cannot be empty. <br/>" + System.lineSeparator(), validateResult);
+        assertEquals(CarValidator.INVALID_MARK, validateResult);
     }
 
     @Test
@@ -52,7 +50,7 @@ public class CarValidatorTest {
         String validateResult = CAR_VALIDATOR.validate(carDto);
 
         // then
-        assertEquals("Mark cannot be empty. <br/>" + System.lineSeparator(), validateResult);
+        assertEquals(CarValidator.INVALID_MARK, validateResult);
     }
 
     @Test
@@ -68,10 +66,101 @@ public class CarValidatorTest {
         String validateResult = CAR_VALIDATOR.validate(carDto);
 
         // then
-        assertEquals("Mark cannot be empty. <br/>" + System.lineSeparator(), validateResult);
+        assertEquals(CarValidator.INVALID_MARK, validateResult);
+    }
 
+    @Test
+    public void shouldGetMessageIfCarDtoModelIsNull() {
+
+        // given
+        CarDto carDto = new CarDto();
+        carDto.setMark("mark");
+        carDto.setModel(null);
+        carDto.setProductionYear(1999);
+
+        // when
+        String validateResult = CAR_VALIDATOR.validate(carDto);
+
+        // then
+        assertEquals(CarValidator.INVALID_MODEL, validateResult);
+    }
+
+    @Test
+    public void shouldGetMessageIfCarDtoModelIsEmpty() {
+        // given
+        CarDto carDto = new CarDto();
+        carDto.setMark("mark");
+        carDto.setModel("");
+        carDto.setProductionYear(1999);
+
+        // when
+        String validateResult = CAR_VALIDATOR.validate(carDto);
+
+        // then
+        assertEquals(CarValidator.INVALID_MODEL, validateResult);
     }
 
 
+    @Test
+    public void shouldGetMessageIfCarDtoModelIsButSpaces() {
+        // given
+        CarDto carDto = new CarDto();
+        carDto.setMark("mark");
+        carDto.setModel("   ");
+        carDto.setProductionYear(1999);
 
+        // when
+        String validateResult = CAR_VALIDATOR.validate(carDto);
+
+        // then
+        assertEquals(CarValidator.INVALID_MODEL, validateResult);
+    }
+
+    @Test
+    public void shouldGetMessageIfCarDtoProductionYearIsZero() {
+
+        // given
+        CarDto carDto = new CarDto();
+        carDto.setMark("mark");
+        carDto.setModel("model");
+        carDto.setProductionYear(0);
+
+        // when
+        String validateResult = CAR_VALIDATOR.validate(carDto);
+
+        // then
+        assertEquals(CarValidator.INVALID_PRODYEAR, validateResult);
+    }
+
+    @Test
+    public void shouldGetMessageIfCarDtoProductionYearIs444() {
+
+        // given
+        CarDto carDto = new CarDto();
+        carDto.setMark("mark");
+        carDto.setModel("model");
+        carDto.setProductionYear(444);
+
+        // when
+        String validateResult = CAR_VALIDATOR.validate(carDto);
+
+        // then
+        assertEquals(CarValidator.INVALID_PRODYEAR, validateResult);
+    }
+
+    @Test
+    public void shouldGetMessageIfCarDtoProductionYearIsIntegerMax() {
+
+        // given
+        CarDto carDto = new CarDto();
+        carDto.setMark("mark");
+        carDto.setModel("model");
+        carDto.setProductionYear(Integer.MAX_VALUE);
+
+        // when
+        String validateResult = CAR_VALIDATOR.validate(carDto);
+
+        // then
+        assertEquals(CarValidator.INVALID_PRODYEAR, validateResult);
+    }
 }
