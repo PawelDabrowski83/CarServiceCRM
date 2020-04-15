@@ -7,12 +7,31 @@ import java.util.Objects;
 public class Car implements Comparable<Car>{
 
     private int carId;
-    private String model;
     private String mark;
+    private String model;
     private LocalDate productionYear;
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active;
+
+    public Car() {
+    }
+
+    protected Car(int carId, String mark, String model, LocalDate productionYear, LocalDateTime created, LocalDateTime updated, boolean active) {
+        this.carId = carId;
+        this.mark = mark;
+        this.model = model;
+        this.productionYear = productionYear;
+        this.created = created;
+        this.updated = updated;
+        this.active = active;
+    }
+
+    protected Car(String mark, String model, LocalDate productionYear) {
+        this.mark = mark;
+        this.model = model;
+        this.productionYear = productionYear;
+    }
 
     public int getCarId() {
         return carId;
@@ -71,7 +90,20 @@ public class Car implements Comparable<Car>{
     }
 
     public String getCarSignature() {
-        return "(" + productionYear.getYear() + ") " + mark + " " + model;
+        StringBuilder builder = new StringBuilder();
+        builder.append("(" + productionYear.getYear() + ")");
+        if (mark == null || mark.trim().isEmpty()) {
+            mark = "";
+        } else {
+            builder.append(" " + mark);
+        }
+
+        if (model == null || model.trim().isEmpty()) {
+            model = "";
+        } else {
+            builder.append(" " + model);
+        }
+        return builder.toString();
     }
 
     @Override
@@ -92,7 +124,7 @@ public class Car implements Comparable<Car>{
                 "carId=" + carId +
                 ", model='" + model + '\'' +
                 ", mark='" + mark + '\'' +
-                ", productionYear=" + productionYear +
+                ", productionYear=" + productionYear.getYear() +
                 ", created=" + created +
                 ", updated=" + updated +
                 ", active=" + active +
