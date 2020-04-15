@@ -35,13 +35,14 @@ public class CarTest {
     }
 
     @Test
-    public void shouldGetCarSignatureIfFielsAreSet() {
+    public void shouldGetCarSignatureIfFieldsAreSet() {
 
         // given
-        Car car = new Car();
-        car.setMark("mark");
-        car.setModel("model");
-        car.setProductionYear(LocalDate.of(1999,1,1));
+        Car car = new Car(
+                "mark",
+                "model",
+                LocalDate.of(1999, 1, 1)
+        );
 
         // when
         String result = car.getCarSignature();
@@ -54,10 +55,11 @@ public class CarTest {
     public void shouldGetCarSignatureWithoutModelIfModelIsNull() {
 
         // given
-        Car car = new Car();
-        car.setMark("mark");
-        car.setModel(null);
-        car.setProductionYear(LocalDate.of(1999,1,1));
+        Car car = new Car(
+                "mark",
+                null,
+                LocalDate.of(1999, 1, 1)
+        );
 
         // when
         String result = car.getCarSignature();
@@ -70,10 +72,11 @@ public class CarTest {
     public void shouldGetCarSignatureWithoutModelIfModelIsEmpty() {
 
         // given
-        Car car = new Car();
-        car.setMark("mark");
-        car.setModel("");
-        car.setProductionYear(LocalDate.of(1999,1,1));
+        Car car = new Car(
+                "mark",
+                "",
+                LocalDate.of(1999, 1, 1)
+        );
 
         // when
         String result = car.getCarSignature();
@@ -86,10 +89,11 @@ public class CarTest {
     public void shouldGetCarSignatureWithoutModelIfModelIsButSpaces() {
 
         // given
-        Car car = new Car();
-        car.setMark("mark");
-        car.setModel("    ");
-        car.setProductionYear(LocalDate.of(1999,1,1));
+        Car car = new Car(
+                "mark",
+                "    ",
+                LocalDate.of(1999, 1, 1)
+        );
 
         // when
         String result = car.getCarSignature();
@@ -102,10 +106,11 @@ public class CarTest {
     public void shouldGetCarSignatureWithoutMarkIfMarkIsNull(){
 
         // given
-        Car car = new Car();
-        car.setMark(null);
-        car.setModel("model");
-        car.setProductionYear(LocalDate.of(1999,1,1));
+        Car car = new Car(
+                null,
+                "model",
+                LocalDate.of(1999, 1, 1)
+        );
 
         // when
         String result = car.getCarSignature();
@@ -118,10 +123,11 @@ public class CarTest {
     public void shouldGetCarSignatureWithoutMarkIfMarkIsEmpty(){
 
         // given
-        Car car = new Car();
-        car.setMark("");
-        car.setModel("model");
-        car.setProductionYear(LocalDate.of(1999,1,1));
+        Car car = new Car(
+                "",
+                "model",
+                LocalDate.of(1999, 1, 1)
+        );
 
         // when
         String result = car.getCarSignature();
@@ -134,10 +140,11 @@ public class CarTest {
     public void shouldGetCarSignatureWithoutMarkIfMarkIsButSpaces(){
 
         // given
-        Car car = new Car();
-        car.setMark("  ");
-        car.setModel("model");
-        car.setProductionYear(LocalDate.of(1999,1,1));
+        Car car = new Car(
+                "     ",
+                "model",
+                LocalDate.of(1999, 1, 1)
+        );
 
         // when
         String result = car.getCarSignature();
@@ -150,10 +157,11 @@ public class CarTest {
     public void shouldGetCarSignatureWhenMarkAndModelAreNull() {
 
         // given
-        Car car = new Car();
-        car.setMark(null);
-        car.setModel(null);
-        car.setProductionYear(LocalDate.of(1999,1,1));
+        Car car = new Car(
+                null,
+                null,
+                LocalDate.of(1999, 1, 1)
+        );
 
         // when
         String result = car.getCarSignature();
@@ -166,10 +174,11 @@ public class CarTest {
     public void shouldGetCarSignatureWhenMarkAndModelAreEmpty() {
 
         // given
-        Car car = new Car();
-        car.setMark("");
-        car.setModel("");
-        car.setProductionYear(LocalDate.of(1999,1,1));
+        Car car = new Car(
+                "",
+                "",
+                LocalDate.of(1999, 1, 1)
+        );
 
         // when
         String result = car.getCarSignature();
@@ -182,15 +191,127 @@ public class CarTest {
     public void shouldGetCarSignatureWhenMarkAndModelAreButSpaces() {
 
         // given
-        Car car = new Car();
-        car.setMark("    ");
-        car.setModel("       ");
-        car.setProductionYear(LocalDate.of(1999,1,1));
+        Car car = new Car(
+                "       ",
+                "                  ",
+                LocalDate.of(1999, 1, 1)
+        );
 
         // when
         String result = car.getCarSignature();
 
         // then
         assertEquals("(1999)", result);
+    }
+
+    @Test
+    public void shouldGetProperToString() {
+
+        // given
+        Car car = new Car(
+                1,
+                "mark",
+                "model",
+                LocalDate.of(1999, 1, 1),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                true
+        );
+
+        // when
+        String result = car.toString();
+
+        // then
+        assertEquals("Car{carId=1, model='model', mark='mark', productionYear=1999, created=2020-12-31T15:35, updated=2020-12-31T15:35, active=true}", result);
+    }
+
+    @Test
+    public void shouldGetProperEqualsAndHashCode() {
+
+        // given
+        Car car1 = new Car(
+                1,
+                "mark",
+                "model",
+                LocalDate.of(1999, 1, 1),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                true
+        );
+        Car car2 = new Car(
+                2,
+                "mark",
+                "model",
+                LocalDate.of(1999, 1, 1),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                false
+        );
+        Car car3 = new Car(
+                2,
+                "mark",
+                "another model definitely",
+                LocalDate.of(1999, 1, 22),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                true
+        );
+
+
+        // then
+        assertTrue(car1.equals(car2));
+        assertTrue(car1.hashCode() == car2.hashCode());
+        assertFalse(car2.equals(car3));
+        assertFalse(car2.hashCode() == car3.hashCode());
+        assertFalse(car1.equals(car3));
+        assertFalse(car1.hashCode() == car3.hashCode());
+    }
+
+    @Test
+    public void shouldGetProperCompareTo() {
+
+        // given
+        Car car1 = new Car(
+                1,
+                "mark",
+                "model",
+                LocalDate.of(1999, 1, 1),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                true
+        );
+        Car car2 = new Car(
+                2,
+                "mark",
+                "model",
+                LocalDate.of(1999, 1, 1),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                false
+        );
+        Car car3 = new Car(
+                2,
+                "mark",
+                "another model definitely",
+                LocalDate.of(1999, 1, 22),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                true
+        );
+        Car car4 = new Car(
+                2,
+                "another mark",
+                "another model definitely",
+                LocalDate.of(1999, 1, 22),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                LocalDateTime.of(2020, 12, 31, 15, 35),
+                true
+        );
+
+        // then
+        assertEquals(0, car1.compareTo(car2));
+        assertEquals(-21, car2.compareTo(car3));
+        assertEquals(-21, car1.compareTo(car3));
+        assertEquals(12, car3.compareTo(car4));
     }
 }
