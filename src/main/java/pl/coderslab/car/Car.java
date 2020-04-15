@@ -2,6 +2,7 @@ package pl.coderslab.car;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Car implements Comparable<Car>{
 
@@ -70,7 +71,7 @@ public class Car implements Comparable<Car>{
     }
 
     public String getCarSignature() {
-        return "(" + productionYear + ") " + mark + " " + model;
+        return "(" + productionYear.getYear() + ") " + mark + " " + model;
     }
 
     @Override
@@ -83,5 +84,33 @@ public class Car implements Comparable<Car>{
             result = this.model.compareToIgnoreCase(o.model);
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "carId=" + carId +
+                ", model='" + model + '\'' +
+                ", mark='" + mark + '\'' +
+                ", productionYear=" + productionYear +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", active=" + active +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Car)) return false;
+        Car car = (Car) o;
+        return Objects.equals(getModel(), car.getModel()) &&
+                Objects.equals(getMark(), car.getMark()) &&
+                getProductionYear().equals(car.getProductionYear());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getModel(), getMark(), getProductionYear());
     }
 }
