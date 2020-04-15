@@ -29,12 +29,7 @@ public class CarMapper implements MapperInterface<CarDto, Car, CarEntity> {
         car.setCarId(dto.getCarId());
         car.setModel(dto.getModel());
         car.setMark(dto.getMark());
-        try {
-            car.setProductionYear(LocalDate.of(dto.getProductionYear(), 1, 1));
-        } catch (DateTimeException e) {
-            e.printStackTrace();
-            System.out.println("Unable to parse year with: " + dto.getProductionYear());
-        }
+        car.setProductionYear(LocalDate.of(dto.getProductionYear(), 1, 1));
         return car;
     }
 
