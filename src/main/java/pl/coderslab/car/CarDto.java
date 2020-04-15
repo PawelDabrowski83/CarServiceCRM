@@ -1,15 +1,25 @@
 package pl.coderslab.car;
 
-import java.time.LocalDateTime;
-import java.time.Year;
+import java.util.Objects;
 
 public class CarDto implements Comparable<CarDto>{
 
     private int carId;
-    private String model;
     private String mark;
+    private String model;
     private int productionYear;
     private String carSignature;
+
+    public CarDto() {
+    }
+
+    protected CarDto(int carId, String mark, String model, int productionYear, String carSignature) {
+        this.carId = carId;
+        this.mark = mark;
+        this.model = model;
+        this.productionYear = productionYear;
+        this.carSignature = carSignature;
+    }
 
     public int getCarId() {
         return carId;
@@ -19,20 +29,20 @@ public class CarDto implements Comparable<CarDto>{
         this.carId = carId;
     }
 
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
     public String getMark() {
         return mark;
     }
 
     public void setMark(String mark) {
         this.mark = mark;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public int getProductionYear() {
@@ -61,5 +71,31 @@ public class CarDto implements Comparable<CarDto>{
             result = this.model.compareToIgnoreCase(o.model);
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CarDto)) return false;
+        CarDto carDto = (CarDto) o;
+        return getProductionYear() == carDto.getProductionYear() &&
+                Objects.equals(getMark(), carDto.getMark()) &&
+                Objects.equals(getModel(), carDto.getModel());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMark(), getModel(), getProductionYear());
+    }
+
+    @Override
+    public String toString() {
+        return "CarDto{" +
+                "carId=" + carId +
+                ", mark='" + mark + '\'' +
+                ", model='" + model + '\'' +
+                ", productionYear=" + productionYear +
+                ", carSignature='" + carSignature + '\'' +
+                '}';
     }
 }

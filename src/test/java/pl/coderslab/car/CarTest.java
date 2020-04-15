@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class CarTest {
 
     @Test
-    public void shouldGetIdIfCarIdIsSet() {
+    public void shouldGettersAndSettersWorkProperly() {
 
         // given
         Car car = new Car();
@@ -259,12 +259,12 @@ public class CarTest {
 
 
         // then
-        assertTrue(car1.equals(car2));
-        assertTrue(car1.hashCode() == car2.hashCode());
-        assertFalse(car2.equals(car3));
-        assertFalse(car2.hashCode() == car3.hashCode());
-        assertFalse(car1.equals(car3));
-        assertFalse(car1.hashCode() == car3.hashCode());
+        assertEquals(car1, car2);
+        assertEquals(car1.hashCode(), car2.hashCode());
+        assertNotEquals(car2, car3);
+        assertNotEquals(car2.hashCode(), car3.hashCode());
+        assertNotEquals(car1, car3);
+        assertNotEquals(car1.hashCode(), car3.hashCode());
     }
 
     @Test
