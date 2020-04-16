@@ -32,14 +32,14 @@ Completed:
 * Backend validation on Vehicle form
 * Labor backend validation
 * Car domain test
+* Person domain test
 
 Next step:
-* Person domain test
+* Vehicle domain test
 
 To Do:
 * Person Dao, Service and Controller test
 * Car Dao, Service and Controller test
-* Vehicle domain test
 * Vehicle Dao, Service and Controller test
 * Employee domain test
 * Customer domain test
