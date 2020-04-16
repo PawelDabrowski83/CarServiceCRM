@@ -349,11 +349,11 @@ public class PersonTest {
 
         // then
         assertEquals(0, person1.compareTo(person2));
-        assertEquals(6, person1.compareTo(person3));
-        assertEquals(-365, person1.compareTo(person4));
-        assertEquals(6, person2.compareTo(person3));
-        assertEquals(-365, person2.compareTo(person4));
-        assertEquals(-6, person3.compareTo(person4));
+        assertEquals(5, person1.compareTo(person3));
+        assertEquals(-1, person1.compareTo(person4));
+        assertEquals(5, person2.compareTo(person3));
+        assertEquals(-1, person2.compareTo(person4));
+        assertEquals(-5, person3.compareTo(person4));
     }
 
     @Test

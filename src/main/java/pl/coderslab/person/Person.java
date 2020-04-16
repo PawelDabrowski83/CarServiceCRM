@@ -125,24 +125,37 @@ public class Person implements Comparable<Person>{
         StringBuilder builder = new StringBuilder();
         if (lastName == null || lastName.trim().isEmpty()) {
             builder.append(LASTNAME_PLACEHOLDER);
+        } else {
+            builder.append(lastName.trim());
         }
         builder.append(" ");
         if (firstName == null || firstName.trim().isEmpty()) {
             builder.append(FIRSTNAME_PLACEHOLDER);
+        } else {
+            builder.append(firstName.trim());
         }
 
         return builder.toString().trim();
     }
 
     public String getBirthYear() {
+        if (birthdate == null) {
+            return "";
+        }
         return Integer.toString(this.birthdate.getYear());
     }
 
     public String getBirthMonth() {
+        if (birthdate == null) {
+            return "";
+        }
         return Integer.toString(this.birthdate.getMonthValue());
     }
 
     public String getBirthDay() {
+        if (birthdate == null) {
+            return "";
+        }
         return Integer.toString(this.birthdate.getDayOfMonth());
     }
 
