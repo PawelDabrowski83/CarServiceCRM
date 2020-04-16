@@ -33,12 +33,6 @@ public class PersonMapper implements MapperInterface<PersonDto, Person, PersonEn
         person.setPhone(dto.getPhone());
         person.setNotes(dto.getNotes());
         person.setBirthdate(dto.getBirthdate());
-//        try {
-//            person.setUpdated(LocalDateTime.parse(dto.getUpdated()));
-//        } catch (DateTimeException | NumberFormatException | NullPointerException e) {
-//            e.printStackTrace();
-//            person.setUpdated(null);
-//        }
         return person;
     }
 
