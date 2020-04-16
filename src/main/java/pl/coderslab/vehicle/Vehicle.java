@@ -5,8 +5,12 @@ import pl.coderslab.customer.Customer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-public class Vehicle {
+public class Vehicle implements Comparable<Vehicle>{
+
+    protected static final String REGISTRYPLATE_PLACEHOLDER = "";
+    protected static final String CARSIGNATURE_PLACEHOLDER = "";
 
     private int vehicleId;
     private Car car;
@@ -18,6 +22,27 @@ public class Vehicle {
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active;
+
+    public Vehicle() {
+    }
+
+    protected Vehicle(int vehicleId, Car car, Customer owner, String registryPlate, LocalDate nextInspection, String color, String notes, LocalDateTime created, LocalDateTime updated, boolean active) {
+        this.vehicleId = vehicleId;
+        this.car = car;
+        this.owner = owner;
+        this.registryPlate = registryPlate;
+        this.nextInspection = nextInspection;
+        this.color = color;
+        this.notes = notes;
+        this.created = created;
+        this.updated = updated;
+        this.active = active;
+    }
+
+    protected Vehicle(Car car, String registryPlate) {
+        this.car = car;
+        this.registryPlate = registryPlate;
+    }
 
     public int getVehicleId() {
         return vehicleId;
@@ -100,7 +125,56 @@ public class Vehicle {
     }
 
     public String getCarSignature() {
-        return this.car.getCarSignature() + " " + this.registryPlate;
+        StringBuilder builder = new StringBuilder();
+        if (car == null || car.getCarSignature().isEmpty()) {
+            builder.append(CARSIGNATURE_PLACEHOLDER);
+        } else {
+            builder.append(car.getCarSignature());
+        }
+        builder.append(" ");
+        if (registryPlate == null || registryPlate.trim().isEmpty()) {
+            builder.append(REGISTRYPLATE_PLACEHOLDER);
+        } else {
+            builder.append(registryPlate);
+        }
+        return builder.toString().trim();
     }
 
+    @Override
+    public int compareTo(Vehicle o) {
+        return this.getCarSignature().compareToIgnoreCase(o.getCarSignature());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vehicle)) return false;
+        Vehicle vehicle = (Vehicle) o;
+        return getCar().equals(vehicle.getCar()) &&
+                getOwner().equals(vehicle.getOwner()) &&
+                getRegistryPlate().equals(vehicle.getRegistryPlate()) &&
+                getNextInspection().equals(vehicle.getNextInspection()) &&
+                getColor().equals(vehicle.getColor());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCar(), getOwner(), getRegistryPlate(), getNextInspection(), getColor());
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "vehicleId=" + vehicleId +
+                ", car=" + car +
+                ", owner=" + owner +
+                ", registryPlate='" + registryPlate + '\'' +
+                ", nextInspection=" + nextInspection +
+                ", color='" + color + '\'' +
+                ", notes='" + notes + '\'' +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", active=" + active +
+                '}';
+    }
 }

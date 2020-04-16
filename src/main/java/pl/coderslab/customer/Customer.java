@@ -56,4 +56,15 @@ public class Customer implements Comparable<Customer>{
     public int compareTo(Customer o) {
         return this.person.compareTo(o.person);
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", person=" + person +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", active=" + active +
+                '}';
+    }
 }
