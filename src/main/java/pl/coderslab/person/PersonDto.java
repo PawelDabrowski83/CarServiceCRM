@@ -2,6 +2,7 @@ package pl.coderslab.person;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class PersonDto implements Comparable<PersonDto> {
 
@@ -14,9 +15,29 @@ public class PersonDto implements Comparable<PersonDto> {
     private String birthYear;
     private String birthMonth;
     private String birthDay;
-//    private String updated;
-//    private boolean active;
     private String fullname;
+
+    public PersonDto() {
+    }
+
+    protected PersonDto(String birthYear, String birthMonth, String birthDay) {
+        this.birthYear = birthYear;
+        this.birthMonth = birthMonth;
+        this.birthDay = birthDay;
+    }
+
+    public PersonDto(int id, String firstName, String lastName, String address, String phone, String notes, String birthYear, String birthMonth, String birthDay, String fullname) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phone = phone;
+        this.notes = notes;
+        this.birthYear = birthYear;
+        this.birthMonth = birthMonth;
+        this.birthDay = birthDay;
+        this.fullname = fullname;
+    }
 
     public int getId() {
         return id;
@@ -65,22 +86,6 @@ public class PersonDto implements Comparable<PersonDto> {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-
-//    public String getUpdated() {
-//        return updated;
-//    }
-//
-//    public void setUpdated(String updated) {
-//        this.updated = updated;
-//    }
-//
-//    public boolean isActive() {
-//        return active;
-//    }
-//
-//    public void setActive(boolean active) {
-//        this.active = active;
-//    }
 
     public String getFullname() {
         return fullname;
@@ -155,5 +160,24 @@ public class PersonDto implements Comparable<PersonDto> {
                 ", birthDay='" + birthDay + '\'' +
                 ", fullname='" + fullname + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PersonDto)) return false;
+        PersonDto personDto = (PersonDto) o;
+        return getFirstName().equals(personDto.getFirstName()) &&
+                getLastName().equals(personDto.getLastName()) &&
+                Objects.equals(getAddress(), personDto.getAddress()) &&
+                getPhone().equals(personDto.getPhone()) &&
+                getBirthYear().equals(personDto.getBirthYear()) &&
+                getBirthMonth().equals(personDto.getBirthMonth()) &&
+                getBirthDay().equals(personDto.getBirthDay());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName(), getAddress(), getPhone(), getBirthYear(), getBirthMonth(), getBirthDay());
     }
 }
