@@ -2,8 +2,12 @@ package pl.coderslab.person;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Person implements Comparable<Person>{
+
+    protected static final String FIRSTNAME_PLACEHOLDER = "";
+    protected static final String LASTNAME_PLACEHOLDER = "";
 
     private int id;
     private String firstName;
@@ -16,6 +20,26 @@ public class Person implements Comparable<Person>{
     private LocalDateTime updated;
     private boolean active;
 
+    public Person() {
+    }
+
+    protected Person(int id, String firstName, String lastName, String address, String phone, String notes, LocalDate birthdate, LocalDateTime created, LocalDateTime updated, boolean active) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phone = phone;
+        this.notes = notes;
+        this.birthdate = birthdate;
+        this.created = created;
+        this.updated = updated;
+        this.active = active;
+    }
+
+    protected Person(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     public int getId() {
         return id;
@@ -98,7 +122,16 @@ public class Person implements Comparable<Person>{
     }
 
     public String getFullname () {
-        return lastName + " " + firstName;
+        StringBuilder builder = new StringBuilder();
+        if (lastName == null || lastName.trim().isEmpty()) {
+            builder.append(LASTNAME_PLACEHOLDER);
+        }
+        builder.append(" ");
+        if (firstName == null || firstName.trim().isEmpty()) {
+            builder.append(FIRSTNAME_PLACEHOLDER);
+        }
+
+        return builder.toString().trim();
     }
 
     public String getBirthYear() {
@@ -123,5 +156,38 @@ public class Person implements Comparable<Person>{
             result = this.birthdate.compareTo(o.birthdate);
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return getFirstName().equals(person.getFirstName()) &&
+                getLastName().equals(person.getLastName()) &&
+                Objects.equals(getAddress(), person.getAddress()) &&
+                getPhone().equals(person.getPhone()) &&
+                getBirthdate().equals(person.getBirthdate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName(), getAddress(), getPhone(), getBirthdate());
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", notes='" + notes + '\'' +
+                ", birthdate=" + birthdate +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", active=" + active +
+                '}';
     }
 }
