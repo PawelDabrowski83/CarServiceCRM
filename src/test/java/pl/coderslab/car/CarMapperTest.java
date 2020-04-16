@@ -5,7 +5,6 @@ import pl.coderslab.commons.MapperInterface;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 
 import static org.junit.Assert.*;
 
