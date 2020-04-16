@@ -2,6 +2,7 @@ package pl.coderslab.vehicle;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class VehicleEntity {
 
@@ -15,6 +16,22 @@ public class VehicleEntity {
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active;
+
+    public VehicleEntity() {
+    }
+
+    protected VehicleEntity(int vehicleId, int carId, int ownerId, String registryPlate, LocalDate nextInspection, String color, String notes, LocalDateTime created, LocalDateTime updated, boolean active) {
+        this.vehicleId = vehicleId;
+        this.carId = carId;
+        this.ownerId = ownerId;
+        this.registryPlate = registryPlate;
+        this.nextInspection = nextInspection;
+        this.color = color;
+        this.notes = notes;
+        this.created = created;
+        this.updated = updated;
+        this.active = active;
+    }
 
     public int getVehicleId() {
         return vehicleId;
@@ -94,5 +111,38 @@ public class VehicleEntity {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "VehicleEntity{" +
+                "vehicleId=" + vehicleId +
+                ", carId=" + carId +
+                ", ownerId=" + ownerId +
+                ", registryPlate='" + registryPlate + '\'' +
+                ", nextInspection=" + nextInspection +
+                ", color='" + color + '\'' +
+                ", notes='" + notes + '\'' +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", active=" + active +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VehicleEntity)) return false;
+        VehicleEntity that = (VehicleEntity) o;
+        return getCarId() == that.getCarId() &&
+                getOwnerId() == that.getOwnerId() &&
+                getRegistryPlate().equals(that.getRegistryPlate()) &&
+                getNextInspection().equals(that.getNextInspection()) &&
+                getColor().equals(that.getColor());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCarId(), getOwnerId(), getRegistryPlate(), getNextInspection(), getColor());
     }
 }
