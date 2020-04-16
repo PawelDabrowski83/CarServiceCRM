@@ -3,6 +3,7 @@ package pl.coderslab.person;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class PersonEntity implements Comparable<PersonEntity> {
 
@@ -16,6 +17,22 @@ public class PersonEntity implements Comparable<PersonEntity> {
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active;
+
+    public PersonEntity() {
+    }
+
+    protected PersonEntity(int id, String firstName, String lastName, String address, String phone, String notes, LocalDate birthdate, LocalDateTime created, LocalDateTime updated, boolean active) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phone = phone;
+        this.notes = notes;
+        this.birthdate = birthdate;
+        this.created = created;
+        this.updated = updated;
+        this.active = active;
+    }
 
     public int getId() {
         return id;
@@ -123,5 +140,21 @@ public class PersonEntity implements Comparable<PersonEntity> {
             result = this.birthdate.compareTo(o.birthdate);
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PersonEntity)) return false;
+        PersonEntity that = (PersonEntity) o;
+        return getFirstName().equals(that.getFirstName()) &&
+                getLastName().equals(that.getLastName()) &&
+                getPhone().equals(that.getPhone()) &&
+                getBirthdate().equals(that.getBirthdate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName(), getPhone(), getBirthdate());
     }
 }
