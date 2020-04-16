@@ -31,11 +31,23 @@ Completed:
 * Car backend validation
 * Backend validation on Vehicle form
 * Labor backend validation
+* Car domain test
 
 Next step:
-* User stories - add new Employee
+* Person domain test
 
 To Do:
+* Person Dao, Service and Controller test
+* Car Dao, Service and Controller test
+* Vehicle domain test
+* Vehicle Dao, Service and Controller test
+* Employee domain test
+* Customer domain test
+* Labor domain test
+* Employee Dao, Service and Controller test
+* Customer Dao, Service and Controller test
+* Labor Dao, Service and Controller test
+* User stories - add new Employee
 * User stories - add new Customer
 * User stories - add new Vehicle
 * User stories - add new Labor
