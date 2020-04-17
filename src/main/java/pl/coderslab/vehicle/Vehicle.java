@@ -142,7 +142,23 @@ public class Vehicle implements Comparable<Vehicle>{
 
     @Override
     public int compareTo(Vehicle o) {
-        return this.getCarSignature().compareToIgnoreCase(o.getCarSignature());
+        int result = 0;
+        if (this.car != null && o.car != null) {
+            result = this.car.compareTo(o.car);
+        }
+        if (result == 0 && this.owner != null && o.owner != null) {
+            result = this.owner.compareTo(o.owner);
+        }
+        if (result == 0 && this.registryPlate != null && o.registryPlate != null) {
+            result = this.registryPlate.compareToIgnoreCase(o.registryPlate);
+        }
+        if (result == 0 && this.nextInspection != null && o.nextInspection != null) {
+            result = this.nextInspection.compareTo(o.nextInspection);
+        }
+        if (result == 0 && this.color != null || o.color != null) {
+            result = this.color.compareToIgnoreCase(o.color);
+        }
+        return result;
     }
 
     @Override
