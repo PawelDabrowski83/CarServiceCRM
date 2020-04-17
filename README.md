@@ -38,15 +38,16 @@ Next step:
 * Vehicle domain test
 
 To Do:
-* Person Dao, Service and Controller test
-* Car Dao, Service and Controller test
-* Vehicle Dao, Service and Controller test
 * Employee domain test
 * Customer domain test
 * Labor domain test
 * Employee Dao, Service and Controller test
 * Customer Dao, Service and Controller test
 * Labor Dao, Service and Controller test
+* Person Dao, Service and Controller test
+* Car Dao, Service and Controller test
+* Vehicle Dao, Service and Controller test
+* make sure that equals and compareTo are consistent on domain classes (they are not)
 * User stories - add new Employee
 * User stories - add new Customer
 * User stories - add new Vehicle
