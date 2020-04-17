@@ -1,7 +1,7 @@
 package pl.coderslab.vehicle;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class VehicleDto implements Comparable<VehicleDto> {
 
@@ -14,6 +14,21 @@ public class VehicleDto implements Comparable<VehicleDto> {
     private String notes;
     private String ownerFullname;
     private String carSignature;
+
+    public VehicleDto() {
+    }
+
+    protected VehicleDto(int vehicleId, int carId, int ownerId, String registryPlate, LocalDate nextInspection, String color, String notes, String ownerFullname, String carSignature) {
+        this.vehicleId = vehicleId;
+        this.carId = carId;
+        this.ownerId = ownerId;
+        this.registryPlate = registryPlate;
+        this.nextInspection = nextInspection;
+        this.color = color;
+        this.notes = notes;
+        this.ownerFullname = ownerFullname;
+        this.carSignature = carSignature;
+    }
 
     public int getVehicleId() {
         return vehicleId;
@@ -94,5 +109,21 @@ public class VehicleDto implements Comparable<VehicleDto> {
             result = this.registryPlate.compareToIgnoreCase(o.registryPlate);
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VehicleDto)) return false;
+        VehicleDto that = (VehicleDto) o;
+        return getCarId() == that.getCarId() &&
+                getOwnerId() == that.getOwnerId() &&
+                getRegistryPlate().equals(that.getRegistryPlate()) &&
+                getColor().equals(that.getColor());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCarId(), getOwnerId(), getRegistryPlate(), getColor());
     }
 }
