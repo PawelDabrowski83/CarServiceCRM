@@ -116,14 +116,27 @@ public class VehicleDto implements Comparable<VehicleDto> {
         if (this == o) return true;
         if (!(o instanceof VehicleDto)) return false;
         VehicleDto that = (VehicleDto) o;
-        return getCarId() == that.getCarId() &&
-                getOwnerId() == that.getOwnerId() &&
-                getRegistryPlate().equals(that.getRegistryPlate()) &&
-                getColor().equals(that.getColor());
+        return getRegistryPlate().equals(that.getRegistryPlate()) &&
+                getCarSignature().equals(that.getCarSignature());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCarId(), getOwnerId(), getRegistryPlate(), getColor());
+        return Objects.hash(getRegistryPlate(), getCarSignature());
+    }
+
+    @Override
+    public String toString() {
+        return "VehicleDto{" +
+                "vehicleId=" + vehicleId +
+                ", carId=" + carId +
+                ", ownerId=" + ownerId +
+                ", registryPlate='" + registryPlate + '\'' +
+                ", nextInspection=" + nextInspection +
+                ", color='" + color + '\'' +
+                ", notes='" + notes + '\'' +
+                ", ownerFullname='" + ownerFullname + '\'' +
+                ", carSignature='" + carSignature + '\'' +
+                '}';
     }
 }
