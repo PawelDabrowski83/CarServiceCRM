@@ -33,14 +33,15 @@ Completed:
 * Labor backend validation
 * Car domain test
 * Person domain test
+* Vehicle domain test
 
 Next step:
-* Vehicle domain test
+* Customer domain test
 
 To Do:
 * Employee domain test
-* Customer domain test
 * Labor domain test
+* VehicleMapperTest is on hold
 * Employee Dao, Service and Controller test
 * Customer Dao, Service and Controller test
 * Labor Dao, Service and Controller test
