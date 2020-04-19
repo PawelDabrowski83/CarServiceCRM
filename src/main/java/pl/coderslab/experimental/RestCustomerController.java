@@ -1,4 +1,4 @@
-package pl.coderslab.customer;
+package pl.coderslab.experimental;
 
 import pl.coderslab.commons.ParameterReaderService;
 
