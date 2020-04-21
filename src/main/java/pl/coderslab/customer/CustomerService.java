@@ -11,44 +11,49 @@ import java.util.stream.Collectors;
 
 public class CustomerService implements ServiceInterface<CustomerDto> {
 
-    private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
-    private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
+    private final MapperInterface<CustomerDto, Customer, CustomerEntity> customerMapper;
+    private final GenericDao<CustomerEntity> customerDao;
+
+    public CustomerService(MapperInterface<CustomerDto, Customer, CustomerEntity> customerMapper, GenericDao<CustomerEntity> customerDao) {
+        this.customerMapper = customerMapper;
+        this.customerDao = customerDao;
+    }
 
     @Override
     public void create(CustomerDto dto) {
-        CUSTOMER_DAO.create(
-                CUSTOMER_MAPPER.mapServiceToEntity(
-                        CUSTOMER_MAPPER.mapDtoToService(
+        customerDao.create(
+                customerMapper.mapServiceToEntity(
+                        customerMapper.mapDtoToService(
                                 dto)));
     }
 
     @Override
     public CustomerDto read(int id) {
-        Optional<CustomerEntity> entityOptional = Optional.ofNullable(CUSTOMER_DAO.read(id));
+        Optional<CustomerEntity> entityOptional = Optional.ofNullable(customerDao.read(id));
         CustomerEntity entity = entityOptional.orElseGet(CustomerEntity::new);
-        return CUSTOMER_MAPPER.mapServiceToDto(
-                CUSTOMER_MAPPER.mapEntityToService(
+        return customerMapper.mapServiceToDto(
+                customerMapper.mapEntityToService(
                         entity));
     }
 
     @Override
     public void update(CustomerDto dto) {
-        CUSTOMER_DAO.update(
-                CUSTOMER_MAPPER.mapServiceToEntity(
-                        CUSTOMER_MAPPER.mapDtoToService(
+        customerDao.update(
+                customerMapper.mapServiceToEntity(
+                        customerMapper.mapDtoToService(
                                 dto)));
     }
 
     @Override
     public void delete(int id) {
-        CUSTOMER_DAO.delete(id);
+        customerDao.delete(id);
     }
 
     @Override
     public Set<CustomerDto> findAll() {
-        return CUSTOMER_DAO.findAll().stream()
-                .map(CUSTOMER_MAPPER::mapEntityToService)
-                .map(CUSTOMER_MAPPER::mapServiceToDto)
+        return customerDao.findAll().stream()
+                .map(customerMapper::mapEntityToService)
+                .map(customerMapper::mapServiceToDto)
                 .collect(Collectors.toCollection(TreeSet::new));
     }
 }

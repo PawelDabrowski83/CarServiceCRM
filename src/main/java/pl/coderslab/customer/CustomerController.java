@@ -1,5 +1,7 @@
 package pl.coderslab.customer;
 
+import pl.coderslab.commons.GenericDao;
+import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.person.PersonDto;
 import pl.coderslab.person.PersonService;
 import pl.coderslab.commons.ParameterReaderService;
@@ -21,7 +23,10 @@ public class CustomerController extends HttpServlet {
     private static final String SHOW_ALL_CUSTOMERS = "/WEB-INF/jsp/allCustomers.jsp";
     private static final String PREPARE_ALL_CUSTOMERS = "/customers?action=view";
     private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
-    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService();
+    private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
+    private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
+    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");

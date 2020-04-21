@@ -1,10 +1,7 @@
 package pl.coderslab.vehicle;
 
 import pl.coderslab.car.*;
-import pl.coderslab.commons.MapperInterface;
-import pl.coderslab.commons.ParameterReaderService;
-import pl.coderslab.commons.ServiceInterface;
-import pl.coderslab.commons.ValidatorInterface;
+import pl.coderslab.commons.*;
 import pl.coderslab.customer.*;
 
 import javax.servlet.ServletException;
@@ -26,8 +23,9 @@ public class VehicleController extends HttpServlet {
     private static final String PREPARE_ALL_VEHICLES = "/vehicles?action=view";
     private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService();
     private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
-    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService();
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
+    private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
+    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);
     private static final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService();
     private static final ValidatorInterface<VehicleDto> VEHICLE_VALIDATOR = new VehicleValidator();
 
