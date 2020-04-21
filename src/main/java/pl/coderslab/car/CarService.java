@@ -11,8 +11,13 @@ import java.util.stream.Collectors;
 
 public class CarService implements ServiceInterface<CarDto> {
 
-    private static final GenericDao<CarEntity> CAR_DAO = new CarDaoImpl();
-    private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
+    private final GenericDao<CarEntity> CAR_DAO;
+    private final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER;
+
+    public CarService(GenericDao<CarEntity> CAR_DAO, MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER) {
+        this.CAR_DAO = CAR_DAO;
+        this.CAR_MAPPER = CAR_MAPPER;
+    }
 
     @Override
     public void create(CarDto dto) {
@@ -24,7 +29,7 @@ public class CarService implements ServiceInterface<CarDto> {
 
     @Override
     public CarDto read(int id) {
-        Optional<CarEntity> entityOptional = Optional.of(CAR_DAO.read(id));
+        Optional<CarEntity> entityOptional = Optional.ofNullable(CAR_DAO.read(id));
         CarEntity entity = entityOptional.orElseGet(CarEntity::new);
         return CAR_MAPPER.mapServiceToDto(
                 CAR_MAPPER.mapEntityToService(

@@ -21,8 +21,9 @@ public class VehicleController extends HttpServlet {
     private static final String FORM_VEHICLE = "/WEB-INF/jsp/formVehicles.jsp";
     private static final String SHOW_ALL_VEHICLES = "/WEB-INF/jsp/allVehicles.jsp";
     private static final String PREPARE_ALL_VEHICLES = "/vehicles?action=view";
-    private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService();
+    private static final GenericDao<CarEntity> CAR_DAO = new CarDaoImpl();
     private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
+    private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService(CAR_DAO, CAR_MAPPER);
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
     private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
     private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);

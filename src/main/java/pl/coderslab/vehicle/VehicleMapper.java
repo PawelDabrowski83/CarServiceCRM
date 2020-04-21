@@ -9,7 +9,8 @@ import pl.coderslab.customer.*;
 public class VehicleMapper implements MapperInterface<VehicleDto, Vehicle, VehicleEntity> {
 
     private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
-    private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService();
+    private static final GenericDao<CarEntity> CAR_DAO = new CarDaoImpl();
+    private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService(CAR_DAO, CAR_MAPPER);
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
     private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
     private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);

@@ -1,8 +1,6 @@
 package pl.coderslab.car;
 
-import pl.coderslab.commons.ParameterReaderService;
-import pl.coderslab.commons.ServiceInterface;
-import pl.coderslab.commons.ValidatorInterface;
+import pl.coderslab.commons.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +17,9 @@ public class CarController extends HttpServlet {
     private static final String SHOW_ALL_CARS = "/WEB-INF/jsp/allCars.jsp";
     private static final String PREPARE_ALL_CARS = "/cars?action=view";
     private static final String CHARACTER_ENCODING = "UTF-8";
-    private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService();
+    private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
+    private static final GenericDao<CarEntity> CAR_DAO = new CarDaoImpl();
+    private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService(CAR_DAO, CAR_MAPPER);
     private static final ValidatorInterface<CarDto> CAR_VALIDATOR = new CarValidator();
 
     @Override
