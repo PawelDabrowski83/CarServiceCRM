@@ -11,6 +11,11 @@ import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.assertEquals;
 
@@ -69,6 +74,36 @@ public class CustomerServiceTest {
 
         // then
         assertEquals(customerDtoExpected.getPersonalId(), customerDtoActual.getPersonalId());
-        assertEquals(customerDtoExpected, customerDtoActual);
+    }
+
+    @Test
+    public void shouldUpdateWork() {
+
+        // when
+        customerService.update(customerDto);
+
+        // then
+        verify(customerDao, times(1)).update(customerEntity);
+    }
+
+    @Test
+    public void shouldDeleteWork() {
+
+        // when
+        customerService.delete(1);
+
+        // then
+        verify(customerDao, times(1)).delete(1);
+    }
+
+    @Test
+    public void shouldFindAllWork() {
+
+        // when
+        customerService.findAll();
+
+        // then
+        verify(customerDao, times(1)).findAll();
+
     }
 }
