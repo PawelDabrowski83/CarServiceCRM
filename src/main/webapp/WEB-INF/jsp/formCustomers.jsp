@@ -27,6 +27,9 @@
             <option value="${person.id}">${person.fullname}</option>
         </c:forEach>
     </select><br/>
+    <c:if test="${error}">
+        ${errorMessage}<br/>
+    </c:if>
     <input type="submit" value="Save"/>
 
 </form>
