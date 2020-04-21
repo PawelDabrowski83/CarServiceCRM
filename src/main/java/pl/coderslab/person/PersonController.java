@@ -1,5 +1,6 @@
 package pl.coderslab.person;
 
+import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ParameterReaderService;
 import pl.coderslab.commons.ValidatorInterface;
 
@@ -21,7 +22,9 @@ public class PersonController extends HttpServlet {
     private static final String PERSON_FORM = "/WEB-INF/jsp/formPersonDetails.jsp";
     private static final String SHOW_ALL_PERSONS = "/WEB-INF/jsp/allPersonDetails.jsp";
     private static final String PREP_ALL_PERSONS = PERSON_PATH + "?action=view";
-    private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
+    private static final PersonDaoInterface<PersonEntity> PERSON_DAO = new PersonDaoImpl();
+    private static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
+    private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService(PERSON_DAO, PERSON_MAPPER);
     private static final ValidatorInterface<PersonDto> PERSON_VALIDATOR = new PersonValidator();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

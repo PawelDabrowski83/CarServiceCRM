@@ -2,11 +2,9 @@ package pl.coderslab.customer;
 
 import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
-import pl.coderslab.person.PersonDto;
-import pl.coderslab.person.PersonService;
+import pl.coderslab.person.*;
 import pl.coderslab.commons.ParameterReaderService;
 import pl.coderslab.commons.ServiceInterface;
-import pl.coderslab.person.PersonServiceInterface;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +20,10 @@ public class CustomerController extends HttpServlet {
     private static final String FORM_CUSTOMER = "/WEB-INF/jsp/formCustomers.jsp";
     private static final String SHOW_ALL_CUSTOMERS = "/WEB-INF/jsp/allCustomers.jsp";
     private static final String PREPARE_ALL_CUSTOMERS = "/customers?action=view";
-    private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
+    private static final PersonDaoInterface<PersonEntity> PERSON_DAO = new PersonDaoImpl();
+    private static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
+    private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService(PERSON_DAO, PERSON_MAPPER);
     private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
     private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);
 
