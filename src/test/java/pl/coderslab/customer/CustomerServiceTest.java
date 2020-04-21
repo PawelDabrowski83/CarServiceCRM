@@ -1,20 +1,12 @@
 package pl.coderslab.customer;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
 import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.assertEquals;
@@ -29,9 +21,6 @@ public class CustomerServiceTest {
     CustomerDto customerDto = mock(CustomerDto.class);
     ServiceInterface<CustomerDto> customerService = new CustomerService(customerMapper, customerDao);
 
-//    @Rule
-//    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
     @Before
     public void setUp() {
         when(customerMapper.mapServiceToDto(customer)).thenReturn(customerDto);
@@ -43,8 +32,6 @@ public class CustomerServiceTest {
 
     @Test
     public void shouldCustomerServiceCreateWork() {
-
-        // given
 
         // when
         customerService.create(customerDto);
