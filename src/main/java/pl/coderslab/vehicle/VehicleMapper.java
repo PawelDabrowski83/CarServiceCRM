@@ -1,6 +1,7 @@
 package pl.coderslab.vehicle;
 
 import pl.coderslab.car.*;
+import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 import pl.coderslab.customer.*;
@@ -10,7 +11,8 @@ public class VehicleMapper implements MapperInterface<VehicleDto, Vehicle, Vehic
     private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
     private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService();
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
-    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService();
+    private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
+    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);
 
     @Override
     public VehicleDto mapServiceToDto(Vehicle vehicle) {
