@@ -3,8 +3,7 @@ package pl.coderslab.labor;
 import pl.coderslab.commons.*;
 import pl.coderslab.customer.CustomerDto;
 import pl.coderslab.customer.CustomerService;
-import pl.coderslab.employee.EmployeeDto;
-import pl.coderslab.employee.EmployeeService;
+import pl.coderslab.employee.*;
 import pl.coderslab.vehicle.*;
 
 import javax.servlet.ServletException;
@@ -28,7 +27,9 @@ public class LaborController extends HttpServlet {
     private static final GenericDao<VehicleEntity> VEHICLE_DAO = new VehicleDaoImpl();
     private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper();
     private static final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
-    private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService();
+    private static final GenericDao<EmployeeEntity> EMPLOYEE_DAO = new EmployeeDaoImpl();
+    private static final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper();
+    private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
     private static final ValidatorInterface<LaborDto> LABOR_VALIDATOR = new LaborValidator();
 
     @Override
