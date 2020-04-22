@@ -20,28 +20,15 @@ Database model:
 
 Completed:
 * Index.jsp front
-* Person Dao
-* Employee Dao
-* Customer Dao
-* Car Dao
-* Vehicle Dao
-* Labor Dao
-* Person form backend validation
-* Customer, Employee form backend validation
-* Car backend validation
-* Backend validation on Vehicle form
-* Labor backend validation
-* Car domain test
-* Person domain test
-* Vehicle domain test
-* Customer domain test
-* VehicleService, PersonService, CustomerService, CarService tested
+* All Dao and domains
+* All form backend validation
+* Car, Vehicle, Person, Customer, Employee domain test
+* VehicleService, PersonService, CustomerService, CarService, EmployeeService tested
 
 Next step:
-* Employee domain and service test
+* Labor domain test
 
 To Do:
-* Labor domain test
 * VehicleMapperTest is on hold
 * Employee Dao and Controller test
 * Customer Dao and Controller test
