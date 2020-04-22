@@ -2,6 +2,7 @@ package pl.coderslab.labor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class LaborEntity {
 
@@ -29,6 +30,28 @@ public class LaborEntity {
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active;
+
+    public LaborEntity() {
+    }
+
+    protected LaborEntity(int laborId, LocalDate registrationDate, LocalDate scheduledDate, LocalDate startedDate, LocalDate finishedDate, int employeeId, String descriptionIssue, String descriptionService, StatusEnum status, int vehicleId, double customerCost, double materialCost, int mhTotal, LocalDateTime created, LocalDateTime updated, boolean active) {
+        this.laborId = laborId;
+        this.registrationDate = registrationDate;
+        this.scheduledDate = scheduledDate;
+        this.startedDate = startedDate;
+        this.finishedDate = finishedDate;
+        this.employeeId = employeeId;
+        this.descriptionIssue = descriptionIssue;
+        this.descriptionService = descriptionService;
+        this.status = status;
+        this.vehicleId = vehicleId;
+        this.customerCost = customerCost;
+        this.materialCost = materialCost;
+        this.mhTotal = mhTotal;
+        this.created = created;
+        this.updated = updated;
+        this.active = active;
+    }
 
     public int getLaborId() {
         return laborId;
@@ -156,5 +179,42 @@ public class LaborEntity {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LaborEntity)) return false;
+        LaborEntity that = (LaborEntity) o;
+        return getEmployeeId() == that.getEmployeeId() &&
+                getVehicleId() == that.getVehicleId() &&
+                Double.compare(that.getCustomerCost(), getCustomerCost()) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getEmployeeId(), getVehicleId(), getCustomerCost());
+    }
+
+    @Override
+    public String toString() {
+        return "LaborEntity{" +
+                "laborId=" + laborId +
+                ", registrationDate=" + registrationDate +
+                ", scheduledDate=" + scheduledDate +
+                ", startedDate=" + startedDate +
+                ", finishedDate=" + finishedDate +
+                ", employeeId=" + employeeId +
+                ", descriptionIssue='" + descriptionIssue + '\'' +
+                ", descriptionService='" + descriptionService + '\'' +
+                ", status=" + status +
+                ", vehicleId=" + vehicleId +
+                ", customerCost=" + customerCost +
+                ", materialCost=" + materialCost +
+                ", mhTotal=" + mhTotal +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", active=" + active +
+                '}';
     }
 }
