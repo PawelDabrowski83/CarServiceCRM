@@ -4,13 +4,21 @@ import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 
-import java.util.*;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class EmployeeService implements ServiceInterface<EmployeeDto> {
 
-    private static final GenericDao<EmployeeEntity> EMPLOYEE_DAO = new EmployeeDaoImpl();
-    private static final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper();
+    private final GenericDao<EmployeeEntity> EMPLOYEE_DAO;
+    private final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER;
+
+
+    public EmployeeService(GenericDao<EmployeeEntity> EMPLOYEE_DAO, MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER) {
+        this.EMPLOYEE_DAO = EMPLOYEE_DAO;
+        this.EMPLOYEE_MAPPER = EMPLOYEE_MAPPER;
+    }
 
     @Override
     public void create(EmployeeDto dto) {
