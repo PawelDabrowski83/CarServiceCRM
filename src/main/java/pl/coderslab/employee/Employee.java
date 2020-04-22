@@ -3,6 +3,7 @@ package pl.coderslab.employee;
 import pl.coderslab.person.Person;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Employee implements Comparable<Employee> {
 
@@ -12,6 +13,18 @@ public class Employee implements Comparable<Employee> {
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active = true;
+
+    public Employee() {
+    }
+
+    protected Employee(int employeeId, Person person, double mhCost, LocalDateTime created, LocalDateTime updated, boolean active) {
+        this.employeeId = employeeId;
+        this.person = person;
+        this.mhCost = mhCost;
+        this.created = created;
+        this.updated = updated;
+        this.active = active;
+    }
 
     public int getEmployeeId() {
         return employeeId;
@@ -64,5 +77,30 @@ public class Employee implements Comparable<Employee> {
     @Override
     public int compareTo(Employee o) {
         return this.person.compareTo(o.person);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return getPerson().equals(employee.getPerson());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPerson());
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", person=" + person +
+                ", mhCost=" + mhCost +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", active=" + active +
+                '}';
     }
 }
