@@ -11,8 +11,13 @@ import java.util.stream.Collectors;
 
 public class LaborService implements ServiceInterface<LaborDto> {
 
-    private static final GenericDao<LaborEntity> LABOR_DAO = new LaborDaoImpl();
-    private static final MapperInterface<LaborDto, Labor, LaborEntity> LABOR_MAPPER = new LaborMapper();
+    private final GenericDao<LaborEntity> LABOR_DAO;
+    private final MapperInterface<LaborDto, Labor, LaborEntity> LABOR_MAPPER;
+
+    public LaborService(GenericDao<LaborEntity> LABOR_DAO, MapperInterface<LaborDto, Labor, LaborEntity> LABOR_MAPPER) {
+        this.LABOR_DAO = LABOR_DAO;
+        this.LABOR_MAPPER = LABOR_MAPPER;
+    }
 
     @Override
     public void create(LaborDto dto) {
