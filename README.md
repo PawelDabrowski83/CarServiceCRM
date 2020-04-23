@@ -1,7 +1,7 @@
 # CarServiceCRM
 
 <p>Simple CRM on Servlet+JSP, Dao implementation and data object separation.</p> 
-<p>There is no Spring or Hibernate on purpose, because I am practicing servlets.
+<p>There is no Spring or Hibernate on purpose, because I am practicing servlets.<br/>
 CRUD - there is no Delete operation, only Update with set active = 0.</p>
 
 Database model:
