@@ -20,34 +20,22 @@ Database model:
 
 Completed:
 * Index.jsp front
-* Person Dao
-* Employee Dao
-* Customer Dao
-* Car Dao
-* Vehicle Dao
-* Labor Dao
-* Person form backend validation
-* Customer, Employee form backend validation
-* Car backend validation
-* Backend validation on Vehicle form
-* Labor backend validation
-* Car domain test
-* Person domain test
-* Vehicle domain test
+* All Dao and domains
+* All form backend validation
+* Car, Vehicle, Person, Customer, Employee domain test
+* VehicleService, PersonService, CustomerService, CarService, EmployeeService tested
 
 Next step:
-* Customer domain test
+* Labor domain test
 
 To Do:
-* Employee domain test
-* Labor domain test
 * VehicleMapperTest is on hold
-* Employee Dao, Service and Controller test
-* Customer Dao, Service and Controller test
+* Employee Dao and Controller test
+* Customer Dao and Controller test
 * Labor Dao, Service and Controller test
-* Person Dao, Service and Controller test
-* Car Dao, Service and Controller test
-* Vehicle Dao, Service and Controller test
+* Person Dao and Controller test
+* Car Dao and Controller test
+* Vehicle Dao and Controller test
 * make sure that equals and compareTo are consistent on domain classes (they are not)
 * User stories - add new Employee
 * User stories - add new Customer

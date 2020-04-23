@@ -1,14 +1,10 @@
 package pl.coderslab.labor;
 
-import pl.coderslab.commons.ParameterReaderService;
-import pl.coderslab.commons.ServiceInterface;
-import pl.coderslab.commons.ValidatorInterface;
+import pl.coderslab.commons.*;
 import pl.coderslab.customer.CustomerDto;
 import pl.coderslab.customer.CustomerService;
-import pl.coderslab.employee.EmployeeDto;
-import pl.coderslab.employee.EmployeeService;
-import pl.coderslab.vehicle.VehicleDto;
-import pl.coderslab.vehicle.VehicleService;
+import pl.coderslab.employee.*;
+import pl.coderslab.vehicle.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,9 +23,15 @@ public class LaborController extends HttpServlet {
     private static final String FORM_LABOR = "/WEB-INF/jsp/formLabors.jsp";
     private static final String PREPARE_ALL_LABORS = "/labors?action=view";
     private static final String SHOW_ALL_LABORS = "/WEB-INF/jsp/allLabors.jsp";
-    private static final ServiceInterface<LaborDto> LABOR_SERVICE = new LaborService();
-    private static final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService();
-    private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService();
+    private static final GenericDao<LaborEntity> LABOR_DAO = new LaborDaoImpl();
+    private static final MapperInterface<LaborDto, Labor, LaborEntity> LABOR_MAPPER = new LaborMapper();
+    private static final ServiceInterface<LaborDto> LABOR_SERVICE = new LaborService(LABOR_DAO, LABOR_MAPPER);
+    private static final GenericDao<VehicleEntity> VEHICLE_DAO = new VehicleDaoImpl();
+    private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper();
+    private static final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
+    private static final GenericDao<EmployeeEntity> EMPLOYEE_DAO = new EmployeeDaoImpl();
+    private static final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper();
+    private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
     private static final ValidatorInterface<LaborDto> LABOR_VALIDATOR = new LaborValidator();
 
     @Override

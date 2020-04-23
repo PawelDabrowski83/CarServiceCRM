@@ -1,7 +1,10 @@
 package pl.coderslab.customer;
 
-import pl.coderslab.commons.*;
+import pl.coderslab.commons.GenericDao;
+import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.person.*;
+import pl.coderslab.commons.ParameterReaderService;
+import pl.coderslab.commons.ServiceInterface;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

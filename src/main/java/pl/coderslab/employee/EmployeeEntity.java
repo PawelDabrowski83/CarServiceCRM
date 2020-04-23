@@ -1,6 +1,7 @@
 package pl.coderslab.employee;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class EmployeeEntity {
 
@@ -10,6 +11,18 @@ public class EmployeeEntity {
     private LocalDateTime created;
     private LocalDateTime updated;
     private boolean active = true;
+
+    public EmployeeEntity() {
+    }
+
+    protected EmployeeEntity(int employeeId, int personId, double mhCost, LocalDateTime created, LocalDateTime updated, boolean active) {
+        this.employeeId = employeeId;
+        this.personId = personId;
+        this.mhCost = mhCost;
+        this.created = created;
+        this.updated = updated;
+        this.active = active;
+    }
 
     public int getEmployeeId() {
         return employeeId;
@@ -59,4 +72,28 @@ public class EmployeeEntity {
         this.active = active;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmployeeEntity)) return false;
+        EmployeeEntity that = (EmployeeEntity) o;
+        return getPersonId() == that.getPersonId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPersonId());
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeEntity{" +
+                "employeeId=" + employeeId +
+                ", personId=" + personId +
+                ", mhCost=" + mhCost +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", active=" + active +
+                '}';
+    }
 }

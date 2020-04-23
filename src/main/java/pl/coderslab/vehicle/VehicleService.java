@@ -11,44 +11,49 @@ import java.util.stream.Collectors;
 
 public class VehicleService implements ServiceInterface<VehicleDto> {
 
-    private static final GenericDao<VehicleEntity> VEHICLE_DAO = new VehicleDaoImpl();
-    private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper();
+    private final GenericDao<VehicleEntity> vehicleDao;
+    private final MapperInterface<VehicleDto, Vehicle, VehicleEntity> vehicleMapper;
+
+    public VehicleService(GenericDao<VehicleEntity> vehicleDao, MapperInterface<VehicleDto, Vehicle, VehicleEntity> vehicleMapper) {
+        this.vehicleDao = vehicleDao;
+        this.vehicleMapper = vehicleMapper;
+    }
 
     @Override
     public void create(VehicleDto dto) {
-        VEHICLE_DAO.create(
-                VEHICLE_MAPPER.mapServiceToEntity(
-                        VEHICLE_MAPPER.mapDtoToService(
+        vehicleDao.create(
+                vehicleMapper.mapServiceToEntity(
+                        vehicleMapper.mapDtoToService(
                                 dto)));
     }
 
     @Override
     public VehicleDto read(int id) {
-        Optional<VehicleEntity> vehicleEntity = Optional.ofNullable(VEHICLE_DAO.read(id));
+        Optional<VehicleEntity> vehicleEntity = Optional.ofNullable(vehicleDao.read(id));
         VehicleEntity entity = vehicleEntity.orElseGet(VehicleEntity::new);
-        return VEHICLE_MAPPER.mapServiceToDto(
-                VEHICLE_MAPPER.mapEntityToService(
+        return vehicleMapper.mapServiceToDto(
+                vehicleMapper.mapEntityToService(
                         entity));
     }
 
     @Override
     public void update(VehicleDto dto) {
-        VEHICLE_DAO.update(
-                VEHICLE_MAPPER.mapServiceToEntity(
-                        VEHICLE_MAPPER.mapDtoToService(
+        vehicleDao.update(
+                vehicleMapper.mapServiceToEntity(
+                        vehicleMapper.mapDtoToService(
                                 dto)));
     }
 
     @Override
     public void delete(int id) {
-        VEHICLE_DAO.delete(id);
+        vehicleDao.delete(id);
     }
 
     @Override
     public Set<VehicleDto> findAll() {
-        return VEHICLE_DAO.findAll().stream()
-                .map(VEHICLE_MAPPER::mapEntityToService)
-                .map(VEHICLE_MAPPER::mapServiceToDto)
+        return vehicleDao.findAll().stream()
+                .map(vehicleMapper::mapEntityToService)
+                .map(vehicleMapper::mapServiceToDto)
                 .collect(Collectors.toCollection(TreeSet::new));
     }
 }

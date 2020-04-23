@@ -1,6 +1,7 @@
 package pl.coderslab.labor;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class LaborDto implements Comparable<LaborDto>{
 
@@ -20,6 +21,28 @@ public class LaborDto implements Comparable<LaborDto>{
     private double materialCost;
     private int mhTotal;
     private String customerFullname;
+
+    public LaborDto() {
+    }
+
+    protected LaborDto(int laborId, LocalDate registrationDate, LocalDate scheduledDate, LocalDate startedDate, LocalDate finishedDate, int employeeId, String employeeFullname, String descriptionIssue, String descriptionService, String status, int vehicleId, String vehicleSignature, double customerCost, double materialCost, int mhTotal, String customerFullname) {
+        this.laborId = laborId;
+        this.registrationDate = registrationDate;
+        this.scheduledDate = scheduledDate;
+        this.startedDate = startedDate;
+        this.finishedDate = finishedDate;
+        this.employeeId = employeeId;
+        this.employeeFullname = employeeFullname;
+        this.descriptionIssue = descriptionIssue;
+        this.descriptionService = descriptionService;
+        this.status = status;
+        this.vehicleId = vehicleId;
+        this.vehicleSignature = vehicleSignature;
+        this.customerCost = customerCost;
+        this.materialCost = materialCost;
+        this.mhTotal = mhTotal;
+        this.customerFullname = customerFullname;
+    }
 
     public int getLaborId() {
         return laborId;
@@ -159,5 +182,42 @@ public class LaborDto implements Comparable<LaborDto>{
             result = this.vehicleSignature.compareToIgnoreCase(o.vehicleSignature);
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LaborDto)) return false;
+        LaborDto laborDto = (LaborDto) o;
+        return getRegistrationDate().equals(laborDto.getRegistrationDate()) &&
+                getScheduledDate().equals(laborDto.getScheduledDate()) &&
+                getVehicleSignature().equals(laborDto.getVehicleSignature());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getRegistrationDate(), getScheduledDate(), getVehicleSignature());
+    }
+
+    @Override
+    public String toString() {
+        return "LaborDto{" +
+                "laborId=" + laborId +
+                ", registrationDate=" + registrationDate +
+                ", scheduledDate=" + scheduledDate +
+                ", startedDate=" + startedDate +
+                ", finishedDate=" + finishedDate +
+                ", employeeId=" + employeeId +
+                ", employeeFullname='" + employeeFullname + '\'' +
+                ", descriptionIssue='" + descriptionIssue + '\'' +
+                ", descriptionService='" + descriptionService + '\'' +
+                ", status='" + status + '\'' +
+                ", vehicleId=" + vehicleId +
+                ", vehicleSignature='" + vehicleSignature + '\'' +
+                ", customerCost=" + customerCost +
+                ", materialCost=" + materialCost +
+                ", mhTotal=" + mhTotal +
+                ", customerFullname='" + customerFullname + '\'' +
+                '}';
     }
 }
