@@ -7,8 +7,13 @@ import java.util.stream.Collectors;
 
 public class PersonService implements PersonServiceInterface<PersonDto> {
 
-    public static final PersonDaoInterface<PersonEntity> PERSON_DAO = new PersonDaoImpl();
-    public static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
+    public final PersonDaoInterface<PersonEntity> PERSON_DAO;
+    public final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER;
+
+    public PersonService(PersonDaoInterface<PersonEntity> PERSON_DAO, MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER) {
+        this.PERSON_DAO = PERSON_DAO;
+        this.PERSON_MAPPER = PERSON_MAPPER;
+    }
 
     public void create (PersonDto dto) {
         PERSON_DAO.create(

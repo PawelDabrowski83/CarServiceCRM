@@ -1,11 +1,10 @@
 package pl.coderslab.employee;
 
+import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ValidatorInterface;
-import pl.coderslab.person.PersonDto;
-import pl.coderslab.person.PersonService;
+import pl.coderslab.person.*;
 import pl.coderslab.commons.ParameterReaderService;
 import pl.coderslab.commons.ServiceInterface;
-import pl.coderslab.person.PersonServiceInterface;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +21,9 @@ public class EmployeeController extends HttpServlet {
     private static final String SHOW_ALL_EMPLOYEES = "/WEB-INF/jsp/allEmployees.jsp";
     private static final String PREPARE_ALL_EMPLOYEES = "/employees?action=view";
     private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService();
-    private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService();
+    private static final PersonDaoInterface<PersonEntity> PERSON_DAO = new PersonDaoImpl();
+    private static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
+    private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService(PERSON_DAO, PERSON_MAPPER);
     private static final String EMPLOYEE_ID = "employeeId";
     private static final ValidatorInterface<EmployeeDto> EMPLOYEE_VALIDATOR = new EmployeeValidator();
 
