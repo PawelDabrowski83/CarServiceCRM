@@ -26,7 +26,7 @@ Completed:
 * All Service tested
 
 Next step:
-* check if all mappers are tested
+* EmployeeMapper, LaborMapper
 
 To Do:
 * Tests on Dao - actually I am not sure yet how to test it yet
