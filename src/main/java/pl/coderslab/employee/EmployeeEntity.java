@@ -10,7 +10,7 @@ public class EmployeeEntity {
     private double mhCost; // man-hour
     private LocalDateTime created;
     private LocalDateTime updated;
-    private boolean active = true;
+    private boolean active;
 
     public EmployeeEntity() {
     }

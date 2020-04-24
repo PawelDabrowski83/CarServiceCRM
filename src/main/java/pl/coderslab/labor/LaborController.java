@@ -39,7 +39,7 @@ public class LaborController extends HttpServlet {
     private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper(CAR_MAPPER, CUSTOMER_MAPPER, CAR_SERVICE, CUSTOMER_SERVICE);
     private static final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
     private static final GenericDao<EmployeeEntity> EMPLOYEE_DAO = new EmployeeDaoImpl();
-    private static final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper();
+    private static final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper(PERSON_DAO, PERSON_MAPPER);
     private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
     private static final ValidatorInterface<LaborDto> LABOR_VALIDATOR = new LaborValidator();
 

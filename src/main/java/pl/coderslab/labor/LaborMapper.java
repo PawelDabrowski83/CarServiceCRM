@@ -11,12 +11,12 @@ import pl.coderslab.vehicle.*;
 
 public class LaborMapper implements MapperInterface<LaborDto, Labor, LaborEntity> {
 
-    private static final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper();
     private static final GenericDao<EmployeeEntity> EMPLOYEE_DAO = new EmployeeDaoImpl();
-    private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
     private static final GenericDao<VehicleEntity> VEHICLE_DAO = new VehicleDaoImpl();
     private static final PersonDaoInterface<PersonEntity> PERSON_DAO = new PersonDaoImpl();
     private static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
+    private static final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper(PERSON_DAO, PERSON_MAPPER);
+    private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
     private static final GenericDao<CarEntity> CAR_DAO = new CarDaoImpl();
     private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
     private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService(CAR_DAO, CAR_MAPPER);

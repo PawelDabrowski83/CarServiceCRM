@@ -12,7 +12,7 @@ public class Employee implements Comparable<Employee> {
     private double mhCost;
     private LocalDateTime created;
     private LocalDateTime updated;
-    private boolean active = true;
+    private boolean active;
 
     public Employee() {
     }

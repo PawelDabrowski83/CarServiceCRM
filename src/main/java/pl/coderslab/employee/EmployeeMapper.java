@@ -48,6 +48,9 @@ public class EmployeeMapper implements MapperInterface<EmployeeDto,Employee,Empl
         employee.setEmployeeId(entity.getEmployeeId());
         employee.setPerson(PERSON_MAPPER.mapEntityToService(PERSON_DAO.read(entity.getPersonId())));
         employee.setMhCost(entity.getMhCost());
+        employee.setCreated(entity.getCreated());
+        employee.setUpdated(entity.getUpdated());
+        employee.setActive(entity.isActive());
         return employee;
     }
 }
