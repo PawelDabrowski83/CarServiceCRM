@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 public class CustomerService implements ServiceInterface<CustomerDto> {
 
-    private final MapperInterface<CustomerDto, Customer, CustomerEntity> customerMapper;
     private final GenericDao<CustomerEntity> customerDao;
+    private final MapperInterface<CustomerDto, Customer, CustomerEntity> customerMapper;
 
-    public CustomerService(MapperInterface<CustomerDto, Customer, CustomerEntity> customerMapper, GenericDao<CustomerEntity> customerDao) {
-        this.customerMapper = customerMapper;
+    public CustomerService(GenericDao<CustomerEntity> customerDao, MapperInterface<CustomerDto, Customer, CustomerEntity> customerMapper) {
         this.customerDao = customerDao;
+        this.customerMapper = customerMapper;
     }
 
     @Override
