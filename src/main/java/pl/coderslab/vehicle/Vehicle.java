@@ -174,7 +174,7 @@ public class Vehicle implements Comparable<Vehicle>{
         if (result == 0 && this.nextInspection != null && o.nextInspection != null) {
             result = this.nextInspection.compareTo(o.nextInspection);
         }
-        if (result == 0 && this.color != null || o.color != null) {
+        if (result == 0 && this.color != null && o.color != null) {
             result = this.color.compareToIgnoreCase(o.color);
         }
         return result;
