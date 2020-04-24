@@ -169,8 +169,6 @@ public class PersonDto implements Comparable<PersonDto> {
         PersonDto personDto = (PersonDto) o;
         return getFirstName().equals(personDto.getFirstName()) &&
                 getLastName().equals(personDto.getLastName()) &&
-                Objects.equals(getAddress(), personDto.getAddress()) &&
-                getPhone().equals(personDto.getPhone()) &&
                 getBirthYear().equals(personDto.getBirthYear()) &&
                 getBirthMonth().equals(personDto.getBirthMonth()) &&
                 getBirthDay().equals(personDto.getBirthDay());

@@ -149,12 +149,11 @@ public class PersonEntity implements Comparable<PersonEntity> {
         PersonEntity that = (PersonEntity) o;
         return getFirstName().equals(that.getFirstName()) &&
                 getLastName().equals(that.getLastName()) &&
-                getPhone().equals(that.getPhone()) &&
                 getBirthdate().equals(that.getBirthdate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFirstName(), getLastName(), getPhone(), getBirthdate());
+        return Objects.hash(getFirstName(), getLastName(), getBirthdate());
     }
 }

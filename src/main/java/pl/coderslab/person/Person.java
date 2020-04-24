@@ -178,14 +178,12 @@ public class Person implements Comparable<Person>{
         Person person = (Person) o;
         return getFirstName().equals(person.getFirstName()) &&
                 getLastName().equals(person.getLastName()) &&
-                Objects.equals(getAddress(), person.getAddress()) &&
-                getPhone().equals(person.getPhone()) &&
                 getBirthdate().equals(person.getBirthdate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFirstName(), getLastName(), getAddress(), getPhone(), getBirthdate());
+        return Objects.hash(getFirstName(), getLastName(), getBirthdate());
     }
 
     @Override
