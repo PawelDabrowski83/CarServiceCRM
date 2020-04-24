@@ -256,8 +256,11 @@ public class Labor implements Comparable<Labor>{
         if (result == 0 && this.getScheduledDate() != null && o.getScheduledDate() != null) {
             result = this.getScheduledDate().compareTo(o.getScheduledDate());
         }
-        if (result == 0 && this.employee != null ) {
+        if (result == 0 && this.employee != null && o.employee != null) {
             result = this.employee.compareTo(o.employee);
+        }
+        if (result == 0 && this.vehicle != null &&) {
+
         }
         return result;
     }
