@@ -31,7 +31,7 @@ Next step:
 To Do:
 * Tests on Dao - actually I am not sure yet how to test it yet
 * Tests on Controllers - to do
-* make sure that equals and compareTo are consistent on domain classes (they are not) - Car, Customer, Employee
+* make sure that equals and compareTo are consistent on domain classes (they are not) - Car, Customer, Employee, Labor
 * User stories - add new Employee
 * User stories - add new Customer
 * User stories - add new Vehicle
