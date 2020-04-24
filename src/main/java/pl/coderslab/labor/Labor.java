@@ -259,8 +259,8 @@ public class Labor implements Comparable<Labor>{
         if (result == 0 && this.employee != null && o.employee != null) {
             result = this.employee.compareTo(o.employee);
         }
-        if (result == 0 && this.vehicle != null &&) {
-
+        if (result == 0 && this.vehicle != null && o.vehicle != null) {
+            result = this.vehicle.compareTo(o.vehicle);
         }
         return result;
     }
