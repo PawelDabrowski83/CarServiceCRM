@@ -29,12 +29,8 @@ Next step:
 * VehicleMapperTest
 
 To Do:
-* Employee Dao and Controller test
-* Customer Dao and Controller test
-* Labor Dao and Controller test
-* Person Dao and Controller test
-* Car Dao and Controller test
-* Vehicle Dao and Controller test
+* Tests on Dao - actually I am not sure yet how to test it yet
+* Tests on Controllers - to do
 * make sure that equals and compareTo are consistent on domain classes (they are not)
 * User stories - add new Employee
 * User stories - add new Customer
