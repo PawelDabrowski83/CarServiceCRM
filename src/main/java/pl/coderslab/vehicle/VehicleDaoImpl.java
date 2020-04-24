@@ -12,7 +12,6 @@ import java.util.Set;
 
 public class VehicleDaoImpl implements GenericDao<VehicleEntity> {
 
-    private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper();
     private static final String TABLE_NAME = "vehicles";
     private static final String CREATE_QUERY =
             "INSERT INTO " + TABLE_NAME + " (details_id, registration_plate, next_inspection, owner, color, notes, created, updated) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())";

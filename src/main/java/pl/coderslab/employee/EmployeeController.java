@@ -1,10 +1,7 @@
 package pl.coderslab.employee;
 
-import pl.coderslab.commons.MapperInterface;
-import pl.coderslab.commons.ValidatorInterface;
+import pl.coderslab.commons.*;
 import pl.coderslab.person.*;
-import pl.coderslab.commons.ParameterReaderService;
-import pl.coderslab.commons.ServiceInterface;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

@@ -1,10 +1,8 @@
 package pl.coderslab.customer;
 
-import pl.coderslab.commons.GenericDao;
-import pl.coderslab.commons.MapperInterface;
+import pl.coderslab.commons.*;
 import pl.coderslab.person.*;
-import pl.coderslab.commons.ParameterReaderService;
-import pl.coderslab.commons.ServiceInterface;
+import pl.coderslab.customer.CustomerValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +23,7 @@ public class CustomerController extends HttpServlet {
     private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService(PERSON_DAO, PERSON_MAPPER);
     private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper(PERSON_DAO, PERSON_MAPPER);
-    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);
+    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_DAO, CUSTOMER_MAPPER);
     private static final ValidatorInterface<CustomerDto> CUSTOMER_VALIDATOR = new CustomerValidator();
 
 

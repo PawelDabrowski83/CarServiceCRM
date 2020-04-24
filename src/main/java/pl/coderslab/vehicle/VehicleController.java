@@ -29,9 +29,9 @@ public class VehicleController extends HttpServlet {
     private static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
     private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper(PERSON_DAO, PERSON_MAPPER);
     private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
-    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);
+    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_DAO, CUSTOMER_MAPPER);
     private static final GenericDao<VehicleEntity> VEHICLE_DAO = new VehicleDaoImpl();
-    private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper();
+    private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper(CAR_MAPPER, CUSTOMER_MAPPER, CAR_SERVICE, CUSTOMER_SERVICE);
     private static final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
     private static final ValidatorInterface<VehicleDto> VEHICLE_VALIDATOR = new VehicleValidator();
 
