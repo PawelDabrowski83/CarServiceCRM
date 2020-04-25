@@ -3,18 +3,30 @@ package pl.coderslab.labor;
 import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
-import pl.coderslab.employee.*;
-import pl.coderslab.vehicle.*;
+import pl.coderslab.employee.Employee;
+import pl.coderslab.employee.EmployeeDto;
+import pl.coderslab.employee.EmployeeEntity;
+import pl.coderslab.employee.EmployeeService;
+import pl.coderslab.vehicle.Vehicle;
+import pl.coderslab.vehicle.VehicleDto;
+import pl.coderslab.vehicle.VehicleEntity;
+import pl.coderslab.vehicle.VehicleService;
 
 public class LaborMapper implements MapperInterface<LaborDto, Labor, LaborEntity> {
 
-    private static final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper();
-    private static final GenericDao<EmployeeEntity> EMPLOYEE_DAO = new EmployeeDaoImpl();
-    private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
-    private static final GenericDao<VehicleEntity> VEHICLE_DAO = new VehicleDaoImpl();
-    private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper();
-    private static final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
+    private MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER;
+    private GenericDao<EmployeeEntity> EMPLOYEE_DAO;
+    private final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
+    private GenericDao<VehicleEntity> VEHICLE_DAO;
+    private MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER;
+    private final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
 
+    public LaborMapper(GenericDao<EmployeeEntity> EMPLOYEE_DAO, MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER, GenericDao<VehicleEntity> VEHICLE_DAO, MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER) {
+        this.EMPLOYEE_MAPPER = EMPLOYEE_MAPPER;
+        this.EMPLOYEE_DAO = EMPLOYEE_DAO;
+        this.VEHICLE_DAO = VEHICLE_DAO;
+        this.VEHICLE_MAPPER = VEHICLE_MAPPER;
+    }
 
     @Override
     public LaborDto mapServiceToDto(Labor labor) {
