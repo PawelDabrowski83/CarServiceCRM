@@ -1,19 +1,26 @@
 package pl.coderslab.vehicle;
 
 import pl.coderslab.car.*;
-import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
 import pl.coderslab.customer.*;
 
 public class VehicleMapper implements MapperInterface<VehicleDto, Vehicle, VehicleEntity> {
 
-    private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
-    private static final GenericDao<CarEntity> CAR_DAO = new CarDaoImpl();
-    private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService(CAR_DAO, CAR_MAPPER);
-    private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
-    private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
-    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);
+    private final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER;
+    private final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER;
+    private final ServiceInterface<CarDto> CAR_SERVICE;
+    private final ServiceInterface<CustomerDto> CUSTOMER_SERVICE;
+
+    public VehicleMapper(MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER,
+                         MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER,
+                         ServiceInterface<CarDto> CAR_SERVICE,
+                         ServiceInterface<CustomerDto> CUSTOMER_SERVICE) {
+        this.CAR_MAPPER = CAR_MAPPER;
+        this.CUSTOMER_MAPPER = CUSTOMER_MAPPER;
+        this.CAR_SERVICE = CAR_SERVICE;
+        this.CUSTOMER_SERVICE = CUSTOMER_SERVICE;
+    }
 
     @Override
     public VehicleDto mapServiceToDto(Vehicle vehicle) {
@@ -24,7 +31,7 @@ public class VehicleMapper implements MapperInterface<VehicleDto, Vehicle, Vehic
         dto.setRegistryPlate(vehicle.getRegistryPlate());
         dto.setNextInspection(vehicle.getNextInspection());
         dto.setOwnerId(vehicle.getOwner().getCustomerId());
-        dto.setOwnerFullname(vehicle.getOwner().getPerson().getFullname());
+        dto.setOwnerFullname(vehicle.getOwnerFullname());
         dto.setColor(vehicle.getColor());
         dto.setNotes(vehicle.getNotes());
         return dto;
@@ -50,7 +57,7 @@ public class VehicleMapper implements MapperInterface<VehicleDto, Vehicle, Vehic
         entity.setCarId(vehicle.getCar().getCarId());
         entity.setRegistryPlate(vehicle.getRegistryPlate());
         entity.setNextInspection(vehicle.getNextInspection());
-        entity.setOwnerId(vehicle.getOwner().getCustomerId());
+        entity.setOwnerId(vehicle.getOwnerCustomerId());
         entity.setColor(vehicle.getColor());
         entity.setNotes(vehicle.getNotes());
         return entity;

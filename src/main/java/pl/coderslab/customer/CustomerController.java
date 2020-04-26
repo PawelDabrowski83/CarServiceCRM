@@ -1,10 +1,8 @@
 package pl.coderslab.customer;
 
-import pl.coderslab.commons.GenericDao;
-import pl.coderslab.commons.MapperInterface;
+import pl.coderslab.commons.*;
 import pl.coderslab.person.*;
-import pl.coderslab.commons.ParameterReaderService;
-import pl.coderslab.commons.ServiceInterface;
+import pl.coderslab.customer.CustomerValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,10 +20,11 @@ public class CustomerController extends HttpServlet {
     private static final String PREPARE_ALL_CUSTOMERS = "/customers?action=view";
     private static final PersonDaoInterface<PersonEntity> PERSON_DAO = new PersonDaoImpl();
     private static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
-    private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
     private static final PersonServiceInterface<PersonDto> PERSON_SERVICE = new PersonService(PERSON_DAO, PERSON_MAPPER);
     private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
-    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);
+    private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper(PERSON_DAO, PERSON_MAPPER);
+    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_DAO, CUSTOMER_MAPPER);
+    private static final ValidatorInterface<CustomerDto> CUSTOMER_VALIDATOR = new CustomerValidator();
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,8 +34,7 @@ public class CustomerController extends HttpServlet {
         String redir = FORM_CUSTOMER;
 
         if ("new".equals(action) | "edit".equals(action)) {
-            Set<PersonDto> personDtos = PERSON_SERVICE.findUnmatchedCustomers();
-            request.setAttribute("persons", personDtos);
+            request.setAttribute("persons", PERSON_SERVICE.findUnmatchedCustomers());
         }
 
         switch (action) {
@@ -58,6 +56,9 @@ public class CustomerController extends HttpServlet {
                 return;
             default:
         }
+
+        request.setAttribute("error", request.getParameter("error"));
+        request.setAttribute("errorMessage", request.getParameter("errorMessage"));
         getServletContext().getRequestDispatcher(redir).forward(request, response);
     }
 
@@ -68,6 +69,23 @@ public class CustomerController extends HttpServlet {
         int personId = ParameterReaderService.getIdFromRequest(request, "personId");
         CustomerDto dto = new CustomerDto();
         dto.setPersonalId(personId);
+
+        String validateResult = CUSTOMER_VALIDATOR.validate(dto);
+        if (!validateResult.isEmpty()) {
+            request.setAttribute("error", true);
+            request.setAttribute("errorMessage", validateResult);
+            request.setAttribute("customer", dto);
+            request.setAttribute("persons", PERSON_SERVICE.findUnmatchedCustomers());
+            if ("edit".equals(action)) {
+                request.setAttribute("action", "edit");
+            } else {
+                request.setAttribute("action", "new");
+            }
+            getServletContext().getRequestDispatcher(FORM_CUSTOMER).forward(request, response);
+            return;
+        } else {
+            request.setAttribute("error", false);
+        }
 
         if ("edit".equals(action)) {
             int customerId = ParameterReaderService.getIdFromRequest(request, "customerId");

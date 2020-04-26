@@ -1,21 +1,21 @@
 # CarServiceCRM
 
-Simple CRM on Servlet+JSP, Dao implementation and data object separation.
-CRUD - there is no Delete operation, only Update with set active = 0.
-It is not Transactional yet.
+<p>Simple CRM on Servlet+JSP, Dao implementation and data object separation.</p> 
+<p>There is no Spring or Hibernate on purpose, because I am practicing servlets.<br/>
+CRUD - there is no Delete operation, only Update with set active = 0.</p>
 
 Database model:
 <ul>
 <li>Person (basic data on everyone)<ul></li>
-<li>Employee -> Person</li>
+<li>Employee (of car workshop) -> Person</li>
 <li>Customer -> Person</li>
 </ul>
-<li>Vehicle basic<ul>
-<li>Vehicle info -> Vehicle basic</li>
-<li>Customer id</li></ul></li>
+<li>Car (more like catalogue of possible cars)<ul>
+<li>Vehicle -> Car</li>
+<li>Vehicle -> Owner id (connection to Customer)</li></ul></li>
 <li>Labor<ul>
-<li>Employee id</li>
-<li>Vehicle id</li></ul></li>
+<li>-> Vehicle (connected)</li>
+<li>-> Employee (connected)</li></ul></li>
 </ul>
 
 Completed:
@@ -23,20 +23,14 @@ Completed:
 * All Dao and domains
 * All form backend validation
 * Car, Vehicle, Person, Customer, Employee domain test
-* VehicleService, PersonService, CustomerService, CarService, EmployeeService tested
+* All Service tested
 
 Next step:
-* Labor domain test
+* LaborMapper
 
 To Do:
-* VehicleMapperTest is on hold
-* Employee Dao and Controller test
-* Customer Dao and Controller test
-* Labor Dao, Service and Controller test
-* Person Dao and Controller test
-* Car Dao and Controller test
-* Vehicle Dao and Controller test
-* make sure that equals and compareTo are consistent on domain classes (they are not)
+* Tests on Dao - actually I am not sure yet how to test it yet
+* Tests on Controllers - to do
 * User stories - add new Employee
 * User stories - add new Customer
 * User stories - add new Vehicle

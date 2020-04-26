@@ -3,6 +3,7 @@ package pl.coderslab.vehicle;
 import pl.coderslab.car.*;
 import pl.coderslab.commons.*;
 import pl.coderslab.customer.*;
+import pl.coderslab.person.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,11 +25,13 @@ public class VehicleController extends HttpServlet {
     private static final GenericDao<CarEntity> CAR_DAO = new CarDaoImpl();
     private static final MapperInterface<CarDto, Car, CarEntity> CAR_MAPPER = new CarMapper();
     private static final ServiceInterface<CarDto> CAR_SERVICE = new CarService(CAR_DAO, CAR_MAPPER);
-    private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
+    private static final PersonDaoInterface<PersonEntity> PERSON_DAO = new PersonDaoImpl();
+    private static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
+    private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper(PERSON_DAO, PERSON_MAPPER);
     private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
-    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_MAPPER, CUSTOMER_DAO);
+    private static final ServiceInterface<CustomerDto> CUSTOMER_SERVICE = new CustomerService(CUSTOMER_DAO, CUSTOMER_MAPPER);
     private static final GenericDao<VehicleEntity> VEHICLE_DAO = new VehicleDaoImpl();
-    private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper();
+    private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper(CAR_MAPPER, CUSTOMER_MAPPER, CAR_SERVICE, CUSTOMER_SERVICE);
     private static final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
     private static final ValidatorInterface<VehicleDto> VEHICLE_VALIDATOR = new VehicleValidator();
 

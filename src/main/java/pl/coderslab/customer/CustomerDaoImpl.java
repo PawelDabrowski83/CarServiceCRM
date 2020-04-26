@@ -3,6 +3,7 @@ package pl.coderslab.customer;
 import pl.coderslab.commons.DbUtil;
 import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
+import pl.coderslab.person.PersonDaoInterface;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,7 @@ import java.util.Set;
 
 public class CustomerDaoImpl implements GenericDao<CustomerEntity> {
 
-    private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
+//    private static final MapperInterface<CustomerDto, Customer, CustomerEntity> CUSTOMER_MAPPER = new CustomerMapper();
     private static final String TABLE_NAME = "customers";
     private static final String CREATE_QUERY =
             "INSERT INTO " + TABLE_NAME + " (personal_id, created, updated) VALUES (?, NOW(), NOW())";

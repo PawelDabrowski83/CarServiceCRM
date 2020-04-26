@@ -1,5 +1,6 @@
 package pl.coderslab.labor;
 
+import pl.coderslab.car.*;
 import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;

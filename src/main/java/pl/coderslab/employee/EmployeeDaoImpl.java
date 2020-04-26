@@ -13,7 +13,6 @@ import java.util.Set;
 
 public class EmployeeDaoImpl implements GenericDao<EmployeeEntity> {
 
-    private static final MapperInterface<EmployeeDto,Employee,EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper();
     private static final String TABLE_NAME = "employees";
     private static final String CREATE_QUERY =
             "INSERT INTO " + TABLE_NAME + " (personal_id, mh_cost, created, updated) values (?, ?, NOW(), NOW())";

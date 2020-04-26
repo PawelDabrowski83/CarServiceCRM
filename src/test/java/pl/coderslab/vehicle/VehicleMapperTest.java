@@ -1,7 +1,12 @@
 package pl.coderslab.vehicle;
 
-import org.junit.Test;
-import pl.coderslab.commons.MapperInterface;
+import org.junit.*;
+import org.junit.runner.*;
+import org.mockito.runners.*;
+import pl.coderslab.car.*;
+import pl.coderslab.commons.*;
+import pl.coderslab.customer.*;
+import pl.coderslab.person.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,20 +15,48 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class VehicleMapperTest {
 
-    private static final VehicleTest VEHICLE_TEST = new VehicleTest();
-    private static final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER = new VehicleMapper();
+    final MapperInterface<CarDto, Car, CarEntity> carMapper = mock(CarMapper.class);
+    final MapperInterface<CustomerDto, Customer, CustomerEntity> customerMapper = mock(CustomerMapper.class);
+    final ServiceInterface<CarDto> carService = mock(CarService.class);
+    final ServiceInterface<CustomerDto> customerService = mock(CustomerService.class);
+    final MapperInterface<VehicleDto, Vehicle, VehicleEntity> vehicleMapper = new VehicleMapper(carMapper, customerMapper, carService, customerService);
+    Car car;
+    CarDto carDto;
+    Customer customer;
+    CustomerDto customerDto;
+    Person person;
+    Vehicle vehicle;
+    VehicleDto vehicleDto;
+    VehicleEntity vehicleEntity;
+
+    @Before
+    public void setUp() {
+
+        car = mock(Car.class);
+        customer = mock(Customer.class);
+        person = mock(Person.class);
+        when(car.getCarId()).thenReturn(1);
+        when(customer.getCustomerId()).thenReturn(1);
+        when(carService.read(1)).thenReturn(carDto);
+        when(customerService.read(1)).thenReturn(customerDto);
+        when(carMapper.mapDtoToService(carDto)).thenReturn(car);
+        when(customerMapper.mapDtoToService(customerDto)).thenReturn(customer);
+    }
 
     @Test
-    public void shouldMapServiceToDtoWorkProperly() {
+    public void shouldMapServiceToDtoWork() {
 
         // given
-        Vehicle vehicle = new Vehicle(
+        vehicle = new Vehicle(
                 1,
-                VEHICLE_TEST.initializeCar(),
-                VEHICLE_TEST.initializeCustomer(),
+                car,
+                customer,
                 "registryPlate",
                 LocalDate.of(1999, 1, 1),
                 "color",
@@ -43,9 +76,12 @@ public class VehicleMapperTest {
                 "lastName firstName",
                 "(1999) mark model registryPlate"
         );
+        when(customer.getPerson()).thenReturn(person);
+        when(person.getFullname()).thenReturn("lastName firstName");
+        when(car.getCarSignature()).thenReturn("(1999) mark model");
 
         // when
-        VehicleDto vehicleDtoActual = VEHICLE_MAPPER.mapServiceToDto(vehicle);
+        VehicleDto vehicleDtoActual = vehicleMapper.mapServiceToDto(vehicle);
 
         // then
         assertEquals(vehicleDtoExpected, vehicleDtoActual);
@@ -58,8 +94,18 @@ public class VehicleMapperTest {
         assertEquals(vehicleDtoExpected.getColor(), vehicleDtoActual.getColor());
     }
 
+    @Test (expected = NullPointerException.class)
+    public void shouldThrowNullPointerWhenMappingNullInServiceToDto() {
+
+        // given
+        vehicle = null;
+
+        // when
+        vehicleMapper.mapServiceToDto(vehicle);
+    }
+
     @Test
-    public void shouldMapDtoToServiceWorkProperly() {
+    public void shouldMapDtoToServiceWork() {
 
         // given
         VehicleDto vehicleDto = new VehicleDto(
@@ -75,8 +121,8 @@ public class VehicleMapperTest {
         );
         Vehicle vehicleExpected = new Vehicle(
                 1,
-                VEHICLE_TEST.initializeCar(),
-                VEHICLE_TEST.initializeCustomer(),
+                car,
+                customer,
                 "registryPlate",
                 LocalDate.of(1999, 1, 1),
                 "color",
@@ -87,7 +133,7 @@ public class VehicleMapperTest {
         );
 
         // when
-        Vehicle vehicleActual = VEHICLE_MAPPER.mapDtoToService(vehicleDto);
+        Vehicle vehicleActual = vehicleMapper.mapDtoToService(vehicleDto);
 
         // then
         assertEquals(vehicleExpected, vehicleActual);
@@ -98,14 +144,24 @@ public class VehicleMapperTest {
         assertFalse(vehicleActual.isActive());
     }
 
+    @Test (expected = NullPointerException.class)
+    public void shouldThrowNullPointerWhenMappingNullInDtoToService() {
+
+        // given
+        vehicleDto = null;
+
+        // when
+        vehicleMapper.mapDtoToService(vehicleDto);
+    }
+
     @Test
-    public void shouldMapServiceToEntityWorkProperly() {
+    public void shouldMapServiceToEntityWork() {
 
         // given
         Vehicle vehicle = new Vehicle(
                 1,
-                VEHICLE_TEST.initializeCar(),
-                VEHICLE_TEST.initializeCustomer(),
+                car,
+                customer,
                 "registryPlate",
                 LocalDate.of(1999, 1, 1),
                 "color",
@@ -128,7 +184,7 @@ public class VehicleMapperTest {
         );
 
         // when
-        VehicleEntity vehicleEntityActual = VEHICLE_MAPPER.mapServiceToEntity(vehicle);
+        VehicleEntity vehicleEntityActual = vehicleMapper.mapServiceToEntity(vehicle);
 
         // then
         assertEquals(vehicleEntityExpected, vehicleEntityActual);
@@ -138,8 +194,18 @@ public class VehicleMapperTest {
         assertFalse(vehicleEntityActual.isActive());
     }
 
+    @Test (expected = NullPointerException.class)
+    public void shouldThrowNullPointerWhenMappingNullInServiceToEntity() {
+
+        // given
+        vehicle = null;
+
+        // when
+        vehicleMapper.mapServiceToEntity(vehicle);
+    }
+
     @Test
-    public void shouldMapEntityToServiceWorkProperly() {
+    public void shouldMapEntityToServiceWork() {
 
         // given
         VehicleEntity vehicleEntity = new VehicleEntity(
@@ -156,8 +222,8 @@ public class VehicleMapperTest {
         );
         Vehicle vehicleExpected = new Vehicle(
                 1,
-                VEHICLE_TEST.initializeCar(),
-                VEHICLE_TEST.initializeCustomer(),
+                car,
+                customer,
                 "registryPlate",
                 LocalDate.of(1999, 1, 1),
                 "color",
@@ -166,9 +232,13 @@ public class VehicleMapperTest {
                 LocalDateTime.of(2020, 12, 31, 15, 35),
                 true
         );
+        when(car.getCarSignature()).thenReturn("carSignatureMock");
+        when(customer.getPerson()).thenReturn(person);
+        when(person.getFullname()).thenReturn("lastName firstName");
 
         // when
-        Vehicle vehicleActual = VEHICLE_MAPPER.mapEntityToService(vehicleEntity);
+        Vehicle vehicleActual = vehicleMapper.mapEntityToService(vehicleEntity);
+        String carSignatureExpected = String.join(" ", vehicleExpected.getCar().getCarSignature(), vehicleExpected.getRegistryPlate()).trim();
 
         // then
         assertEquals(vehicleExpected, vehicleActual);
@@ -177,6 +247,16 @@ public class VehicleMapperTest {
         assertEquals(vehicleExpected.getCreated(), vehicleActual.getCreated());
         assertEquals(vehicleExpected.getUpdated(), vehicleActual.getUpdated());
         assertTrue(vehicleActual.isActive());
-        assertNull(vehicleActual.getCarSignature());
+        assertEquals(carSignatureExpected, vehicleActual.getCarSignature());
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void shouldThrowNullPointerWhenMappingNullInEntityToService() {
+
+        // given
+        vehicleEntity = null;
+
+        // when
+        vehicleMapper.mapEntityToService(vehicleEntity);
     }
 }

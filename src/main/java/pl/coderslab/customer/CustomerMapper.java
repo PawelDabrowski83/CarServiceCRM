@@ -6,8 +6,13 @@ import pl.coderslab.commons.MapperInterface;
 
 public class CustomerMapper implements MapperInterface<CustomerDto, Customer, CustomerEntity> {
 
-    private static final GenericDao<PersonEntity> PERSON_DAO = new PersonDaoImpl();
-    private static final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER = new PersonMapper();
+    private final GenericDao<PersonEntity> PERSON_DAO;
+    private final MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER;
+
+    public CustomerMapper(GenericDao<PersonEntity> PERSON_DAO, MapperInterface<PersonDto, Person, PersonEntity> PERSON_MAPPER) {
+        this.PERSON_DAO = PERSON_DAO;
+        this.PERSON_MAPPER = PERSON_MAPPER;
+    }
 
     @Override
     public CustomerDto mapServiceToDto(Customer customer) {

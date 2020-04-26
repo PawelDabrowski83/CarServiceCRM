@@ -11,6 +11,7 @@ public class Vehicle implements Comparable<Vehicle>{
 
     protected static final String REGISTRYPLATE_PLACEHOLDER = "";
     protected static final String CARSIGNATURE_PLACEHOLDER = "";
+    protected static final String OWNER_PLACEHOLDER = "";
 
     private int vehicleId;
     private Car car;
@@ -126,7 +127,7 @@ public class Vehicle implements Comparable<Vehicle>{
 
     public String getCarSignature() {
         StringBuilder builder = new StringBuilder();
-        if (car == null || car.getCarSignature().isEmpty()) {
+        if (car == null || car.getCarSignature() == null || car.getCarSignature().isEmpty()) {
             builder.append(CARSIGNATURE_PLACEHOLDER);
         } else {
             builder.append(car.getCarSignature());
@@ -138,6 +139,24 @@ public class Vehicle implements Comparable<Vehicle>{
             builder.append(registryPlate);
         }
         return builder.toString().trim();
+    }
+
+    public String getOwnerFullname() {
+        StringBuilder builder = new StringBuilder();
+        if (owner != null && owner.getPerson() != null && owner.getPerson().getFullname() != null) {
+            builder.append(owner.getPerson().getFullname());
+        } else {
+            builder.append(OWNER_PLACEHOLDER);
+        }
+        return builder.toString().trim();
+    }
+
+    public int getOwnerCustomerId() {
+        int result = 0;
+        if (owner != null) {
+            result = owner.getCustomerId();
+        }
+        return result;
     }
 
     @Override
@@ -155,7 +174,7 @@ public class Vehicle implements Comparable<Vehicle>{
         if (result == 0 && this.nextInspection != null && o.nextInspection != null) {
             result = this.nextInspection.compareTo(o.nextInspection);
         }
-        if (result == 0 && this.color != null || o.color != null) {
+        if (result == 0 && this.color != null && o.color != null) {
             result = this.color.compareToIgnoreCase(o.color);
         }
         return result;

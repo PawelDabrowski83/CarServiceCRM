@@ -19,7 +19,7 @@ public class CustomerServiceTest {
     Customer customer = mock(Customer.class);
     CustomerEntity customerEntity = mock(CustomerEntity.class);
     CustomerDto customerDto = mock(CustomerDto.class);
-    ServiceInterface<CustomerDto> customerService = new CustomerService(customerMapper, customerDao);
+    ServiceInterface<CustomerDto> customerService = new CustomerService(customerDao, customerMapper);
 
     @Before
     public void setUp() {

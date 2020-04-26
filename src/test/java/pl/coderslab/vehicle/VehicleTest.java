@@ -1,59 +1,37 @@
 package pl.coderslab.vehicle;
 
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runner.*;
+import org.mockito.runners.*;
 import pl.coderslab.car.Car;
 import pl.coderslab.customer.Customer;
-import pl.coderslab.person.Person;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class VehicleTest {
 
-    public Car initializeCar() {
-        Car car = new Car();
-        car.setCarId(1);
-        car.setMark("mark");
-        car.setModel("model");
-        car.setProductionYear(LocalDate.of(1999, 1, 1));
-        car.setCreated(LocalDateTime.of(2020, 12, 31, 15, 35));
-        car.setUpdated(LocalDateTime.of(2020, 12, 31, 15, 35));
-        car.setActive(true);
-        return car;
+    Car car;
+    Customer customer;
+    Vehicle vehicle;
+
+    @Before
+    public void setUp() {
+
+        car = mock(Car.class);
+        customer = mock(Customer.class);
+        when(car.getCarSignature()).thenReturn("(1999) mark model");
     }
-
-    public Customer initializeCustomer(){
-        Person person = new Person();
-        person.setId(1);
-        person.setFirstName("firstName");
-        person.setLastName("lastName");
-        person.setAddress("address");
-        person.setPhone("123456");
-        person.setNotes("notes");
-        person.setBirthdate(LocalDate.of(1999, 1, 1));
-        person.setCreated(LocalDateTime.of(2020, 12, 31, 15, 35));
-        person.setUpdated(LocalDateTime.of(2020, 12, 31, 15, 35));
-        person.setActive(true);
-
-        Customer customer = new Customer();
-        customer.setCustomerId(1);
-        customer.setPerson(person);
-        customer.setCreated(LocalDateTime.of(2020, 12, 31, 15, 35));
-        customer.setUpdated(LocalDateTime.of(2020, 12, 31, 15, 35));
-        customer.setActive(true);
-
-        return customer;
-    }
-
     @Test
     public void shouldGettersAndSettersWorkProperly() {
 
         // given
-        Vehicle vehicle = new Vehicle();
-        Car car = initializeCar();
-        Customer customer = initializeCustomer();
+        vehicle = new Vehicle();
 
         // when
         vehicle.setVehicleId(1);
@@ -84,8 +62,6 @@ public class VehicleTest {
     public void shouldEqualsAndHashCodeWorkProperly() {
 
         // given
-        Car car = initializeCar();
-        Customer customer = initializeCustomer();
         Vehicle vehicle1 = new Vehicle(
                 1,
                 car,
@@ -111,9 +87,10 @@ public class VehicleTest {
                 LocalDateTime.of(2020, 12, 31, 15, 35),
                 true
         );
-        Car car2 = initializeCar();
-        car2.setModel("another model");
+        Car car2 = mock(Car.class);
+        when(car2.getModel()).thenReturn("another model");
         vehicle2.setCar(car2);
+        when(car.getModel()).thenReturn("model");
 
         Vehicle vehicle3 = new Vehicle(
                 3,
@@ -160,8 +137,6 @@ public class VehicleTest {
     public void shouldToStringWorkProperly() {
 
         // given
-        Car car = initializeCar();
-        Customer customer = initializeCustomer();
         Vehicle vehicle = new Vehicle(
                 1,
                 car,
@@ -174,31 +149,20 @@ public class VehicleTest {
                 LocalDateTime.of(2020, 12, 31, 15, 35),
                 true
         );
+        when(car.toString()).thenReturn("CarMock");
+        when(customer.toString()).thenReturn("CustomerMock");
 
         // when
         String actualToSting = vehicle.toString();
 
         // then
-        assertEquals("Vehicle{vehicleId=1, " +
-                "car=Car{carId=1, model='model', mark='mark'," +
-                " productionYear=1999, created=2020-12-31T15:35, updated=2020-12-31T15:35," +
-                " active=true}," +
-                " owner=Customer{customerId=1, " +
-                "person=Person{id=1, firstName='firstName', lastName='lastName'," +
-                " address='address', phone='123456', notes='notes', birthdate=1999-01-01," +
-                " created=2020-12-31T15:35, updated=2020-12-31T15:35, active=true}," +
-                " created=2020-12-31T15:35, updated=2020-12-31T15:35, active=true}, " +
-                "registryPlate='registryPlate', nextInspection=1999-01-01, color='color'," +
-                " notes='notes', created=2020-12-31T15:35, updated=2020-12-31T15:35," +
-                " active=true}", actualToSting);
+        assertEquals("Vehicle{vehicleId=1, car=CarMock, owner=CustomerMock, registryPlate='registryPlate', nextInspection=1999-01-01, color='color', notes='notes', created=2020-12-31T15:35, updated=2020-12-31T15:35, active=true}", actualToSting);
     }
 
     @Test
     public void shouldCompareToWorkProperly() {
 
         // given
-        Car car = initializeCar();
-        Customer customer = initializeCustomer();
         Vehicle vehicle1 = new Vehicle(
                 1,
                 car,
@@ -212,9 +176,10 @@ public class VehicleTest {
                 true
         );
 
+        Car car2 = mock(Car.class);
         Vehicle vehicle2 = new Vehicle(
                 2,
-                car,
+                car2,
                 customer,
                 "registryPlate",
                 LocalDate.of(1999, 1, 1),
@@ -224,16 +189,12 @@ public class VehicleTest {
                 LocalDateTime.of(2020, 12, 31, 15, 35),
                 true
         );
-        Car car2 = initializeCar();
-        car2.setModel("another model");
-        vehicle2.setCar(car2);
 
-        car = initializeCar();
         Vehicle vehicle3 = new Vehicle(
                 3,
                 car,
                 customer,
-                "registryPlate",
+                "another registryPlate",
                 LocalDate.of(1999, 1, 1),
                 "color",
                 "notes",
@@ -254,26 +215,26 @@ public class VehicleTest {
                 LocalDateTime.of(2020, 12, 31, 15, 35),
                 true
         );
+        when(car.compareTo(car2)).thenReturn(1);
 
         // then
-        assertEquals(12, vehicle1.compareTo(vehicle2));
-        assertEquals(0, vehicle1.compareTo(vehicle3));
-        assertEquals(0, vehicle1.compareTo(vehicle4));
-        assertEquals(-12, vehicle2.compareTo(vehicle3));
-        assertEquals(-12, vehicle2.compareTo(vehicle4));
-        assertEquals(0, vehicle3.compareTo(vehicle4));
+        assertEquals(1, vehicle1.compareTo(vehicle2));
+        assertEquals(17, vehicle1.compareTo(vehicle3));
+        assertEquals(-1, vehicle1.compareTo(vehicle4));
+        assertEquals(1, vehicle2.compareTo(vehicle3));
+        assertEquals(1, vehicle2.compareTo(vehicle4));
+        assertEquals(-17, vehicle3.compareTo(vehicle4));
     }
 
     @Test
     public void shouldGetCarSignatureWhenRegistryPlateIsNull() {
 
         // given
-        Car car = initializeCar();
-        Customer customer = initializeCustomer();
         Vehicle vehicle = new Vehicle(
                 car,
                 null
         );
+
 
         // when
         String actual = vehicle.getCarSignature();
@@ -286,8 +247,6 @@ public class VehicleTest {
     public void shouldGetCarSignatureWhenRegistryPlateIsEmpty() {
 
         // given
-        Car car = initializeCar();
-        Customer customer = initializeCustomer();
         Vehicle vehicle = new Vehicle(
                 car,
                 ""
@@ -304,8 +263,6 @@ public class VehicleTest {
     public void shouldGetCarSignatureWhenRegistryPlateIsButSpaces() {
 
         // given
-        Car car = initializeCar();
-        Customer customer = initializeCustomer();
         Vehicle vehicle = new Vehicle(
                 car,
                 "           "
@@ -322,8 +279,6 @@ public class VehicleTest {
     public void shouldGetCarSignatureWhenCarIsNull() {
 
         // given
-        Car car = initializeCar();
-        Customer customer = initializeCustomer();
         Vehicle vehicle = new Vehicle(
                 null,
                 "registryPlate"
@@ -340,8 +295,6 @@ public class VehicleTest {
     public void shouldGetCarSignatureWhenCarAndRegistryPlateAreNull() {
 
         // given
-        Car car = initializeCar();
-        Customer customer = initializeCustomer();
         Vehicle vehicle = new Vehicle(
                 null,
                 null
@@ -358,8 +311,6 @@ public class VehicleTest {
     public void shouldGetCarSignatureWhenCarIsNullAndRegistryPlateIsEmpty() {
 
         // given
-        Car car = initializeCar();
-        Customer customer = initializeCustomer();
         Vehicle vehicle = new Vehicle(
                 null,
                 ""
