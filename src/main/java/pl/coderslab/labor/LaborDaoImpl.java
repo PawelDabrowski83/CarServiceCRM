@@ -12,7 +12,6 @@ import java.util.Set;
 
 public class LaborDaoImpl implements GenericDao<LaborEntity> {
 
-    private static final MapperInterface<LaborDto, Labor, LaborEntity> LABOR_MAPPER = new LaborMapper();
     private static final String TABLE_NAME = "labors";
     private static final String CREATE_QUERY =
             "INSERT INTO " + TABLE_NAME + " (registry_date, scheduled_date, started_date, finished_date, assigned, issue_description, service_log, status, vehicle, labor_cost, material_cost, mh_ammount, created, updated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
