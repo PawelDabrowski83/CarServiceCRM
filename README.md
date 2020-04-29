@@ -20,8 +20,7 @@ Completed:
 * All Service tested
 
 Next step:
-* (bug) LaborMapperTest - EmployeeService is throwing NullPointer with no obvious reason
-* (bug) findUnmatchedEmployees is not working, yet findUnmatchedCustomers works fine 
+* (bug) LaborMapperTest - EmployeeService is throwing NullPointer with no obvious reason 
 
 To Do:
 * Tests on Dao - reseatching how to mock a Connection and ResultSet (they are provided by static method, and Mockito does not like static)
