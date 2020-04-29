@@ -3,7 +3,7 @@
 <p>Simple CRM on Servlet+JSP, Dao implementation and data object separation.</p> 
 <p>There is no Spring or Hibernate on purpose, because I am practicing servlets.<br/>
 
-#Why I like this project:
+# Why I like this project:
 <p>I implemented simple CRM without Spring and Hibernate, improving my JavaEE understanding. I have learned how to test classes with Mockito.</p>
 <p>Also I have with class polimorhism and SQL querries. If you check new Customer/Employee form, there is a dropdown with only unmatched Persons to select. I feel a little clever with this, not super smart but clever.</p>
 <p>In future I would like to make domain classes immutable and add front, because now eyes are bleeding.</p>
