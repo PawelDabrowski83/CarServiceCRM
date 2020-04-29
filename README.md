@@ -5,6 +5,7 @@
 CRUD - there is no Delete operation, only Update with set active = 0.</p>
 
 Database model:
+![Class diagram](https://github.com/PawelDabrowski83/CarServiceCRM/blob/master/class-diagram-v2.png)
 <ul>
 <li>Person (basic data on everyone)<ul></li>
 <li>Employee (of car workshop) -> Person</li>
