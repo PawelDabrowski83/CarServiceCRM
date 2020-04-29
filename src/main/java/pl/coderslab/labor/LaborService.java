@@ -52,6 +52,9 @@ public class LaborService implements ServiceInterface<LaborDto> {
 
     @Override
     public Set<LaborDto> findAll() {
-        return LABOR_DAO.findAll().stream().map(LABOR_MAPPER::mapEntityToService).map(LABOR_MAPPER::mapServiceToDto).collect(Collectors.toCollection(TreeSet::new));
+        return LABOR_DAO.findAll().stream()
+                .map(LABOR_MAPPER::mapEntityToService)
+                .map(LABOR_MAPPER::mapServiceToDto)
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 }
