@@ -40,6 +40,7 @@ public class LaborMapperTest {
     VehicleDto vehicleDto;
     Employee employee;
     EmployeeDto employeeDto;
+    EmployeeEntity employeeEntity;
     Person personEmployee;
     Person personCustomer;
     Car car;
@@ -330,8 +331,12 @@ public class LaborMapperTest {
                 LocalDateTime.of(2020, 12, 31, 15, 35),
                 true
         );
+        when(employee.getEmployeeId()).thenReturn(1);
+        when(employeeDao.read(1)).thenReturn(employeeEntity);
         when(employeeService.read(1)).thenReturn(employeeDto);
         when(employeeMapper.mapDtoToService(employeeDto)).thenReturn(employee);
+        when(employeeMapper.mapEntityToService(employeeEntity)).thenReturn(employee);
+        when(employeeMapper.mapServiceToDto(employee)).thenReturn(employeeDto);
         when(vehicleService.read(1)).thenReturn(vehicleDto);
         when(vehicleMapper.mapDtoToService(vehicleDto)).thenReturn(vehicle);
 
