@@ -25,8 +25,6 @@ public class LaborController extends HttpServlet {
     private static final String PREPARE_ALL_LABORS = "/labors?action=view";
     private static final String SHOW_ALL_LABORS = "/WEB-INF/jsp/allLabors.jsp";
     private static final GenericDao<LaborEntity> LABOR_DAO = new LaborDaoImpl();
-    private static final MapperInterface<LaborDto, Labor, LaborEntity> LABOR_MAPPER = new LaborMapper();
-    private static final ServiceInterface<LaborDto> LABOR_SERVICE = new LaborService(LABOR_DAO, LABOR_MAPPER);
     private static final GenericDao<VehicleEntity> VEHICLE_DAO = new VehicleDaoImpl();
     private static final GenericDao<CarEntity> CAR_DAO = new CarDaoImpl();
     private static final GenericDao<CustomerEntity> CUSTOMER_DAO = new CustomerDaoImpl();
@@ -42,7 +40,8 @@ public class LaborController extends HttpServlet {
     private static final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER = new EmployeeMapper(PERSON_DAO, PERSON_MAPPER);
     private static final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
     private static final ValidatorInterface<LaborDto> LABOR_VALIDATOR = new LaborValidator();
-
+    private static final MapperInterface<LaborDto, Labor, LaborEntity> LABOR_MAPPER = new LaborMapper(EMPLOYEE_DAO, EMPLOYEE_MAPPER, VEHICLE_DAO, VEHICLE_MAPPER);
+    private static final ServiceInterface<LaborDto> LABOR_SERVICE = new LaborService(LABOR_DAO, LABOR_MAPPER);
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding(CHARACTER_ENCODING);
