@@ -6,7 +6,6 @@ import java.util.*;
 
 public class PersonDaoImpl implements PersonDaoInterface<PersonEntity> {
 
-    private static final PersonMapper PERSON_MAPPER = new PersonMapper();
     private static final String TABLE_NAME = "personal_infos";
     private static final String CREATE_QUERY =
             "INSERT INTO " + TABLE_NAME + " (first_name, last_name, address, phone, notes, created, updated, date_of_birth) values (?, ?, ?, ?, ?, NOW(), NOW(), ?)";
@@ -19,9 +18,9 @@ public class PersonDaoImpl implements PersonDaoInterface<PersonEntity> {
     private static final String FIND_ALL_QUERY =
             "SELECT * FROM " + TABLE_NAME + " WHERE active = 1";
     private static final String FIND_UNMATCHED_CUSTOMERS =
-            "SELECT * FROM " + TABLE_NAME + " WHERE " + TABLE_NAME + ".personal_id NOT IN (SELECT customers.personal_id FROM customers WHERE customers.personal_id=" + TABLE_NAME + ".personal_id);";
+            "SELECT * FROM " + TABLE_NAME + " WHERE " + TABLE_NAME + ".personal_id NOT IN (SELECT customers.personal_id FROM customers WHERE customers.personal_id=" + TABLE_NAME + ".personal_id AND active = 1);";
     private static final String FIND_UNMATCHED_EMPLOYEES =
-            "SELECT * FROM " + TABLE_NAME + " WHERE " + TABLE_NAME + ".personal_id NOT IN (SELECT employees.employee_id FROM employees WHERE employees.personal_id=" + TABLE_NAME + ".personal_id);";
+            "SELECT * FROM " + TABLE_NAME + " WHERE " + TABLE_NAME + ".personal_id NOT IN (SELECT employees.personal_id FROM employees WHERE employees.personal_id=" + TABLE_NAME + ".personal_id AND active = 1);";
 
     @Override
     public void create(PersonEntity entity) {

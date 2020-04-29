@@ -2,22 +2,16 @@
 
 <p>Simple CRM on Servlet+JSP, Dao implementation and data object separation.</p> 
 <p>There is no Spring or Hibernate on purpose, because I am practicing servlets.<br/>
-CRUD - there is no Delete operation, only Update with set active = 0.</p>
 
-Database model:
-<ul>
-<li>Person (basic data on everyone)<ul></li>
-<li>Employee (of car workshop) -> Person</li>
-<li>Customer -> Person</li>
-</ul>
-<li>Car (more like catalogue of possible cars)<ul>
-<li>Vehicle -> Car</li>
-<li>Vehicle -> Owner id (connection to Customer)</li></ul></li>
-<li>Labor<ul>
-<li>-> Vehicle (connected)</li>
-<li>-> Employee (connected)</li></ul></li>
-</ul>
+# Why I like this project:
+<p>I implemented simple CRM without Spring and Hibernate, improving my JavaEE understanding. I have learned how to test classes with Mockito.</p>
+<p>Also I have with class polimorhism and SQL querries. If you check new Customer/Employee form, there is a dropdown with only unmatched Persons to select. I feel a little clever with this, not super smart but clever.</p>
+<p>In future I would like to make domain classes immutable and add front, because now eyes are bleeding.</p>
 
+# Database model:
+![Class diagram](https://github.com/PawelDabrowski83/CarServiceCRM/blob/master/class-diagram-v2.png)
+
+# Project roadmap:
 Completed:
 * Index.jsp front
 * All Dao and domains
@@ -26,10 +20,10 @@ Completed:
 * All Service tested
 
 Next step:
-* LaborMapper
+* (bug) LaborMapperTest - EmployeeService is throwing NullPointer with no obvious reason 
 
 To Do:
-* Tests on Dao - actually I am not sure yet how to test it yet
+* Tests on Dao - reseatching how to mock a Connection and ResultSet (they are provided by static method, and Mockito does not like static)
 * Tests on Controllers - to do
 * User stories - add new Employee
 * User stories - add new Customer
