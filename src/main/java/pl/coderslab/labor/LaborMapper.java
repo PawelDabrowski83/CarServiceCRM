@@ -14,18 +14,20 @@ import pl.coderslab.vehicle.VehicleService;
 
 public class LaborMapper implements MapperInterface<LaborDto, Labor, LaborEntity> {
 
-    private MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER;
-    private GenericDao<EmployeeEntity> EMPLOYEE_DAO;
-    private ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
-    private GenericDao<VehicleEntity> VEHICLE_DAO;
-    private MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER;
-    private ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
+    private final GenericDao<EmployeeEntity> EMPLOYEE_DAO;
+    private final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER;
+    private final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE;
+    private final GenericDao<VehicleEntity> VEHICLE_DAO;
+    private final MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER;
+    private final ServiceInterface<VehicleDto> VEHICLE_SERVICE;
 
     public LaborMapper(GenericDao<EmployeeEntity> EMPLOYEE_DAO, MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER, GenericDao<VehicleEntity> VEHICLE_DAO, MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER) {
-        this.EMPLOYEE_MAPPER = EMPLOYEE_MAPPER;
         this.EMPLOYEE_DAO = EMPLOYEE_DAO;
+        this.EMPLOYEE_MAPPER = EMPLOYEE_MAPPER;
+        this.EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
         this.VEHICLE_DAO = VEHICLE_DAO;
         this.VEHICLE_MAPPER = VEHICLE_MAPPER;
+        this.VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
     }
 
     @Override
