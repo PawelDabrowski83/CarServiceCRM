@@ -6,6 +6,11 @@ import java.util.Objects;
 
 public class Car implements Comparable<Car>{
 
+    protected static final String YEAR_PLACEHOLDER = "";
+    protected static final String MARK_PLACEHOLDER = "";
+    protected static final String MODEL_PLACEHOLDER = "";
+    protected static final String CAR_SIGNATURE_SEPARATOR = " ";
+
     private int carId;
     private String mark;
     private String model;
@@ -91,19 +96,33 @@ public class Car implements Comparable<Car>{
 
     public String getCarSignature() {
         StringBuilder builder = new StringBuilder();
-        builder.append("(" + productionYear.getYear() + ")");
-        if (mark == null || mark.trim().isEmpty()) {
-            mark = "";
+        if (productionYear != null && productionYear.getYear() > 1800) {
+            builder.append("(" + productionYear.getYear() + ")");
         } else {
-            builder.append(" " + mark);
+            builder.append(YEAR_PLACEHOLDER);
         }
 
-        if (model == null || model.trim().isEmpty()) {
-            model = "";
+        if (mark != null && !mark.trim().isEmpty()) {
+            builder.append(CAR_SIGNATURE_SEPARATOR);
+            builder.append(mark);
+            builder.append(CAR_SIGNATURE_SEPARATOR);
         } else {
-            builder.append(" " + model);
+            if (!(CAR_SIGNATURE_SEPARATOR + MARK_PLACEHOLDER + CAR_SIGNATURE_SEPARATOR).trim().isEmpty()) {
+                // condition is always false for now, but may be different when CAR_SIGNATURE_SEPARATOR or
+                // MARK_PLACEHOLDER are not empty
+                builder.append(CAR_SIGNATURE_SEPARATOR + MARK_PLACEHOLDER + CAR_SIGNATURE_SEPARATOR);
+            } else {
+                builder.append(CAR_SIGNATURE_SEPARATOR);
+            }
         }
-        return builder.toString();
+
+        if (model != null && !model.trim().isEmpty()) {
+            builder.append(model);
+        } else {
+            builder.append(MODEL_PLACEHOLDER);
+        }
+
+        return builder.toString().trim();
     }
 
     @Override
