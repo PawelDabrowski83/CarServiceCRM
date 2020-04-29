@@ -20,7 +20,7 @@ Completed:
 * All Service tested
 
 Next step:
-* (bug) LaborMapperTest - EmployeeService is throwing NullPointer with no obvious reason 
+* (bug) formLabor nullpointing on empty Car signature 
 
 To Do:
 * Tests on Dao - reseatching how to mock a Connection and ResultSet (they are provided by static method, and Mockito does not like static)
