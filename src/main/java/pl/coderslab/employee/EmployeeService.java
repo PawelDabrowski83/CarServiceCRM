@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 
 public class EmployeeService implements ServiceInterface<EmployeeDto> {
 
-    private final GenericDao<EmployeeEntity> EMPLOYEE_DAO;
-    private final MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER;
+    private GenericDao<EmployeeEntity> EMPLOYEE_DAO;
+    private MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER;
 
 
     public EmployeeService(GenericDao<EmployeeEntity> EMPLOYEE_DAO, MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER) {
