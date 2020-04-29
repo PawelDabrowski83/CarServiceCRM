@@ -1,6 +1,5 @@
 package pl.coderslab.labor;
 
-import pl.coderslab.car.*;
 import pl.coderslab.commons.GenericDao;
 import pl.coderslab.commons.MapperInterface;
 import pl.coderslab.commons.ServiceInterface;
@@ -17,10 +16,10 @@ public class LaborMapper implements MapperInterface<LaborDto, Labor, LaborEntity
 
     private MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER;
     private GenericDao<EmployeeEntity> EMPLOYEE_DAO;
-    private final ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
+    private ServiceInterface<EmployeeDto> EMPLOYEE_SERVICE = new EmployeeService(EMPLOYEE_DAO, EMPLOYEE_MAPPER);
     private GenericDao<VehicleEntity> VEHICLE_DAO;
     private MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER;
-    private final ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
+    private ServiceInterface<VehicleDto> VEHICLE_SERVICE = new VehicleService(VEHICLE_DAO, VEHICLE_MAPPER);
 
     public LaborMapper(GenericDao<EmployeeEntity> EMPLOYEE_DAO, MapperInterface<EmployeeDto, Employee, EmployeeEntity> EMPLOYEE_MAPPER, GenericDao<VehicleEntity> VEHICLE_DAO, MapperInterface<VehicleDto, Vehicle, VehicleEntity> VEHICLE_MAPPER) {
         this.EMPLOYEE_MAPPER = EMPLOYEE_MAPPER;
