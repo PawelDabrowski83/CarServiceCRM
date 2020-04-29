@@ -18,9 +18,9 @@ public class PersonDaoImpl implements PersonDaoInterface<PersonEntity> {
     private static final String FIND_ALL_QUERY =
             "SELECT * FROM " + TABLE_NAME + " WHERE active = 1";
     private static final String FIND_UNMATCHED_CUSTOMERS =
-            "SELECT * FROM " + TABLE_NAME + " WHERE " + TABLE_NAME + ".personal_id NOT IN (SELECT customers.personal_id FROM customers WHERE customers.personal_id=" + TABLE_NAME + ".personal_id AND active = 1) AND active = 1;";
+            "SELECT * FROM " + TABLE_NAME + " WHERE " + TABLE_NAME + ".personal_id NOT IN (SELECT customers.personal_id FROM customers WHERE customers.personal_id=" + TABLE_NAME + ".personal_id AND active = 1);";
     private static final String FIND_UNMATCHED_EMPLOYEES =
-            "SELECT * FROM " + TABLE_NAME + " WHERE " + TABLE_NAME + ".personal_id NOT IN (SELECT employees.employee_id FROM employees WHERE employees.personal_id=" + TABLE_NAME + ".personal_id AND active = 1) AND active = 1;";
+            "SELECT * FROM " + TABLE_NAME + " WHERE " + TABLE_NAME + ".personal_id NOT IN (SELECT employees.personal_id FROM employees WHERE employees.personal_id=" + TABLE_NAME + ".personal_id AND active = 1);";
 
     @Override
     public void create(PersonEntity entity) {
