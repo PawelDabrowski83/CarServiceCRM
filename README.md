@@ -20,7 +20,7 @@ Completed:
 * All Service tested
 
 Next step:
-* (bug) formLabor nullpointing on empty Car signature 
+* add Logger
 
 To Do:
 * Tests on Dao - reseatching how to mock a Connection and ResultSet (they are provided by static method, and Mockito does not like static)
